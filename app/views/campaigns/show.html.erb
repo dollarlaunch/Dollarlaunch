@@ -1,0 +1,117 @@
+<div class="container">
+  <h1>Your Project</h1>
+  <div class="row">
+    <div class="col">
+      <h2>Your Project Title</h2>
+      <p><%= @campaign.title  %></p>
+    </div>
+    <div class="col">
+      <h2>Project Image</h2>
+      <% if @campaign.image.attached? %>
+        <p><%= image_tag(@campaign.thumbnail) %></p>
+      <% end %>
+    </div>
+    <div class="col">
+      <h1>Description of the Campaign</h1>
+      <p><%= @campaign.blurb %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>Location</h3>
+      <p><%= @campaign.location %></p>
+    </div>
+    <div class="col">
+      <h3>Duration</h3>
+      <p><%= @campaign.duration  %></p>
+    </div>
+    <div class="col">
+      <h3>Goal</h3>
+      <p><%= @campaign.goal %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4>Pledge Amount</h4>
+      <p><%= @campaign.pledge_amount %></p>
+    </div>
+    <div class="col">
+      <h4>No of Participants</h4>
+      <p><%= @campaign.no_of_participants  %></p>
+    </div>
+    <div class="col">
+      <h4>Status</h4>
+      <p><%= @campaign.status %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h5>Pledge Deadline</h5>
+      <p><%= @campaign.pledge_deadline %></p>
+    </div>
+    <div class="col">
+      <h5>Category</h5>
+      <p><%= @campaign.category.name  %></p>
+    </div>
+    <div class="col">
+      <h5>User</h5>
+      <p><%= @campaign.user.id %></p>
+    </div>
+  </div>
+  <hr>
+  <h2>Project Milestones</h2>
+  <% @campaign.milestones.each do |milestone| %>
+    <div class="row">
+      <% if milestone.images.attached? %>
+        <% milestone.images.each do |id, image| %>
+          <div class="col">
+            <p><%= image_tag(milestone.imagethumbnail(image)) %></p>
+          </div>
+        <% end %>
+      <% end %>
+      <div class="col">
+        <h3>Milestone Title</h3>
+        <p><%= milestone.title %></p>
+      </div>
+      <div class="col">
+        <h3>Milestone Description</h3>
+        <p><%= milestone.description %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <% if milestone.clip.attached? %>
+          <p><%= video_tag(url_for(milestone.clip), controls: '', style: 'width:500px; height:200px' ) %></p>
+        <% end %>
+      </div>
+      <div class="col">
+        <% if milestone.thumbnail.attached? %>
+          <p><%= image_tag milestone.thumbnail %></p>
+        <% end %>
+      </div>
+      <div class="col">
+        <h3>Milestone Duration Type</h3>
+        <p><%= milestone.duration_type %></p>
+      </div>
+      <div class="col">
+        <h3>Milestone Duration Limit</h3>
+        <p><%= milestone.duration_limit %></p>
+      </div>
+      <div class="col">
+        <h3>Milestone Budget</h3>
+        <p><%= milestone.budget %></p>
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col">
+      <%= link_to "Back to Projects", campaigns_path, class:'btn btn-outline-info btn-sm my-2 my-sm-0' %>
+    </div>
+    <div class="col">
+      <%= link_to "Edit Project", edit_campaign_path(@campaign), class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
+    </div>
+    <div class="col">
+      <%= link_to "Delete Project", campaign_path(@campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn-outline-danger btn-sm my-2 my-sm-0' %>
+    </div>
+  </div>
+</div>

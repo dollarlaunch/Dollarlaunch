@@ -1,0 +1,64 @@
+<div class='nested-fields'>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-10 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Milestone Form</h3>
+              <%= f.input :title, placeholder: 'Milestone Title', input_html: { class: 'form control form-control-sm' } %>
+              <%= f.input :description, placeholder: 'Description of the Milestone', input_html: { class: 'form control form-control-sm' } %>
+              <div class="row">
+                <div class="col">
+                  <% @campaign.milestones.each do |milestone| %>
+                    <% if milestone.images.attached? %>
+                      Previous Images
+                      <% milestone.images.each do |id, image| %>
+                        <div class="col">
+                          <p><%= image_tag(milestone.imagethumbnail(image)) %></p>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <%= f.label 'Images' %> 
+                  <%= f.file_field :images, multiple: true %>
+                </div>
+                <div class="col">
+                  <% @campaign.milestones.each do |milestone| %>
+                    <% if milestone.clip.attached? %>
+                      Previous Video Clip
+                      <div class="col">
+                        <p><%= video_tag(url_for(milestone.clip), controls: '', style: 'width:500px; height:200px' ) %></p>
+                      </div>
+                    <% end %>
+                  <% end %>
+                  <%= f.label 'Video Clip' %> 
+                  <%= f.file_field :clip %>
+                </div>
+              </div>
+              </br>
+              <div class="row">
+                <div class="col">
+                  <% @campaign.milestones.each do |milestone| %>
+                    <% if milestone.thumbnail.attached? %>
+                      <div class="col">
+                        Previous Thumbnail
+                        <p><%= image_tag milestone.thumbnail %></p>
+                      </div>
+                    <% end %>
+                  <% end %>
+                  <%= f.label 'Video Thumbnail' %> 
+                  <%= f.file_field :thumbnail %>
+                </div>
+                <div class="col">
+                  <%= f.input :duration_type, collection: Milestone.duration_types.keys, label: 'Duration Type', input_html: { class: 'form control form-control-sm' } %>
+                </div>
+              </div>
+              <%= f.input :duration_limit, as: :integer, label: 'Duration Limit', input_html: { class: 'form control form-control-sm' } %>
+              <%= f.input :budget, as: :integer, input_html: { class: 'form control form-control-sm' } %>
+              <%= link_to_remove_association "Remove Milestone", f, class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

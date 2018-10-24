@@ -1,0 +1,75 @@
+<div class="container">
+  <h1>Listing All of Your Projects</h1>
+  <% @campaigns.each do |campaign| %>
+    <div class="row">
+      <div class="col">
+        <h2>Your Project Title</h2>
+        <p><%= campaign.title  %></p>
+      </div>
+      <div class="col">
+        <h2>Project Image</h2>
+        <% if campaign.image.attached? %>
+          <p><%= image_tag(campaign.thumbnail) %></p>
+        <% end %>
+      </div>
+      <div class="col">
+        <h1>Description of the Campaign</h1>
+        <p><%= campaign.blurb %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h3>Location</h3>
+        <p><%= campaign.location %></p>
+      </div>
+      <div class="col">
+        <h3>Duration</h3>
+        <p><%= campaign.duration  %></p>
+      </div>
+      <div class="col">
+        <h3>Goal</h3>
+        <p><%= campaign.goal %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h4>Pledge Amount</h4>
+        <p><%= campaign.pledge_amount %></p>
+      </div>
+      <div class="col">
+        <h4>No of Participants</h4>
+        <p><%= campaign.no_of_participants  %></p>
+      </div>
+      <div class="col">
+        <h4>Status</h4>
+        <p><%= campaign.status %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h5>Pledge Deadline</h5>
+        <p><%= campaign.pledge_deadline %></p>
+      </div>
+      <div class="col">
+        <h5>Category</h5>
+        <p><%= campaign.category.name  %></p>
+      </div>
+      <div class="col">
+        <h5>User</h5>
+        <p><%= campaign.user.id %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= link_to "Show Project", campaign_path(campaign), class:'btn btn-outline-primary btn-sm my-2 my-sm-0' %>
+      </div>
+      <div class="col">
+        <%= link_to "Edit Project", edit_campaign_path(campaign), class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
+      </div>
+      <div class="col">
+        <%= link_to "Delete Project", campaign_path(campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn-outline-danger btn-sm my-2 my-sm-0' %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
