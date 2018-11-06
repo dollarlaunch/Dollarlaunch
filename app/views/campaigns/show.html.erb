@@ -1,117 +1,142 @@
-<div class="container">
-  <h1>Your Project</h1>
+<div class="container mt-4 mb-3">
   <div class="row">
-    <div class="col">
-      <h2>Your Project Title</h2>
-      <p><%= @campaign.title  %></p>
+    <div class="col-md-2">
+      <div class="compgn-user-bg">
+        <center><img src="/user.png" class="user-dmy"></center>
+        <p class="mt-2 mb-0 text-center">By <%=  @campaign.user.username %></p>
+        <center><small><%= time_ago_in_words(@campaign.created_at) %> ago</small></center>
+      </div>
     </div>
-    <div class="col">
-      <h2>Project Image</h2>
-      <% if @campaign.image.attached? %>
-        <p><%= image_tag(@campaign.thumbnail) %></p>
-      <% end %>
-    </div>
-    <div class="col">
-      <h1>Description of the Campaign</h1>
+    <div class="col-md-10 mb-3">
+      <h3><%= @campaign.title  %></h3>
       <p><%= @campaign.blurb %></p>
     </div>
   </div>
+</div>
+<div class="container mb-3">
   <div class="row">
-    <div class="col">
-      <h3>Location</h3>
-      <p><%= @campaign.location %></p>
+    <div class="col-md-8 mb-2">
+        <%= image_tag(@campaign.image.url, class:'cmpgn-img') %>
     </div>
-    <div class="col">
-      <h3>Duration</h3>
-      <p><%= @campaign.duration  %></p>
-    </div>
-    <div class="col">
-      <h3>Goal</h3>
-      <p><%= @campaign.goal %></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h4>Pledge Amount</h4>
-      <p><%= @campaign.pledge_amount %></p>
-    </div>
-    <div class="col">
-      <h4>No of Participants</h4>
-      <p><%= @campaign.no_of_participants  %></p>
-    </div>
-    <div class="col">
-      <h4>Status</h4>
-      <p><%= @campaign.status %></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h5>Pledge Deadline</h5>
-      <p><%= @campaign.pledge_deadline %></p>
-    </div>
-    <div class="col">
-      <h5>Category</h5>
-      <p><%= @campaign.category.name  %></p>
-    </div>
-    <div class="col">
-      <h5>User</h5>
-      <p><%= @campaign.user.id %></p>
-    </div>
-  </div>
-  <hr>
-  <h2>Project Milestones</h2>
-  <% @campaign.milestones.each do |milestone| %>
-    <div class="row">
-      <% if milestone.images.attached? %>
-        <% milestone.images.each do |id, image| %>
-          <div class="col">
-            <p><%= image_tag(milestone.imagethumbnail(image)) %></p>
-          </div>
-        <% end %>
-      <% end %>
-      <div class="col">
-        <h3>Milestone Title</h3>
-        <p><%= milestone.title %></p>
-      </div>
-      <div class="col">
-        <h3>Milestone Description</h3>
-        <p><%= milestone.description %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <% if milestone.clip.attached? %>
-          <p><%= video_tag(url_for(milestone.clip), controls: '', style: 'width:500px; height:200px' ) %></p>
+    <div class="col-md-4">
+      <div class="cmpgn-top-right-side">
+        <p class="mb-0 mt-2">Pledge Amount</p>
+        <small class="text-muted"><%= @campaign.pledge_amount %></small>
+        <hr>
+        <p class="mb-0">No of Participants</p>
+        <small class="text-muted"><%= @campaign.no_of_participants  %></small>
+        <hr>
+        <p class="mb-0">Pledge Deadline</p>
+        <small class="text-muted"><%= @campaign.pledge_deadline %></small>
+        <hr>
+        <% if current_user.admin == true  %>
+          <p class="mb-0">Status</p>
+          <small class="text-muted"><%= @campaign.status %></small>
         <% end %>
       </div>
-      <div class="col">
-        <% if milestone.thumbnail.attached? %>
-          <p><%= image_tag milestone.thumbnail %></p>
-        <% end %>
-      </div>
-      <div class="col">
-        <h3>Milestone Duration Type</h3>
-        <p><%= milestone.duration_type %></p>
-      </div>
-      <div class="col">
-        <h3>Milestone Duration Limit</h3>
-        <p><%= milestone.duration_limit %></p>
-      </div>
-      <div class="col">
-        <h3>Milestone Budget</h3>
-        <p><%= milestone.budget %></p>
-      </div>
-    </div>
-  <% end %>
-  <div class="row">
-    <div class="col">
-      <%= link_to "Back to Projects", campaigns_path, class:'btn btn-outline-info btn-sm my-2 my-sm-0' %>
-    </div>
-    <div class="col">
-      <%= link_to "Edit Project", edit_campaign_path(@campaign), class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
-    </div>
-    <div class="col">
-      <%= link_to "Delete Project", campaign_path(@campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn-outline-danger btn-sm my-2 my-sm-0' %>
+      <button class="btn btn-primary btn-block mt-3">Back this project</button>
     </div>
   </div>
 </div>
+<div class="container mt-5">
+	<nav>
+    <div class="nav nav-tabs nav-fill cmpg-tab" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link cmpgn-tb active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Campaign</a>
+      <a class="nav-item nav-link cmpgn-tb" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Milestones</a>
+    </div>
+	</nav>
+</div>
+<div class="container mt-3">
+  <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="row">
+        <div class="col-md-8">
+          <p>
+            <%= @campaign.blurb %>
+          </p>
+        </div>
+        <div class="col-md-4">
+    			<div class="cmpgn-right">
+            <p class="mb-0">Location</p>
+            <small class="text-muted"><%= @campaign.location %></small>
+            <hr>
+            <p class="mb-0">Goal</p>
+            <small class="text-muted"><%= @campaign.goal %></small>
+            <hr>
+            <p class="mb-0">Category</p>
+            <small class="text-muted" class='badge badge-primary'><%= @campaign.category.name %></small>
+    			</div>
+        </div>
+      </div>
+    </div>
+		<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <% @campaign.milestones.each_with_index do |milestone, index| %>
+        <div class="card bg-light text-dark mt-3 mb-3">
+          <div class="card-body">
+            <h5 class="mb-0">
+              Milestone <%= index + 1 %>
+            <i class="fas fa-plus-square new-iplus mil-next<%= milestone.id %>"></i>
+            </h5>
+            <div class="mil-dec<%= milestone.id %>">
+              <hr>
+            	<div class="row">
+                <div class="col-md-8">
+                  <h3><%= milestone.title %></h3>
+                  <p><%= milestone.description %></p>
+                    <div id="demo<%= milestone.id %>" class="carousel slide mb-3" data-ride="carousel">
+                      <div class="carousel-inner">
+                        <% milestone.images.each_with_index  do |image, index| %>
+                          <div class="carousel-item <%= "active" if index == 0 %>">
+                            <%= image_tag(image.image.url) %>
+                          </div>
+                        <% end %>
+                      </div>
+                      <a class="carousel-control-prev" href="#demo<%= milestone.id %>" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                      </a>
+                      <a class="carousel-control-next" href="#demo<%= milestone.id %>" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                      </a>
+                    </div>
+                    <%= video_tag((milestone.video.url), controls: '', width:"100%") %>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="cmpgn-right">
+                      <p class="mb-0">Milestone Duration Type</p>
+                      <small class="text-muted"><%= milestone.duration_limit %></small>
+                      <small class="text-muted"><%= milestone.duration_type %></small>
+                      <hr>
+                      <p class="mb-0">Milestone Budget</p>
+                      <small class="text-muted"><%= milestone.budget %></small>
+                    </div>
+                  </div>
+              </div>
+            </div>
+  				</div>
+  			</div>
+      <% end %>
+	  </div>
+	</div>
+</div>
+<div class="container my-3">
+	<div class="col-md-6 mx-auto">
+    <%= link_to "Back to Projects", campaigns_path, class:'btn btn-primary' %>
+    <% if can? :update, @campaign %>
+      <%= link_to "Edit Project", edit_campaign_path(@campaign), class:'btn btn btn-primary' %>
+    <% end %>
+    <% if can? :destroy, @campaign %>
+      <%= link_to "Delete Project", campaign_path(@campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn btn-danger' %>
+    <% end %>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+    <% @campaign.milestones.each do |milestone| %>
+      $(".mil-dec<%=milestone.id%>").hide();
+        $(".mil-next<%=milestone.id%>").click(function(){
+            $(".mil-dec<%=milestone.id%>").slideToggle("500");
+            $("i", this).toggleClass("fas fa-plus-square fas fa-minus-square");
+        })
+    <%end%>
+  });
+</script>

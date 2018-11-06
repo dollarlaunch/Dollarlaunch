@@ -2,15 +2,16 @@ class CategoriesController < ApplicationController
   
   before_action :authenticate_user!
   before_action :set_category_params, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   
   def index
+    @categories = Category.all
   end
   
   def show
   end
   
   def new
-    @category = Category.new
   end
   
   def create

@@ -1,22 +1,55 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Log In</h5>
-          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <div class="form-inputs">
-              <%= f.input :email, required: false, autofocus: true, input_html: { autocomplete: "email", class: 'form control form-control-sm' }, error: 'Username is mandatory, please specify one' %>
-              <%= f.input :password, required: false, input_html: { autocomplete: "current-password", class: 'form control form-control-sm' } %>
-              <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+  <div class="col-md-6 col-lg-5 mx-auto">
+    <div class="card card-signin mt-5">
+      <div class="card-body">
+        <h3 class="text-center mb-3">Log In</h3>
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text login-icn"><i class="far fa-envelope-open"></i></span>
             </div>
-            <div class="form-actions">
-              <%= f.button :submit, "Log in", class:'btn btn-primary btn-block btn-md' %>
+            <input type="email" class="form-control login-bg" placeholder="Enter Your Email" name="user[email]">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text login-icn"><i class="fas fa-lock"></i></span>
             </div>
-          <% end %>
-          <%= render "users/shared/links" %>
-        </div>
+            <input type="password" class="form-control login-bg" placeholder="Enter Your Password" name="user[password]">
+          </div>
+          <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+          <div class="form-actions">
+            <%= f.button :submit, "Log in", class:'btn btn-primary btn-block btn-md mb-3' %>
+          </div>
+        <% end %>
+        <p class="text-center mb-0">By Joining I Agree to KickStarter</p>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <center><%= link_to "Forgot your password?", new_password_path(resource_name) %></center>
+        <% end -%>
+         <hr>
+         <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+        <center><span>Not a Member?  </span><%= link_to "Sign up", new_registration_path(resource_name) %></center>
+       <% end -%>
       </div>
     </div>
   </div>
 </div>
+
+<!--practice-->
+<!--<input type='file' onchange="readURL(this);" />-->
+<!--                <img id="blah" src="#" alt="your image" />-->
+<!--                <script>-->
+<!--                    function readURL(input) {-->
+<!--        if (input.files && input.files[0]) {-->
+<!--            var reader = new FileReader();-->
+
+<!--            reader.onload = function (e) {-->
+<!--                $('#blah')-->
+<!--                    .attr('src', e.target.result)-->
+<!--                    .width(150)-->
+<!--                    .height(200);-->
+<!--            };-->
+
+<!--            reader.readAsDataURL(input.files[0]);-->
+<!--        }-->
+<!--    }-->
+<!--                </script>-->

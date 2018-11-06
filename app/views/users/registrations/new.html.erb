@@ -1,21 +1,44 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <h5 class="card-title text-center">Sign Up</h5>
-          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-            <%= f.error_notification %>
-            <div class="form-inputs">
-              <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email", class: 'form control form-control-sm' }%>
-              <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password", class: 'form control form-control-sm' } %>
-              <%= f.input :password_confirmation, required: true, input_html: { autocomplete: "new-password", class: 'form control form-control-sm' } %>
+  <div class="col-md-5 mx-auto">
+    <div class="card card-signin mt-5">
+      <div class="card-body">
+        <h2 class="text-center mb-3">Sign Up</h2>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
+          <div class="form-inputs">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text login-icn"><i class="fas fa-user-alt"></i></span>
+              </div>
+              <input type="text" class="form-control login-bg" placeholder="Enter Your Name" name="user[username]">
             </div>
-            <div class="form-actions">
-              <%= f.button :submit, "Sign up", class:'btn btn-primary btn-block btn-md' %>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text login-icn"><i class="far fa-envelope-open"></i></span>
+              </div>
+              <input type="email" class="form-control login-bg" placeholder="Enter Your Email" name="user[email]">
             </div>
-          <% end %>
-        </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text login-icn"><i class="fas fa-lock"></i></span>
+              </div>
+              <input type="password" class="form-control login-bg" placeholder="Enter Your Password" name="user[password]">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text login-icn"><i class="fas fa-lock"></i></span>
+              </div>
+              <input type="password" class="form-control login-bg" placeholder="Re-Enter Your Password" name="user[password_confirmation]">
+            </div>
+          </div>
+          <div class="form-actions">
+            <%= f.button :submit, "Sign up", class:'btn btn-primary btn-block btn-md' %>
+          </div>
+        <% end %>
+        <hr>
+        <%- if controller_name != 'sessions' %>
+        <center><span>Already A Member? </span><%= link_to "Log in", new_session_path(resource_name) %></center>
+          <% end -%>
       </div>
     </div>
   </div>

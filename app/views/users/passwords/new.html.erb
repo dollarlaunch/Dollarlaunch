@@ -1,18 +1,22 @@
-<h2>Forgot your password?</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
+<div class="container">
+  <div class="col-md-6 col-lg-5 mx-auto">
+    <div class="card card-signin mt-5">
+      <div class="card-body">
+        <h3 class="text-center mb-3">Forgot your password?</h3>
+        <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+            <div class="form-inputs">
+              <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email", class:'form control form-control-sm' } %>
+            </div>
+            <div class="form-actions">
+              <%= f.button :submit, "Send me reset password instructions" %>
+            </div>
+            <hr>
+            <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+              <center><%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %></center>
+            <% end -%>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

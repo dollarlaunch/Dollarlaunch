@@ -1,5 +1,7 @@
-<%= simple_form_for @category do |f| %>
-  <%= f.input :name %>
-  <%= f.hidden_field :user_id, value: current_user.id %>
-  <%= f.submit %>
-<% end %>
+<div class="container">
+  <%= simple_form_for @category do |f| %>
+    <%= f.input :name %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit %>
+  <% end %>
+</div>

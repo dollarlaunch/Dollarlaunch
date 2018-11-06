@@ -2,9 +2,14 @@ class CampaignsController < ApplicationController
   
   before_action :authenticate_user!
   before_action :set_campaign_params, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource only: [:edit, :destroy]
   
   def index
-    @campaigns = Campaign.all
+    if current_user.admin == true
+      @campaigns = Campaign.all
+    else
+      @campaigns = current_user.campaigns
+    end
   end
   
   def show
@@ -36,7 +41,7 @@ class CampaignsController < ApplicationController
   
   def destroy
     @campaign.destroy
-    
+
     redirect_to campaigns_path
   end
   
@@ -47,7 +52,7 @@ class CampaignsController < ApplicationController
     end
     
     def campaign_params
-      params.require(:campaign).permit(:image, :title, :blurb, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :category_id, :user_id, milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :clip, :thumbnail, :_destroy, images: []] )
+      params.require(:campaign).permit(:image, :title, :blurb, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :category_id, :user_id, milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
     end
     
 end

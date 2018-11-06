@@ -1,20 +1,23 @@
-<h2>Resend confirmation instructions</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-  <%= f.full_error :confirmation_token %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
-                input_html: { autocomplete: "email" } %>
+<div class="container">
+  <div class="col-md-6 col-lg-5 mx-auto">
+    <div class="card card-signin mt-5">
+      <div class="card-body">
+        <h3 class="text-center mb-3">Resend confirmation instructions</h3>
+        <%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+          <%= f.full_error :confirmation_token %>
+          <div class="form-inputs">
+            <%= f.input :email, required: true, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), input_html: { autocomplete: "email", class:'form control form-control-sm' } %>
+          </div>
+          <div class="form-actions">
+            <%= f.button :submit, "Resend confirmation instructions" %>
+          </div>
+          <hr>
+          <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+            <center><%= link_to "Forgot your password?", new_password_path(resource_name) %></center>
+          <% end -%>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

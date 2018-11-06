@@ -6,6 +6,7 @@ class CreateMilestones < ActiveRecord::Migration[5.2]
       t.integer :duration_type
       t.integer :duration_limit
       t.integer :budget
+      t.attachment :video
       
       t.references :campaign, foreign_key: true
 

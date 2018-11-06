@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Sign Up</h5>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= f.error_notification %>
+            <div class="form-inputs">
+              <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email", class: 'form control form-control-sm' }%>
+              <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password", class: 'form control form-control-sm' } %>
+              <%= f.input :password_confirmation, required: true, input_html: { autocomplete: "new-password", class: 'form control form-control-sm' } %>
+            </div>
+            <div class="form-actions">
+              <%= f.button :submit, "Sign up", class:'btn btn-primary btn-block btn-md' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

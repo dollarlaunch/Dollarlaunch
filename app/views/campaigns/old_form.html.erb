@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-10 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h3 class="card-title text-center">Project Form</h3>
+          <%= simple_form_for @campaign do |f| %>
+            <%= f.label 'Project Image' %>
+            <% if @campaign.image.attached? %>
+              <p><%= image_tag(@campaign.thumbnail) %></p>
+            <% end %>
+            <%= f.file_field :image %>
+            <%= f.input :title, placeholder: 'Project Title', label: 'Project Title', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.input :blurb, placeholder: 'Description of the Project', label: 'Project Description', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.label 'Categories' %> 
+            <%= f.collection_select :category_id, Category.all, :id, :name, {}, { class: 'form control form-control-sm' } %>
+            <%= f.input :location, label: 'Project Location', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.input :duration, as: :integer, label: 'Funding Duration', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.input :goal, as: :integer, label: 'Funding Goal', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.input :pledge_amount, as: :integer, label: 'Pledge Amount', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.input :no_of_participants, as: :integer, label: 'No of Participants', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.input :pledge_deadline, as: :integer, label: 'Pledge Deadline', input_html: { class: 'form control form-control-sm' } %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <h3>Milestones</h3>
+            <div id="milestones">
+              <%= f.simple_fields_for :milestones do |milestone| %>
+                <%= render 'milestone_fields', :f => milestone %>
+              <% end %>
+              <div class='links'>
+                <%= link_to_add_association 'Add Milestone', f, :milestones, class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
+              </div>
+            </div>
+            <br>
+            <%= f.submit class:'btn btn-primary btn-sm', class:'btn btn-outline-primary btn-block btn-sm my-2 my-sm-0' %>
+          <% end %>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>

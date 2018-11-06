@@ -1,75 +1,42 @@
-<div class="container">
-  <h1>Listing All of Your Projects</h1>
-  <% @campaigns.each do |campaign| %>
-    <div class="row">
-      <div class="col">
-        <h2>Your Project Title</h2>
-        <p><%= campaign.title  %></p>
-      </div>
-      <div class="col">
-        <h2>Project Image</h2>
-        <% if campaign.image.attached? %>
-          <p><%= image_tag(campaign.thumbnail) %></p>
-        <% end %>
-      </div>
-      <div class="col">
-        <h1>Description of the Campaign</h1>
-        <p><%= campaign.blurb %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h3>Location</h3>
-        <p><%= campaign.location %></p>
-      </div>
-      <div class="col">
-        <h3>Duration</h3>
-        <p><%= campaign.duration  %></p>
-      </div>
-      <div class="col">
-        <h3>Goal</h3>
-        <p><%= campaign.goal %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h4>Pledge Amount</h4>
-        <p><%= campaign.pledge_amount %></p>
-      </div>
-      <div class="col">
-        <h4>No of Participants</h4>
-        <p><%= campaign.no_of_participants  %></p>
-      </div>
-      <div class="col">
-        <h4>Status</h4>
-        <p><%= campaign.status %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h5>Pledge Deadline</h5>
-        <p><%= campaign.pledge_deadline %></p>
-      </div>
-      <div class="col">
-        <h5>Category</h5>
-        <p><%= campaign.category.name  %></p>
-      </div>
-      <div class="col">
-        <h5>User</h5>
-        <p><%= campaign.user.id %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <%= link_to "Show Project", campaign_path(campaign), class:'btn btn-outline-primary btn-sm my-2 my-sm-0' %>
-      </div>
-      <div class="col">
-        <%= link_to "Edit Project", edit_campaign_path(campaign), class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
-      </div>
-      <div class="col">
-        <%= link_to "Delete Project", campaign_path(campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn-outline-danger btn-sm my-2 my-sm-0' %>
-      </div>
-    </div>
-    <hr>
+<div class="container mt-3">
+  <% if current_user.admin == true%>
+    <h1>Listing the Projects of All Users</h1>
+  <% else %>
+    <h1>Listing All of Your Projects</h1>
+  <% end %>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Project Title</th>
+        <th>Status</th>
+        <th>Username</th>
+        <th>Show</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @campaigns.each do |campaign| %>
+        <tr>
+          <td><%= campaign.title %></td>
+          <% if current_user.admin == true  %>
+            <td>
+              <small class="text-muted"><%= campaign.status %></small>
+              <% if campaign.status == 'prelaunch' %>
+              | <%= link_to 'Launched', change_campaign_status_path(campaign), method: :put %>
+              <% end %>
+            </td>
+            <td><%= campaign.user.username %></td>
+          <% end %>
+          <td><%= link_to '<i class="fas fa-eye"></i>'.html_safe, campaign_path(campaign) %></td>
+          <td><%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_campaign_path(campaign) %></td>
+          <td><%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, campaign_path(campaign), method: :delete, data: { confirm: 'Are You Sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if current_user.campaigns.count == 0 && current_user.admin == false %>
+    <h5>You Don't have any Projects! Want to Create?</h5>
+    <%= link_to 'Start a Project', new_campaign_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>

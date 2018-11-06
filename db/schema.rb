@@ -10,41 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_130227) do
+ActiveRecord::Schema.define(version: 2018_10_31_121411) do
 
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "campaigns", force: :cascade do |t|
     t.string "title"
     t.text "blurb"
+    t.text "description"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
     t.text "location"
     t.integer "duration"
     t.integer "goal"
     t.integer "pledge_amount"
     t.integer "no_of_participants"
-    t.integer "status"
-    t.integer "pledge_deadline"
-    t.integer "category_id"
-    t.integer "user_id"
+    t.integer "status", default: 0
+    t.date "pledge_deadline"
+    t.bigint "category_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_campaigns_on_category_id"
@@ -53,10 +40,22 @@ ActiveRecord::Schema.define(version: 2018_10_23_130227) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
+    t.text "description"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.bigint "milestone_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["milestone_id"], name: "index_images_on_milestone_id"
   end
 
   create_table "milestones", force: :cascade do |t|
@@ -65,23 +64,41 @@ ActiveRecord::Schema.define(version: 2018_10_23_130227) do
     t.integer "duration_type"
     t.integer "duration_limit"
     t.integer "budget"
-    t.integer "campaign_id"
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
+    t.bigint "campaign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campaign_id"], name: "index_milestones_on_campaign_id"
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "username", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.boolean "admin", default: false, null: false
+    t.string "avatar_file_name", default: ""
+    t.string "avatar_content_type", default: ""
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "campaigns", "categories"
+  add_foreign_key "campaigns", "users"
+  add_foreign_key "categories", "users"
+  add_foreign_key "images", "milestones"
+  add_foreign_key "milestones", "campaigns"
 end
