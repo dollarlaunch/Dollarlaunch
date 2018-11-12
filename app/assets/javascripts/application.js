@@ -14,6 +14,6 @@
 //= require jquery
 //= require cocoon
 //= require activestorage
-//= require turbolinks
+//= require dataTables/jquery.dataTables
 //= require_tree .
 

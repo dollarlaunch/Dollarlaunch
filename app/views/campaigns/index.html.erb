@@ -4,7 +4,7 @@
   <% else %>
     <h1>Listing All of Your Projects</h1>
   <% end %>
-  <table class="table table-bordered">
+  <table id="campaigns" class="table table-bordered">
     <thead>
       <tr>
         <th>Project Title</th>
@@ -23,7 +23,7 @@
             <td>
               <small class="text-muted"><%= campaign.status %></small>
               <% if campaign.status == 'prelaunch' %>
-              | <%= link_to 'Launched', change_campaign_status_path(campaign), method: :put %>
+              | <%= link_to 'Launch', change_campaign_status_path(campaign), method: :put %>
               <% end %>
             </td>
             <td><%= campaign.user.username %></td>

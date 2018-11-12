@@ -2,9 +2,9 @@ class Milestone < ApplicationRecord
   belongs_to :campaign
   attr_accessor :images_array
   enum duration_type: [:Week, :Month]
-  has_many :images, dependent: :destroy
+  has_many :images, dependent: :destroy, as: :owner
   has_attached_file :video
-  validates_attachment_content_type :video, :content_type => ["video.mov", "video/mp4"]
+  validates_attachment_content_type :video, :content_type => ["video/mp4"]
   
   after_create :create_images
   def create_images

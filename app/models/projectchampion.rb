@@ -1,0 +1,2 @@
+class Projectchampion < ApplicationRecord
+end

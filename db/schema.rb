@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_121411) do
+ActiveRecord::Schema.define(version: 2018_11_12_104716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 2018_10_31_121411) do
     t.integer "no_of_participants"
     t.integer "status", default: 0
     t.date "pledge_deadline"
+    t.integer "projectchampionstatus", default: 0
+    t.integer "projectchampionminimumamount"
+    t.text "projectchampiontext"
+    t.string "projectchampionvideo_file_name"
+    t.string "projectchampionvideo_content_type"
+    t.integer "projectchampionvideo_file_size"
+    t.datetime "projectchampionvideo_updated_at"
     t.bigint "category_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -52,10 +59,11 @@ ActiveRecord::Schema.define(version: 2018_10_31_121411) do
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
-    t.bigint "milestone_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["milestone_id"], name: "index_images_on_milestone_id"
+    t.index ["owner_type", "owner_id"], name: "index_images_on_owner_type_and_owner_id"
   end
 
   create_table "milestones", force: :cascade do |t|
@@ -72,6 +80,17 @@ ActiveRecord::Schema.define(version: 2018_10_31_121411) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campaign_id"], name: "index_milestones_on_campaign_id"
+  end
+
+  create_table "projectchampions", force: :cascade do |t|
+    t.integer "projectchampiontotalamount"
+    t.integer "projectchampionpaidamount"
+    t.bigint "campaign_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_projectchampions_on_campaign_id"
+    t.index ["user_id"], name: "index_projectchampions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,6 +118,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_121411) do
   add_foreign_key "campaigns", "categories"
   add_foreign_key "campaigns", "users"
   add_foreign_key "categories", "users"
-  add_foreign_key "images", "milestones"
   add_foreign_key "milestones", "campaigns"
+  add_foreign_key "projectchampions", "campaigns"
+  add_foreign_key "projectchampions", "users"
 end

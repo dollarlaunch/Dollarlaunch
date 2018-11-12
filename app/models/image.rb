@@ -1,5 +1,5 @@
 class Image < ApplicationRecord
   has_attached_file :image
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-  belongs_to :milestone
+  belongs_to :owner, polymorphic: true
 end

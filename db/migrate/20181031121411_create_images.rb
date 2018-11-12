@@ -3,7 +3,7 @@ class CreateImages < ActiveRecord::Migration[5.2]
     create_table :images do |t|
       t.attachment :image
       
-      t.references :milestone, foreign_key: true
+      t.references :owner, polymorphic: true
       t.timestamps
     end
   end

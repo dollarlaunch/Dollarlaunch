@@ -3,11 +3,24 @@
     <h3 class="text-center mb-3">Project Form</h3>
     <hr>
     <%= simple_form_for @campaign do |f| %>
+      <% if @campaign.errors.any? %>
+      <ul>
+        <% @campaign.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+      <% end %>
       <div class="tab">
         <div class="form-group row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <h5>Title</h5>
             <%= f.input :title, required: true, placeholder: 'Title of your Project', label: false, input_html: { class: 'form control' } %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <h5>Project Image</h5>
+            <%= f.input :image, as: :file, label: false  %>
           </div>
           <div class="col-md-6">
             <h5>Select Category</h5>
@@ -15,23 +28,27 @@
           </div>
         </div>
         <div class="form-group row">
+          <div class="col-md-12">
+            <h5>Blurb</h5>
+            <%= f.input :blurb, required: true, placeholder: 'Write Something about the Project', label: false, input_html: { class: 'form control' } %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <h5>Description</h5>
+            <%= f.input :description, required: true, placeholder: 'Description of your Project', label: false, input_html: { class: 'form control' } %>
+          </div>
+        </div>
+      </div>
+      <div class="tab">
+        <div class="form-group row">
           <div class="col-md-6">
             <h5>Project Duration</h5>
             <%= f.input :duration, placeholder: 'Duration of your Project in Days/Months', required: true, as: :integer, label: false, input_html: { min: 0, class: 'form control' } %>
           </div>
           <div class="col-md-6">
-            <h5>Project Image</h5>
-            <%= f.input :image, as: :file, label: false  %>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-6">
             <h5>Project Goal</h5>
              <%= f.input :goal, placeholder: 'Goal of your Project in Numbers', required: true, as: :integer, label: false, input_html: { min: 0, class: 'form control' } %>
-          </div>
-          <div class="col-md-6">
-            <h5>Pledge Amount</h5>
-            <%= f.input :pledge_amount, placeholder: 'Pledge Amount of your Project in Numbers', required: true, as: :integer, label: false, input_html: { min: 0, class: 'form control' } %>
           </div>
         </div>
         <div class="form-group row">
@@ -40,14 +57,14 @@
             <%= f.input :no_of_participants, placeholder: 'Total No of Participants Involved', required: true, as: :integer, label: false, input_html: { min: 0, class: 'form control' } %>
           </div>
           <div class="col-md-6">
-            <h5>Pledge Deadline</h5>
-            <%= f.input :pledge_deadline, placeholder: 'Pledge Deadline of your Project in Numbers', required: true, as: :date, label: false, input_html: { min: 0, class: 'form control form-control-lg' } %>
+            <h5>Pledge Amount</h5>
+            <%= f.input :pledge_amount, placeholder: 'Pledge Amount of your Project in Numbers', required: true, as: :integer, label: false, input_html: { min: 0, class: 'form control' } %>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-md-6">
-            <h5>Description</h5>
-            <%= f.input :blurb, required: true, placeholder: 'Description of the Project', label: false, input_html: { class: 'form control' } %>
+            <h5>Pledge Deadline</h5>
+            <%= f.input :pledge_deadline, placeholder: 'Pledge Deadline of your Project in Numbers', required: true, as: :date, label: false, input_html: { min: 0, class: 'form control form-control-lg' } %>
           </div>
           <div class="col-md-6">
             <h5>Project Location</h5>
@@ -58,6 +75,7 @@
       </div>
       <div class="tab">
         <center><h3>Milestones</h3></center>
+        <center><span class="text-muted">Milestones are not Mandatory! If you want to skip the Milestones, then click on the Next button to process further !</span></center>
         <div id="milestones">
           <%= f.simple_fields_for :milestones, :html => { :multipart => true } do |milestone| %>
             <%= render 'milestone_fields', :f => milestone %>
@@ -67,6 +85,33 @@
           </div>
         </div>
         <br>
+      </div>
+      <div class="tab">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <h5>For Project Champion, You have to select one of the Options.</h5>
+            <%= f.input :projectchampionstatus, as: :radio_buttons, collection: Campaign.projectchampionstatuses.keys, input_html: { :onclick => "show()", class: 'form control' } %>
+          </div>
+        </div>
+        <div id="projectchampionform" class="hideprojectchampionform">
+          <div class="form-group row">
+            <div class="col-md-12">
+              <hr>
+              <h5>Project Champion Minimum Amount</h5>
+              <%= f.input :projectchampionminimumamount, placeholder: 'e.g: $1000', label: false, input_html: { class: 'form control' } %>
+              <h5>Project Champion Text</h5>
+              <%= f.input :projectchampiontext, placeholder: 'Text for the Project Champion', label: false, input_html: { class: 'form control' } %>
+            </div>
+            <div class="col-md-6">
+              <h5>Project Champion Images</h5> 
+              <%= f.input :projectchampionimages_array, as: :file, :input_html => { :multiple => true }, label: false %>
+            </div>
+            <div class="col-md-6">
+              <h5>Project Champion Video</h5> 
+              <%= f.input :projectchampionvideo, as: :file, label: false %>
+            </div>
+          </div>
+        </div>
         <div style="float:right" class="form-group row">
           <%= f.submit class:'btn btn-outline-primary btn-lg my-2 my-sm-0' %>
         </div>
@@ -78,12 +123,27 @@
       <div style="text-align:center;margin-top:40px;">
         <span class="step"></span>
         <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
       </div>
     <% end %>
   </div>
 </div>
 
 <script>
+
+   function show(){
+    var radios = document.getElementsByName('campaign[projectchampionstatus]');
+    radios[1].onclick = function(){
+        document.getElementById('campaign_projectchampiontext').value = "";
+        document.getElementById('campaign_projectchampionimages_array').value = "";
+        document.getElementById('campaign_projectchampionvideo').value = "";
+        document.getElementById('projectchampionform').style.display = 'none';
+      } 
+    radios[2].onclick = function(){
+        document.getElementById('projectchampionform').style.display = 'block';
+      }
+    }
 
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
@@ -95,9 +155,15 @@
     // ... and fix the Previous/Next buttons:
     if (n == 0) {
       document.getElementById("prevBtn").style.display = "none";
+      document.getElementById("nextBtn").style.display = "inline";
     } else {
       document.getElementById("prevBtn").style.display = "inline";
     }
+    
+    if (n > 0 && n < (x.length - 1)) {
+      document.getElementById("nextBtn").style.display = "inline";
+    }
+    
     if (n == (x.length - 1)) {
       document.getElementById("nextBtn").style.display = "none";
     } else {

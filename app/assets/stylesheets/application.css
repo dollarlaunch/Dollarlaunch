@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require dataTables/jquery.dataTables
  *= require_self
  */
 
@@ -106,7 +107,7 @@ textarea.invalid {
   }
     
   }
-a#nav-profile-tab, a#nav-profile-tab1, a#nav-profile-tab2, a#nav-home-tab {
+a #nav-campaign-tab, a #nav-milestone-tab, a #nav-champion-tab {
     color: #000;
   }
 .nav-text {
@@ -140,4 +141,8 @@ a#nav-profile-tab, a#nav-profile-tab1, a#nav-profile-tab2, a#nav-home-tab {
 }
 .carousel-control-prev, .carousel-control-next {
   background: #00000069;
+}
+
+.hideprojectchampionform {
+  display: none;
 }

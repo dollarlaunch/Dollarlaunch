@@ -9,7 +9,6 @@ gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -53,3 +52,4 @@ gem "cocoon"
 gem 'cancancan'
 gem "paperclip", "~> 6.0.0"
 gem "figaro"
+gem 'jquery-datatables-rails', '~> 3.4.0'
