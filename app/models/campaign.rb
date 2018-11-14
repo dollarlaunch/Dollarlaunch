@@ -15,6 +15,7 @@ class Campaign < ApplicationRecord
   # Project Champion Images
   attr_accessor :projectchampionimages_array
   has_many :images, dependent: :destroy, as: :owner
+  has_many :projectchampions, dependent: :destroy
   
   after_create :create_images
   def create_images

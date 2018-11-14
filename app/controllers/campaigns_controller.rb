@@ -14,6 +14,7 @@ class CampaignsController < ApplicationController
   
   def show
     @projectchampion = Projectchampion.new
+    @projectchampionsexist = @campaign.projectchampions
   end
   
   def new

@@ -15,5 +15,5 @@
 //= require cocoon
 //= require activestorage
 //= require dataTables/jquery.dataTables
+//= require social-share-button
 //= require_tree .
-

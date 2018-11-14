@@ -3,6 +3,7 @@ class CreateProjectchampions < ActiveRecord::Migration[5.2]
     create_table :projectchampions do |t|
       t.integer :projectchampiontotalamount
       t.integer :projectchampionpaidamount
+      t.boolean :paymentstatus, default: false
       
       t.references :campaign, foreign_key: true
       t.references :user, foreign_key: true

@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2018_11_12_104716) do
   create_table "projectchampions", force: :cascade do |t|
     t.integer "projectchampiontotalamount"
     t.integer "projectchampionpaidamount"
+    t.boolean "paymentstatus", default: false
     t.bigint "campaign_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

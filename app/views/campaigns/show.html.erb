@@ -71,6 +71,7 @@
       </div>
     </div>
 		<div class="tab-pane fade" id="nav-milestone" role="tabpanel" aria-labelledby="nav-milestone-tab">
+		  <%= @anchor %>
       <% @campaign.milestones.each_with_index do |milestone, index| %>
         <div class="card bg-light text-dark mt-3 mb-3">
           <div class="card-body">
@@ -124,9 +125,25 @@
             You, have to make a request to the Project Owner to Activate the <span class="badge badge-primary">Project Champion Feature</span>
           <% end %>
           <% if @campaign.projectchampionstatus == 'Activate' %>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-              Become a Project Champion
-            </button>
+            <% if @campaign.user.id != current_user.id %>
+              <% if !@projectchampionsexist.present? %>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                  Become a Project Champion
+                </button>
+              <% else %>  
+                <%= @projectchampionsexist.each do |projectchampion| %>
+                  <% if projectchampion.user.id == current_user.id && projectchampion.paymentstatus == true %>
+                    <span>Congratulations, You are a Project Champion of this Campaign.</span><br>
+                    <span class="text-muted">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></span>
+                    <%= social_share_button_tag(@campaign.title, :url => campaign_url(@campaign), desc: @campaign.blurb) %>
+                  <% else %>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                      Become a Project Champion
+                    </button>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -140,16 +157,16 @@
                     <%= simple_form_for @projectchampion do |f| %>
                       <h6>Total Amount you'll bring</h6>
                       <small>Project Champion Minimum Amount is: $<%= @campaign.projectchampionminimumamount %></small>
-                      <%= f.input :projectchampiontotalamount, required: true, placeholder: 'e.g: $1000', label: false, input_html: { class: 'form control form-control-sm min-value' }  %>
-                      
+                      <%= f.input :projectchampiontotalamount, required: true, label: false, input_html: { class: 'form control form-control-sm min-value' }  %>
                       <h6>Amount to be paid by you</h6>
-                      <%= f.input :projectchampionpaidamount, required: true, placeholder: 'e.g: $300', label: false, input_html: { class: 'form control form-control-sm', min: 0 }  %>
-                      <span class="text-muted">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></span>
+                      <%= f.input :projectchampionpaidamount, required: true, label: false, input_html: { class: 'form control form-control-sm paid-by-you', min: 0 }  %>
+                      <%= f.hidden_field :campaign_id, value: @campaign.id %>
+                      <%= f.hidden_field :user_id, value: current_user.id %>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <%= f.submit class:'btn btn-primary', value:'Proceed' %>
+                      </div>
                     <% end %>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Proceed</button>
                   </div>
                 </div>
               </div>
@@ -197,12 +214,29 @@
     <% @campaign.milestones.each do |milestone| %>
       $(".mil-dec<%=milestone.id%>").hide();
         $(".mil-next<%=milestone.id%>").click(function(){
-            $(".mil-dec<%=milestone.id%>").slideToggle("500");
-            $("i", this).toggleClass("fas fa-plus-square fas fa-minus-square");
+          $(".mil-dec<%=milestone.id%>").slideToggle("500");
+          $("i", this).toggleClass("fas fa-plus-square fas fa-minus-square");
         })
     <%end%>
   });
-  
   var minval = <%= @campaign.projectchampionminimumamount %>;
-  $('.min-value').attr('min',minval)
+  $('.min-value').attr('min',minval);
+  $('.min-value').focusout(function(){
+    var totalval = $('.min-value').val();
+    $('.paid-by-you').attr('max',totalval);
+  });
+  
+  var anchor_value;
+  var stripped_url = document.location.toString().split("#");
+  if (stripped_url.length > 1){
+    anchor_value = stripped_url[1];
+    $('#' + anchor_value).addClass('active');
+    $('#' + anchor_value).addClass('show');
+    $('#nav-champion').addClass('active');
+    $('#nav-champion').addClass('show');
+    $('#nav-campaign').removeClass('active');
+    $('#nav-campaign').removeClass('show');
+    $('#nav-campaign-tab').removeClass('active');
+    $('#nav-campaign-tab').removeClass('show');
+  }
 </script>
