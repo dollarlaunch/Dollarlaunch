@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(version: 2018_11_12_104716) do
     t.string "avatar_content_type", default: ""
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string "referalcode", default: ""
+    t.string "referby", default: ""
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

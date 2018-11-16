@@ -131,7 +131,7 @@
                   Become a Project Champion
                 </button>
               <% else %>  
-                <%= @projectchampionsexist.each do |projectchampion| %>
+                <% @projectchampionsexist.each do |projectchampion| %>
                   <% if projectchampion.user.id == current_user.id && projectchampion.paymentstatus == true %>
                     <span>Congratulations, You are a Project Champion of this Campaign.</span><br>
                     <span class="text-muted">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></span>

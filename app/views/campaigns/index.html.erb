@@ -8,8 +8,10 @@
     <thead>
       <tr>
         <th>Project Title</th>
-        <th>Status</th>
-        <th>Username</th>
+        <% if current_user.admin == true%>
+          <th>Status</th>
+          <th>Username</th>
+        <% end %>
         <th>Show</th>
         <th>Edit</th>
         <th>Delete</th>
