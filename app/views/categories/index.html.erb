@@ -5,8 +5,12 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <% if can? :edit, Category %>
+          <th>Edit</th>
+        <% end %>
+        <% if can? :delete, Category %>
+          <th>Delete</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>

@@ -130,11 +130,37 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                   Become a Project Champion
                 </button>
+                <div id="demo" class="carousel slide mb-3 mt-3" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <% @campaign.images.each_with_index  do |image, index| %>
+                      <div class="carousel-item <%= "active" if index == 0 %>">
+                        <%= image_tag(image.image.url) %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+                </div>
+                <%= video_tag((@campaign.projectchampionvideo.url), controls: '', width:"100%") %>
               <% else %>  
                 <% @projectchampionsexist.each do |projectchampion| %>
                   <% if projectchampion.user.id == current_user.id && projectchampion.paymentstatus == true %>
                     <span>Congratulations, You are a Project Champion of this Campaign.</span><br>
-                    <span class="text-muted">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></span>
+                    <% @users = User.all %>
+                    <% i = 0 %>
+                    <% @users.each do |user| %>
+                      <% if current_user.referalcode == user.referby %>
+                        <% i = i + 1 %>
+                      <% end %>
+                    <% end %>
+                    <small>Remaining Amount Needed to Complete the Pledge: </small><strong class="badge badge-primary">$<%= projectchampion.projectchampiontotalamount - projectchampion. projectchampionpaidamount%></strong><br>
+                    <small>Total Users You Invited </small><strong class="badge badge-primary"><%= i %></strong>
+                    <hr>
+                    <p class="text-muted mb-0">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></p>
                     <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
                     <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
                   <% else %>
@@ -172,27 +198,11 @@
                 </div>
               </div>
             </div>
-            <div id="demo" class="carousel slide mb-3 mt-3" data-ride="carousel">
-              <div class="carousel-inner">
-                <% @campaign.images.each_with_index  do |image, index| %>
-                  <div class="carousel-item <%= "active" if index == 0 %>">
-                    <%= image_tag(image.image.url) %>
-                  </div>
-                <% end %>
-              </div>
-              <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-              </a>
-              <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-              </a>
-            </div>
-            <%= video_tag((@campaign.projectchampionvideo.url), controls: '', width:"100%") %>
           <% end %>
         </div>
         <div class="col-md-4">
           <div class="cmpgn-right pb-0">
-            <p>Project Champion Feature is: <small class="badge badge-danger"><%= @campaign.projectchampionstatus %></small></p>
+            <p>Project Champion Feature is: <small class="badge badge-info"><%= @campaign.projectchampionstatus %></small></p>
           </div>
         </div>
       </div>

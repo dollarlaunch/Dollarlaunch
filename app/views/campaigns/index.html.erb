@@ -30,9 +30,9 @@
             </td>
             <td><%= campaign.user.username %></td>
           <% end %>
-          <td><%= link_to '<i class="fas fa-eye"></i>'.html_safe, campaign_path(campaign) %></td>
-          <td><%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_campaign_path(campaign) %></td>
-          <td><%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, campaign_path(campaign), method: :delete, data: { confirm: 'Are You Sure?' } %></td>
+          <td><center><%= link_to '<i class="fas fa-eye"></i>'.html_safe, campaign_path(campaign) %></center></td>
+          <td><center><%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_campaign_path(campaign) %></center></td>
+          <td><center><%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, campaign_path(campaign), method: :delete, data: { confirm: 'Are You Sure?' } %></center></td>
         </tr>
       <% end %>
     </tbody>
