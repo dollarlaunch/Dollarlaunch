@@ -11,6 +11,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.attachment :avatar,                      default: ""
       t.string :referalcode, null: true, default: ""
       t.string :referby, null: true, default: ""
+      
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at

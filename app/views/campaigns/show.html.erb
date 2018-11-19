@@ -135,7 +135,8 @@
                   <% if projectchampion.user.id == current_user.id && projectchampion.paymentstatus == true %>
                     <span>Congratulations, You are a Project Champion of this Campaign.</span><br>
                     <span class="text-muted">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></span>
-                    <%= social_share_button_tag(@campaign.title, :url => campaign_url(@campaign), desc: @campaign.blurb) %>
+                    <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
+                    <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
                   <% else %>
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                       Become a Project Champion

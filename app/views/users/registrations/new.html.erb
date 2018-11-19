@@ -5,6 +5,13 @@
         <h2 class="text-center mb-3">Sign Up</h2>
         <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= f.error_notification %>
+          <% if @user.errors.any? %>
+            <ul>
+              <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          <% end %>
           <div class="form-inputs">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -30,6 +37,16 @@
               </div>
               <input type="password" class="form-control login-bg" placeholder="Re-Enter Your Password" name="user[password_confirmation]">
             </div>
+            <input type="hidden" class="form-control login-bg" name="user[referalcode]">
+            <% if session[:referalcode].present? %>
+              Note: <small class="text-muted">Enter your referal code if you have been invited by someone</small>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text login-icn"><i class="fas fa-code"></i></span>
+                </div>
+                  <input type="text" class="form-control login-bg" placeholder="Enter your Invited Referal Code" name="user[referby]" value="<%= session[:referalcode] %>" >
+              </div>
+            <% end %>
           </div>
           <div class="form-actions">
             <%= f.button :submit, "Sign up", class:'btn btn-primary btn-block btn-md' %>
