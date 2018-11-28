@@ -1,14 +1,19 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="col-sm-9 col-md-7 col-lg-12 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Edit <%= resource_name.to_s.humanize %></h5>
           <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
             <%= f.error_notification %>
             <div class="form-inputs">
+              <h5>Project Image</h5>
+              <%= f.input :avatar, as: :file, label: false  %>
               <%= f.input :username, required: true, autofocus: true, input_html: { class: 'form control form-control-sm'  } %>
               <%= f.input :email, required: true, autofocus: true, input_html: { class: 'form control form-control-sm'  } %>
+              <%= f.input :biography, autofocus: true, input_html: { class: 'form control form-control-sm'  }  %>
+              <%= f.input :websites, autofocus: true, input_html: { class: 'form control form-control-sm'  } %>
+              <%= f.input :contact, autofocus: true, input_html: { class: 'form control form-control-sm'  } %>
               <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                 <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
               <% end %>

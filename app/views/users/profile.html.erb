@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-signin mt-5">
+        <div class="card-body">
+          <h2 class="text-center mb-3">Profile</h2>
+          <% if @user.avatar.present? %>
+            Profile Image: <%= image_tag(@user.avatar.url, class:"user-dmy" )%>
+          <% else %>
+            No Profile Image: <img src="/user.png" class="user-dmy">
+          <% end %>
+          <p>Name: <%= @user.username %></p>
+          <p>Email: <%= @user.email %></p>
+          <% if @user.biography.present? %>
+            <p>Biography: <%= @user.biography %></p>
+          <% else %>
+            <p class="text-muted">Biography: Nill</p>
+          <% end %>
+          <% if @user.websites.present? %>
+            <p>Websites: <%= @user.websites %></p>
+          <% else %>
+            <p class="text-muted">Websites: Nill</p>
+          <% end %>
+          <% if @user.contact.present? %>
+            <p>Contact: <%= @user.contact %></p>
+          <% else %>
+            <p class="text-muted">Contact: Nill</p>
+          <% end %>
+          <%= link_to "Update Profile", edit_user_registration_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

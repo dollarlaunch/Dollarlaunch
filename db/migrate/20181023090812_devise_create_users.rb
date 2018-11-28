@@ -7,10 +7,15 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :username,           null: false, default: ""
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      
+      ## Additional Fields
       t.boolean :admin,             null: false, default: false
-      t.attachment :avatar,                      default: ""
-      t.string :referalcode, null: true, default: ""
-      t.string :referby, null: true, default: ""
+      t.attachment :avatar                      
+      t.string :referalcode,        null: true, default: ""
+      t.string :referby,            null: true, default: ""
+      t.text :biography,            null: true, default: ""
+      t.text :websites,             null: true, default: ""
+      t.text :contact,              null: true, default: ""
       
       ## Recoverable
       t.string   :reset_password_token

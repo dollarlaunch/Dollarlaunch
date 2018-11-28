@@ -5,13 +5,25 @@ class User < ApplicationRecord
   
   has_many :categories
   has_many :campaigns, dependent: :destroy
+  has_attached_file :avatar
+  validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   
   after_create :createreferalcode
   
-  def createreferalcode
-    @username = self.username
-    @username = SecureRandom.urlsafe_base64(8)
-    self.update(referalcode: @username) 
+  def after_confirmation
+    welcome_email
   end
+  
+  private 
+  
+    def welcome_email
+      UsermailerMailer.welcome_email(self).deliver
+    end
+    
+    def createreferalcode
+      @username = self.username
+      @username = SecureRandom.urlsafe_base64(8)
+      self.update(referalcode: @username) 
+    end
   
 end

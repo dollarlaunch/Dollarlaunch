@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-signin mt-5">
+        <div class="card-body">
+          <h2 class="text-center mb-3">Campaign Settings</h2>
+          <% @campaigns.each do |campaign| %>
+            <div class="border border-dark p-2 m-1">
+              <p>Campaign Title: <small><%= campaign.title %></small></p>
+              <p>Campaign Description: <small><%= campaign.blurb %></small></p>
+              <p>Campaign Status: <small class="badge badge-info"><%= campaign.status %></small></p>
+              <%= link_to "Go to Campaign", campaign_path(campaign) %>
+            </div>
+          <% end %>
+          <hr>
+          <p><center><%= link_to "Show All My Campaigns", campaigns_path %></center></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-signin mt-5">
+        <div class="card-body">
+          <h2 class="text-center mb-3">Profile Settings</h2>
+          <div class="border border-dark p-2 m-1">
+            <p>Name: <small><%= current_user.username %></small></p>
+            <p>Email: <small><%= current_user.email %></small></p>
+            <%= link_to "Go to your Profile", profile_path(current_user.id) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

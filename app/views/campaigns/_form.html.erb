@@ -90,7 +90,7 @@
         <div class="form-group row">
           <div class="col-md-12">
             <h5>For Project Champion, You have to select one of the Options.</h5>
-            <%= f.input :projectchampionstatus, as: :radio_buttons, collection: Campaign.projectchampionstatuses.keys, input_html: { :onclick => "show()", class: 'form control' } %>
+            <%= f.input :projectchampionstatus, as: :radio_buttons, collection: Campaign.projectchampionstatuses.keys, input_html: { class: 'form control' } %>
           </div>
         </div>
         <div id="projectchampionform" class="hideprojectchampionform">
@@ -191,6 +191,7 @@
     }
     // Otherwise, display the correct tab:
     showTab(currentTab);
+    show();
   }
   
   function validateForm() {

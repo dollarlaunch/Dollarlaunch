@@ -99,12 +99,15 @@ ActiveRecord::Schema.define(version: 2018_11_12_104716) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.boolean "admin", default: false, null: false
-    t.string "avatar_file_name", default: ""
-    t.string "avatar_content_type", default: ""
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string "referalcode", default: ""
     t.string "referby", default: ""
+    t.text "biography", default: ""
+    t.text "websites", default: ""
+    t.text "contact", default: ""
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

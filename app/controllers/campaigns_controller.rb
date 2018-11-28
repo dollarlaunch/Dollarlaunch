@@ -56,6 +56,7 @@ class CampaignsController < ApplicationController
     def campaign_params
       params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :category_id, :user_id, projectchampionimages_array:[], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
     end
+    
     def authenticate_me
       if params[:referalcode].present?
         session[:referalcode] = params[:referalcode]
