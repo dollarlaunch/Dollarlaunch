@@ -7,8 +7,9 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
-      
+      cannot :new, Campaign
     else
+      can :new, Campaign
       can :update, Campaign do |campaign|
         campaign.user == user
       end

@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   put '/admin/campaign/:id/changed' => 'admins#change_campaign_status', :as => 'change_campaign_status'
   get '/user/:id/dashboard', to: 'users#dashboard', :as => 'dashboard'
   get '/user/:id/profile', to: 'users#profile', :as => 'profile'
+  post '/hook' => 'projectchampions#hook'
 end

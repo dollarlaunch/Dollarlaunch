@@ -2,7 +2,7 @@ class CampaignsController < ApplicationController
   
   before_action :authenticate_me
   before_action :set_campaign_params, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource only: [:edit, :destroy]
+  load_and_authorize_resource only: [:edit, :destroy, :new]
   
   def index
     if current_user.admin == true
@@ -63,4 +63,5 @@ class CampaignsController < ApplicationController
       end
       authenticate_user!
     end
+    
 end

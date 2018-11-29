@@ -7,8 +7,8 @@
           <% @campaigns.each do |campaign| %>
             <div class="border border-dark p-2 m-1">
               <p>Campaign Title: <small><%= campaign.title %></small></p>
-              <p>Campaign Description: <small><%= campaign.blurb %></small></p>
-              <p>Campaign Status: <small class="badge badge-info"><%= campaign.status %></small></p>
+              <p>About Campaign: <small><%= campaign.blurb %></small></p>
+              <p>Campaign Status: <small class="border badge badge-light"><%= campaign.status %></small></p>
               <%= link_to "Go to Campaign", campaign_path(campaign) %>
             </div>
           <% end %>

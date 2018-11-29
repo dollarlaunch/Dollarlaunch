@@ -1,6 +1,7 @@
 class ProjectchampionsController < ApplicationController
   
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:hook]
+  protect_from_forgery except: [:hook]
   # before_action :set_projectchampion_params, except: [:index]
   
   def index
@@ -13,10 +14,21 @@ class ProjectchampionsController < ApplicationController
   def create
     @projectchampion = Projectchampion.new(projectchampion_params)
     if @projectchampion.save
-      redirect_to campaign_path(@projectchampion.campaign_id, anchor: 'nav-champion-tab')
+      redirect_to @projectchampion.paypal_url(campaign_path(@projectchampion.campaign_id, anchor: 'nav-champion-tab'))
+      # redirect_to campaign_path(@projectchampion.campaign_id, anchor: 'nav-champion-tab')
     else
       render 'new'
     end
+  end
+  
+  def hook
+    params.permit! # Permit all Paypal input params
+    status = params[:payment_status]
+    if status == "Completed"
+      @projectchampion = Projectchampion.find(params[:item_number])
+      @projectchampion.update_attributes(paymentstatus: true)
+    end
+    head :ok
   end
   
   private
