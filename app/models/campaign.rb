@@ -21,6 +21,9 @@ class Campaign < ApplicationRecord
   attr_accessor :projectchampionimages_array
   has_many :images, dependent: :destroy, as: :owner
   
+  # Backer Scenario
+  has_many :backers, dependent: :destroy
+  
   # Callbacks for the Images Creation and Updation
   after_create :create_images
   after_update :update_images

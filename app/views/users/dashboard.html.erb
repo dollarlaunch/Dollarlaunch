@@ -4,16 +4,29 @@
       <div class="card card-signin mt-5">
         <div class="card-body">
           <h2 class="text-center mb-3">Campaign Settings</h2>
-          <% @campaigns.each do |campaign| %>
-            <div class="border border-dark p-2 m-1">
-              <p>Campaign Title: <small><%= campaign.title %></small></p>
-              <p>About Campaign: <small><%= campaign.blurb %></small></p>
-              <p>Campaign Status: <small class="border badge badge-light"><%= campaign.status %></small></p>
-              <%= link_to "Go to Campaign", campaign_path(campaign) %>
-            </div>
+          <% if current_user.admin != true %>
+            <% @campaigns.each do |campaign| %>
+              <div class="border border-dark p-2 m-1">
+                <p>Campaign Title: <small><%= campaign.title %></small></p>
+                <p>About Campaign: <small><%= campaign.blurb %></small></p>
+                <p>Campaign Status: <small class="border badge badge-light"><%= campaign.status %></small></p>
+                <%= link_to "Go to Campaign", campaign_path(campaign) %>
+              </div>
+            <% end %>
+            <hr>
+            <p><center><%= link_to "Show All My Campaigns", campaigns_path %></center></p>
+          <% else %>
+            <% @campaigns.each do |campaign| %>
+              <div class="border border-dark p-2 m-1">
+                <p>Campaign Title: <small><%= campaign.title %></small></p>
+                <p>About Campaign: <small><%= campaign.blurb %></small></p>
+                <p>Campaign Status: <small class="border badge badge-light"><%= campaign.status %></small></p>
+                <%= link_to "Go to Campaign", campaign_path(campaign) %>
+              </div>
+            <% end %>
+            <hr>
+            <p><center><%= link_to "Show All Campaigns", campaigns_path %></center></p>
           <% end %>
-          <hr>
-          <p><center><%= link_to "Show All My Campaigns", campaigns_path %></center></p>
         </div>
       </div>
     </div>
