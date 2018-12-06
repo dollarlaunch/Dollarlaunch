@@ -1,24 +1,16 @@
-# README
+# Dollarmark Website, Build on Ruby on Rails 5.2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Website is Based on a Funding Platform for Creating Projects, It includes all the Categories like the Music, film, art, theater, 
+games, comics, design, photography, and a lot more.
 
-Things you may want to cover:
+## Major Gems Used in this Project
 
-* Ruby version
+* Devise (For User Authentication)
+* CanCanCan (For User Authorization)
+* Simple_form
+* Paperclip
+* Paypal-SDK-Rest
 
-* System dependencies
+### License
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This Project is Copyright to the Dollarmark Community. [Dollarmark]
