@@ -39,7 +39,6 @@ class Campaign < ApplicationRecord
     end
     
     def update_images
-      images.destroy_all
       projectchampionimages_array.each do |image|
         images.create(image: image)
       end

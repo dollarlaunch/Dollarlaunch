@@ -6,6 +6,7 @@ class Milestone < ApplicationRecord
   has_many :images, dependent: :destroy, as: :owner
   has_attached_file :video
   validates_attachment_content_type :video, :content_type => ["video/mp4"]
+  enum status: { NotCompleted: 0, Completed: 1 }
   
   after_create :create_images
   after_update :update_images
@@ -19,9 +20,10 @@ class Milestone < ApplicationRecord
     end
   
     def update_images
-      images.destroy_all
-      images_array.each do |image|
-        images.create(image: image)
+      if images_array.present?
+        images_array.each do |image|
+          images.create(image: image)
+        end
       end
     end
   

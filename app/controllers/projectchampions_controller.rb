@@ -40,5 +40,4 @@ class ProjectchampionsController < ApplicationController
     def projectchampion_params
       params.require(:projectchampion).permit(:projectchampiontotalamount, :projectchampionpaidamount, :campaign_id, :user_id)
     end
-  
 end

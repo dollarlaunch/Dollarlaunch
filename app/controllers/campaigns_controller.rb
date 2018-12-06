@@ -1,8 +1,9 @@
 class CampaignsController < ApplicationController
   
+  include ActionView::Helpers::NumberHelper  
   before_action :authenticate_me
   before_action :backer_params, only: [:show]
-  before_action :set_campaign_params, only: [:show, :edit, :update, :destroy]
+  before_action :set_campaign_params, only: [:show, :edit, :update, :destroy, :pledgeamountperperson]
   load_and_authorize_resource only: [:edit, :destroy, :new]
   
   def index
@@ -18,6 +19,8 @@ class CampaignsController < ApplicationController
     @projectchampion = Projectchampion.new
     @projectchampionsexist = @campaign.projectchampions.where(user_id: current_user.id, paymentstatus: true).first
     @backerexist = @campaign.backers.where(user_id: current_user.id, paymentstatus: true).first
+    pledgeamountperperson
+    eachmilestoneamount
   end
   
   def new
@@ -67,6 +70,22 @@ class CampaignsController < ApplicationController
       authenticate_user!
     end
     
+    def pledgeamountperperson
+      @pledgeamountperpersonininteger = @campaign.pledge_amount/@campaign.no_of_participants
+      @pledgeamountperperson = number_with_precision(@pledgeamountperpersonininteger, precision: 2)
+      return @pledgeamountperperson
+    end
+    
+    def eachmilestoneamount
+      @pledgeamountperpersonininteger = @campaign.pledge_amount/@campaign.no_of_participants
+      @remainingamountininteger = @pledgeamountperpersonininteger - 1
+      @remainingamountinstring = number_with_precision(@remainingamountininteger, precision: 2)
+      @remainingamount = @remainingamountinstring.to_f
+      @eachmilestoneamountininteger = @remainingamount/@campaign.milestones.count
+      @eachmilestoneamount = number_with_precision(@eachmilestoneamountininteger, precision: 2)
+      return @remainingamount, @eachmilestoneamount
+    end
+  
     def backer_params
       @campaign = Campaign.find(params[:id])
       if @campaign.backers.present?

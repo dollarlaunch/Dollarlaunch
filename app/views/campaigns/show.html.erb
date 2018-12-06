@@ -4,6 +4,8 @@
       <div class="compgn-user-bg">
         <% if @campaign.user.avatar.present? %>
           <center><%= image_tag(@campaign.user.avatar.url, class:'user-dmy') %></center>
+        <% else %>
+          <center><img src="/user.png" class="user-dmy"></center>
         <% end %>
         <p class="mt-2 mb-0 text-center">By <%=  @campaign.user.username %></p>
         <center><small><%= time_ago_in_words(@campaign.created_at) %> ago</small></center>
@@ -26,8 +28,6 @@
         <small class="text-muted">$<%= @campaign.pledge_amount %></small>
         <hr>
         <p class="mb-0 mt-2">Pledge Amount Per Person</p>
-        <% @pledgeamountperpersonininteger = @campaign.pledge_amount/@campaign.no_of_participants %>
-        <% @pledgeamountperperson = number_with_precision(@pledgeamountperpersonininteger, precision: 2) %>
         <small class="text-muted">$<%= @pledgeamountperperson %></small>
         <hr>
         <p class="mb-0">No of Participants</p>
@@ -79,11 +79,7 @@
                   <p>Title: <small class="text-muted"><%= @campaign.title %></small></p>
                   <p>Description: <small class="text-muted"><%= @campaign.blurb %></small></p>
                   <p>Total Milestones: <small class="text-muted border p-1"><%= @campaign.milestones.count %></small></p>
-                  <% @remainingamount = @pledgeamountperpersonininteger - 1 %>
-                  <% @remainingamountinfloat = number_with_precision(@remainingamount, precision: 2) %>
-                  <p>Total Remaining Amount: <small class="text-muted border p-1">$<%= @remainingamountinfloat %> will be deduct during the milestones completion</small></p>
-                  <% @eachmilestoneamountininteger = @remainingamount/@campaign.milestones.count %>
-                  <% @eachmilestoneamount = number_with_precision(@eachmilestoneamountininteger, precision: 2) %>
+                  <p>Total Remaining Amount: <small class="text-muted border p-1">$<%= @remainingamount %> will be deduct during the milestones completion</small></p>
                   <p>After each Milestone: <small class="text-muted border p-1">$<%= @eachmilestoneamount %> will be deduct</small></p>
                 </div>
               </div>
@@ -144,11 +140,13 @@
     </div>
 		<div class="tab-pane fade" id="nav-milestone" role="tabpanel" aria-labelledby="nav-milestone-tab">
 		  <%= @anchor %>
+		  <center>Milestones List</center>
+		  <hr>
       <% @campaign.milestones.each_with_index do |milestone, index| %>
         <div class="card bg-light text-dark mt-3 mb-3">
           <div class="card-body">
             <h5 class="mb-0">
-              Milestone <%= index + 1 %>
+              <%= milestone.title %>
             <i class="fas fa-plus-square new-iplus mil-next<%= milestone.id %>"></i>
             </h5>
             <div class="mil-dec<%= milestone.id %>">
@@ -182,6 +180,16 @@
                       <hr>
                       <p class="mb-0">Milestone Budget</p>
                       <small class="text-muted"><%= milestone.budget %></small>
+                      <hr>
+                      <% if milestone.status == "Completed" %>
+                        <p class="mb-0">Status: <span class="border border-success p-1">Completed</span></p>
+                      <% else %>
+                        <p class="mb-0">Status: <span class="border border-danger p-1">Not Completed</span></p>
+                        <% if @campaign.user.id == current_user.id %>
+                          <hr>
+                          <center><span class="border p-1"><%= link_to 'Mark As Completed', change_milestone_status_path(:milestone => milestone.id), method: :put %></span></center>
+                        <% end %>
+                      <% end %>
                     </div>
                   </div>
               </div>
