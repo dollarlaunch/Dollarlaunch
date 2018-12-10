@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_05_092552) do
+ActiveRecord::Schema.define(version: 2018_12_10_105214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,14 @@ ActiveRecord::Schema.define(version: 2018_12_05_092552) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "faqs", force: :cascade do |t|
+    t.text "description"
+    t.bigint "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_faqs_on_campaign_id"
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "image_file_name"
     t.string "image_content_type"
@@ -92,10 +100,10 @@ ActiveRecord::Schema.define(version: 2018_12_05_092552) do
     t.string "video_content_type"
     t.integer "video_file_size"
     t.datetime "video_updated_at"
+    t.integer "status", default: 0
     t.bigint "campaign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "status", default: 0
     t.index ["campaign_id"], name: "index_milestones_on_campaign_id"
   end
 
@@ -109,6 +117,14 @@ ActiveRecord::Schema.define(version: 2018_12_05_092552) do
     t.datetime "updated_at", null: false
     t.index ["campaign_id"], name: "index_projectchampions_on_campaign_id"
     t.index ["user_id"], name: "index_projectchampions_on_user_id"
+  end
+
+  create_table "riskandchallenges", force: :cascade do |t|
+    t.text "description"
+    t.bigint "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_riskandchallenges_on_campaign_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -143,7 +159,9 @@ ActiveRecord::Schema.define(version: 2018_12_05_092552) do
   add_foreign_key "campaigns", "categories"
   add_foreign_key "campaigns", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "faqs", "campaigns"
   add_foreign_key "milestones", "campaigns"
   add_foreign_key "projectchampions", "campaigns"
   add_foreign_key "projectchampions", "users"
+  add_foreign_key "riskandchallenges", "campaigns"
 end

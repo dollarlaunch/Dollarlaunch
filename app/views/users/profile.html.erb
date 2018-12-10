@@ -1,33 +1,50 @@
-<div class="container">
+<div class="container mt-3">
   <div class="row">
-    <div class="col-md-12">
-      <div class="card card-signin mt-5">
-        <div class="card-body">
-          <h2 class="text-center mb-3">Profile</h2>
-          <% if @user.avatar.present? %>
-            Profile Image: <%= image_tag(@user.avatar.url, class:"user-dmy" )%>
-          <% else %>
-            No Profile Image: <img src="/user.png" class="user-dmy">
-          <% end %>
-          <p>Name: <%= @user.username %></p>
-          <p>Email: <%= @user.email %></p>
-          <% if @user.biography.present? %>
-            <p>Biography: <%= @user.biography %></p>
-          <% else %>
-            <p class="text-muted">Biography: Nill</p>
-          <% end %>
-          <% if @user.websites.present? %>
-            <p>Websites: <%= @user.websites %></p>
-          <% else %>
-            <p class="text-muted">Websites: Nill</p>
-          <% end %>
-          <% if @user.contact.present? %>
-            <p>Contact: <%= @user.contact %></p>
-          <% else %>
-            <p class="text-muted">Contact: Nill</p>
-          <% end %>
-          <%= link_to "Update Profile", edit_user_registration_path %>
-        </div>
+    <div class="col-lg-2 mb-2">
+      <div class="profile-show">
+        <% if @user.avatar.present? %>
+          <%= image_tag(@user.avatar.url, class:"img-fluid" )%>
+        <% else %>
+          <img src="/dum-prf-1.png" class="img-fluid">
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <h2><%= @user.username %></h2>
+      <i class="fas fa-envelope-square prfl-eml-icn"></i><%= @user.email %>
+      <hr class="my-1">
+      <i class="fas fa-globe prfl-web-icn"></i>
+      <% if @user.websites.present? %>
+        <span><%= @user.websites %></span>
+      <% else %>
+        <span class="text-muted">No Websites Available</span>
+      <% end %>
+      <hr class="my-1">
+      <i class="fas fa-address-book prfl-web-icn"></i>
+      <% if @user.contact.present? %>
+        <span>Contact: <%= @user.contact %></span>
+      <% else %>
+        <span class="text-muted">No Contacts Available</span>
+      <% end %>
+      <hr class="my-1">
+      <i class="fas fa-info-circle prfl-web-icn"></i>
+      <% if @user.biography.present? %>
+        <span><%= @user.biography.truncate(50) %></span>
+      <% else %>
+        <span class="text-muted">No Biography Available</span>
+      <% end %>
+      <hr class="my-1">
+    </div>
+    <div class="col-lg-3">
+      <div class="profile-shw-membr">
+        <i class="fas fa-history text-muted"></i>
+        <small class="text-muted">Member For, <%= time_ago_in_words(@user.created_at) %></small><br>
+        <i class="fas fa-calculator text-muted"></i>
+        <small class="text-muted"> Total Campaigns:</small> <span class="badge badge-primary"><%= @user.campaigns.count %></span><br>
+        <i class="far fa-life-ring text-muted"></i>
+        <small class="text-muted"> Backed Campaigns:</small> <span class="badge badge-primary"><%= @user.backers.count %></span><br>
+        <i class="fas fa-trophy text-muted"></i>
+        <small class="text-muted"> Champions:</small> <span class="badge badge-primary"><%= @user.projectchampions.count %></span>
       </div>
     </div>
   </div>

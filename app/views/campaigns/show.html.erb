@@ -120,9 +120,22 @@
     <div class="tab-pane fade show active" id="nav-campaign" role="tabpanel" aria-labelledby="nav-campaign-tab">
       <div class="row">
         <div class="col-md-8">
-          <p>
-            <%= @campaign.description %>
-          </p>
+          <h4 class="text-muted">Description</h4>
+          <p><%= @campaign.description %></p>
+          <hr>
+          <h4 class="text-muted">Risks & Challenges</h4>
+          <ul>
+            <% @campaign.riskandchallenges.each do |risksandchallenge| %>
+              <li><%= risksandchallenge.description %></li>
+            <% end %>
+          </ul>
+          <hr>
+          <h4 class="text-muted">Frequently Asked Questions</h4>
+          <ul>
+            <% @campaign.faqs.each do |faq| %>
+              <li><%= faq.description %></li>
+            <% end %>
+          </ul>
         </div>
         <div class="col-md-4">
     			<div class="cmpgn-right">

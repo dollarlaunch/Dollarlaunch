@@ -24,6 +24,14 @@ class Campaign < ApplicationRecord
   # Backer Scenario
   has_many :backers, dependent: :destroy
   
+  # Risk and Challenge
+  has_many :riskandchallenges, dependent: :destroy
+  accepts_nested_attributes_for :riskandchallenges, reject_if: :all_blank, allow_destroy: true
+  
+  # FAQ's
+  has_many :faqs, dependent: :destroy
+  accepts_nested_attributes_for :faqs, reject_if: :all_blank, allow_destroy: true
+  
   # Callbacks for the Images Creation and Updation
   after_create :create_images
   after_update :update_images

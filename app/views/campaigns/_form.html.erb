@@ -89,6 +89,33 @@
             <br>
           </div>
           <div class="tab">
+            <div class="row">
+              <div class="col-md-6">
+                <h3>Risks & Challenges</h3>
+                <div id="risksandchallenges">
+                  <%= f.simple_fields_for :riskandchallenges, :html => { :multipart => true } do |riskandchallenge| %>
+                    <%= render 'riskandchallenge_fields', :f => riskandchallenge %>
+                  <% end %>
+                  <div class='links'>
+                    <center><%= link_to_add_association 'Add Risk & Challenge', f, :riskandchallenges, class:'btn btn-primary' %></center>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="col-md-6">
+                <h3>Frequently Asked Questions</h3>
+                <div id="faqs">
+                  <%= f.simple_fields_for :faqs, :html => { :multipart => true } do |faq| %>
+                    <%= render 'faq_fields', :f => faq %>
+                  <% end %>
+                  <div class='links'>
+                    <center><%= link_to_add_association 'Add FAQ', f, :faqs, class:'btn btn-primary' %></center>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab">
             <div class="form-group row">
               <div class="col-md-12">
                 <h5>For Project Champion, You have to select one of the Options.</h5>
@@ -127,6 +154,7 @@
             <span class="step"></span>
             <span class="step"></span>
             <span class="step"></span>
+            <span class="step"></span>
           </div>
         <% end %>
       </div>
@@ -148,7 +176,22 @@
       document.getElementById('projectchampionform').style.display = 'block';
     }
   }
-
+  
+  $(document).click(function() {
+    if($('#projectchampionform').is(':visible')){
+      $("#campaign_projectchampionminimumamount").prop('required',true);
+      $("#campaign_projectchampiontext").prop('required',true);
+      $("#campaign_projectchampionimages_array").prop('required',true);
+      $("#campaign_projectchampionvideo").prop('required',true);
+    } 
+    else {
+      $("#campaign_projectchampionminimumamount").prop('required',false);
+      $("#campaign_projectchampiontext").prop('required',false);
+      $("#campaign_projectchampionimages_array").prop('required',false);
+      $("#campaign_projectchampionvideo").prop('required',false);
+    }
+  });
+  
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
   
@@ -217,6 +260,7 @@
   });
   
   function validateForm() {
+    
     // This function deals with validation of the form fields
     var x, y, i,z, valid = true;
     x = document.getElementsByClassName("tab");
@@ -227,7 +271,13 @@
       // If a field is empty...
       if (y[i].value == "") {
         // add an "invalid" class to the field:
-        y[i].className += " invalid";
+        y[i].classList.add('invalid');
+        if($('#projectchampionform').is(':hidden')){
+          $('#campaign_projectchampionminimumamount').removeClass('invalid');
+          $('#campaign_projectchampiontext').removeClass('invalid');
+          $('#campaign_projectchampionimages_array').removeClass('invalid');
+          $('#campaign_projectchampionvideo').removeClass('invalid');
+        }
         // and set the current valid status to false:
         valid = false;
       }
@@ -237,7 +287,13 @@
       // If a area is empty...
       if (z[i].value == "") {
         // add an "invalid" class to the field:
-        z[i].className += " invalid";
+        z[i].classList.add('invalid');
+        if($('#projectchampionform').is(':hidden')){
+          $('#campaign_projectchampionminimumamount').removeClass('invalid');
+          $('#campaign_projectchampiontext').removeClass('invalid');
+          $('#campaign_projectchampionimages_array').removeClass('invalid');
+          $('#campaign_projectchampionvideo').removeClass('invalid');
+        }
         // and set the current valid status to false:
         valid = false;
       }
@@ -247,6 +303,8 @@
       document.getElementsByClassName("step")[currentTab].className += " finish";
     }
     return valid; // return the valid status
+    
+    
   }
   
   function fixStepIndicator(n) {

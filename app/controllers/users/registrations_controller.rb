@@ -50,6 +50,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :referalcode, :referby, :biography, :websites, :contact, :avatar])
   end
 
+  def after_update_path_for(resource)
+    flash[:notice] = "Account succesfully updated"
+    edit_user_registration_path
+  end
+    
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
   #   super(resource)

@@ -11,6 +11,6 @@ games, comics, design, photography, and a lot more.
 * Paperclip
 * Paypal-SDK-Rest
 
-### License
+## License
 
-This Project is Copyright to the Dollarmark Community. [Dollarmark]
+This Project is Copyright to the Dollarmark Community.
