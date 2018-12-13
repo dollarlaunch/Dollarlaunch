@@ -43,7 +43,6 @@ class BackersController < ApplicationController
     # Redirect the user to given approval url
       @redirect_url = @payment.links.find{|v| v.rel == "approval_url" }.href
       redirect_to @redirect_url
-      @backer.save
     else
       logger.error @payment.error.inspect
     end
@@ -52,7 +51,7 @@ class BackersController < ApplicationController
   private
     
     def backer_params
-      params.require(:backer).permit(:user_id, :campaign_id, :pledgeamountperperson, :eachmilestoneamount)
+      params.require(:backer).permit(:user_id, :campaign_id, :pledgeamountperperson)
     end
     
 end

@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
-
+  
   # GET /resource/sign_up
   # def new
   #   super
@@ -52,7 +52,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def after_update_path_for(resource)
     flash[:notice] = "Account succesfully updated"
-    edit_user_registration_path
   end
     
   # The path used after sign up.

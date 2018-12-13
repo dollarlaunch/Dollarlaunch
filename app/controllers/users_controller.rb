@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   end
   
   def profile
+    @campaigns = current_user.campaigns.limit(3)
   end
   
   def change_milestone_status
@@ -56,12 +57,13 @@ class UsersController < ApplicationController
         capture = @authorization.capture({
           :amount => {
             :currency => "USD",
-            :total => @eachmilestoneamount
+            :total => @milestoneamount
           },
           :is_final_capture => false
         })
         if capture.success?
           logger.info "Capture[#{capture.id}]"
+          @transaction = Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: backer.id)
         else
           logger.error capture.error.inspect
         end

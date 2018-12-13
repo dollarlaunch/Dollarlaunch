@@ -1,51 +1,198 @@
+<div class="container mt-5">
+	<nav>
+    <div class="nav nav-tabs nav-fill cmpg-tab" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link cmpgn-tb active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile</a>
+      <a class="nav-item nav-link cmpgn-tb" id="nav-follow-tab" data-toggle="tab" href="#nav-follow" role="tab" aria-controls="nav-follow" aria-selected="false"><i class="far fa-thumbs-up"></i> Followed Campaigns</a>
+      <a class="nav-item nav-link cmpgn-tb" id="nav-invoice-tab" data-toggle="tab" href="#nav-invoice" role="tab" aria-controls="nav-invoice" aria-selected="false"><i class="fas fa-money-check-alt"></i> Payment Settings</a>
+    </div>
+	</nav>
+</div>
 <div class="container mt-3">
-  <div class="row">
-    <div class="col-lg-2 mb-2">
-      <div class="profile-show">
-        <% if @user.avatar.present? %>
-          <%= image_tag(@user.avatar.url, class:"img-fluid" )%>
-        <% else %>
-          <img src="/dum-prf-1.png" class="img-fluid">
+  <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <div class="row">
+        <div class="col-lg-2 mb-2">
+          <div class="profile-show">
+            <% if @user.avatar.present? %>
+              <%= image_tag(@user.avatar.url, class:"img-fluid" )%>
+            <% else %>
+              <img src="/dum-prf-1.png" class="img-fluid">
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <h2><%= @user.username %></h2>
+          <i class="fas fa-envelope-square prfl-eml-icn"></i><%= @user.email %><br>
+          <i class="fas fa-globe prfl-web-icn"></i>
+          <% if @user.websites.present? %>
+            <span><%= @user.websites %></span><br>
+          <% else %>
+            <span class="text-muted">No Websites Available</span><br>
+          <% end %>
+          <i class="fas fa-address-book prfl-web-icn"></i>
+          <% if @user.contact.present? %>
+            <span>Contact: <%= @user.contact %></span><br>
+          <% else %>
+            <span class="text-muted">No Contacts Available</span><br>
+          <% end %>
+          <i class="fas fa-info-circle prfl-web-icn"></i>
+          <% if @user.biography.present? %>
+            <span><%= @user.biography.truncate(50) %></span><br>
+          <% else %>
+            <span class="text-muted">No Biography Available</span><br>
+          <% end %>
+        </div>
+        <div class="col-lg-3">
+          <div class="profile-shw-membr">
+            <i class="fas fa-history text-muted"></i>
+            <small class="text-muted">Member For, <%= time_ago_in_words(@user.created_at) %></small><br>
+            <i class="fas fa-calculator text-muted"></i>
+            <small class="text-muted"> Total Campaigns:</small> <span class="badge badge-primary"><%= @user.campaigns.count %></span><br>
+            <i class="far fa-life-ring text-muted"></i>
+            <small class="text-muted"> Backed Campaigns:</small> <span class="badge badge-primary"><%= @user.backers.count %></span><br>
+            <i class="fas fa-trophy text-muted"></i>
+            <small class="text-muted"> Champions:</small> <span class="badge badge-primary"><%= current_user.userprojectchampioncount %></span>
+          </div>
+          <div>
+            <%= link_to "Update Profile", edit_user_registration_path, class:"btn btn-primary mt-3 ml-5" %>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <h3>My Campaigns</h3>
+          <% if current_user.campaigns.count == 0 %>
+            <h5>You Don't have any Projects! Want to Create?</h5>
+            <%= link_to 'Start a Project', new_campaign_path, class:'btn btn-primary btn-sm' %>
+          <% else %>
+            <% @campaigns.each do |campaign| %>
+              <div class="card">
+                <div class="card-header">
+                  <%= campaign.blurb.truncate(100) %>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h5 class="card-title"><%= campaign.title %></h5>
+                      <small class="text-muted"><%= campaign.description.truncate(300) %></small><br>
+                      <%= link_to "Go to Campaign", campaign_path(campaign), class:"btn btn-primary m-2" %>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="profile-shw-membr">
+                        <i class="fas fa-history text-muted"></i><span class="text-muted"> Created <%= time_ago_in_words(campaign.created_at) %> ago</span><br>
+                        <i class="fas fa-calculator text-muted"></i> <span class="text-muted">Total Milestones:</span> <span class="badge badge-info"><%= campaign.milestones.count %></span><br>
+                        <i class="far fa-life-ring text-muted"></i> <span class="text-muted">Total Backers:</span> <span class="badge badge-info"><%= campaign.backers.count %></span><br>
+                        <i class="fas fa-signal text-muted"></i> <span class="text-muted">Status:</span> <span class="badge badge-success"><%= campaign.status %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            <% end %>
+            <p><center><%= link_to "Show All Campaigns", campaigns_path %></center></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade show" id="nav-follow" role="tabpanel" aria-labelledby="nav-follow-tab">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Campaigns I Backed</h3>
+          <% if current_user.backers.count == 0 %>
+            <h5>You Don't Backed any Projects! Want to Backed?</h5>
+            <%= link_to 'Browse Projects', root_path, class:'btn btn-primary btn-sm' %>
+          <% else %>
+            <% current_user.backers.each do |backer| %>
+              <div class="card">
+                <div class="card-header">
+                  <%= backer.campaign.blurb.truncate(100) %>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h5 class="card-title"><%= backer.campaign.title %></h5>
+                      <small class="text-muted"><%= backer.campaign.description.truncate(300) %></small><br>
+                      <%= link_to "Go to Campaign", campaign_path(backer.campaign), class:"btn btn-primary mt-2" %>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="profile-shw-membr">
+                        <i class="fas fa-user text-muted"></i> <span class="text-muted">Created by <%= backer.campaign.user.username %><br>
+                        <i class="fas fa-history text-muted"></i> Created <span class="text-muted"><%= time_ago_in_words(backer.campaign.created_at) %> ago</span><br>
+                        <i class="fas fa-dollar-sign text-muted"></i> Pledged Amount: <span class="text-muted">$<%= backer.pledgeamountperperson %></span><br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <hr>
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <h3>ProjectChampion of Campaigns</h3>
+          <% if current_user.projectchampions.count == 0 %>
+            <h5>You are not the ProjectChampion of any Project! Want to Become a one?</h5>
+            <%= link_to 'Browse Projects', root_path, class:'btn btn-primary btn-sm' %>
+          <% else %>
+            <% current_user.projectchampions.each do |projectchampion| %>
+              <div class="card">
+                <div class="card-header">
+                  <%= projectchampion.campaign.blurb.truncate(100) %>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h5 class="card-title"><%= projectchampion.campaign.title %></h5>
+                      <small class="text-muted"><%= projectchampion.campaign.description.truncate(300) %></small><br>
+                      <%= link_to "Go to Campaign", campaign_path(projectchampion.campaign), class:"btn btn-primary mt-2" %>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="profile-shw-membr">
+                        <i class="fas fa-user text-muted"></i> <span class="text-muted">Created by <%= projectchampion.campaign.user.username %><br>
+                        <i class="fas fa-history text-muted"></i> Created <span class="text-muted"><%= time_ago_in_words(projectchampion.campaign.created_at) %> ago</span><br>
+                        <i class="fas fa-dollar-sign text-muted"></i> Amount You Paid: <span class="text-muted">$<%= projectchampion.projectchampionpaidamount %></span><br>
+                        <i class="fas fa-users text-muted"></i> Total Users You Invited: <span class="badge badge-info"><%= current_user.userreferalcodemacth %></span><br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade show" id="nav-invoice" role="tabpanel" aria-labelledby="nav-invoice-tab">
+      <div class="card">
+        <% @user.backers.each do |backer| %>
+          <h5 class="card-header">Payment Invoices Details</h5>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Invoice Amount</th>
+                  <th>Corresponding Campaign</th>
+                  <th>Invoice Created At</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% backer.backerinvoices.each do |invoice| %>
+                  <tr>
+                    <td>$<%= invoice.amount %></td>
+                    <td><%= invoice.backer.campaign.title %></td>
+                    <% @time = invoice.created_at.to_s %>
+                    <td><%= Date.parse(@time) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         <% end %>
-      </div>
-    </div>
-    <div class="col-lg-7">
-      <h2><%= @user.username %></h2>
-      <i class="fas fa-envelope-square prfl-eml-icn"></i><%= @user.email %>
-      <hr class="my-1">
-      <i class="fas fa-globe prfl-web-icn"></i>
-      <% if @user.websites.present? %>
-        <span><%= @user.websites %></span>
-      <% else %>
-        <span class="text-muted">No Websites Available</span>
-      <% end %>
-      <hr class="my-1">
-      <i class="fas fa-address-book prfl-web-icn"></i>
-      <% if @user.contact.present? %>
-        <span>Contact: <%= @user.contact %></span>
-      <% else %>
-        <span class="text-muted">No Contacts Available</span>
-      <% end %>
-      <hr class="my-1">
-      <i class="fas fa-info-circle prfl-web-icn"></i>
-      <% if @user.biography.present? %>
-        <span><%= @user.biography.truncate(50) %></span>
-      <% else %>
-        <span class="text-muted">No Biography Available</span>
-      <% end %>
-      <hr class="my-1">
-    </div>
-    <div class="col-lg-3">
-      <div class="profile-shw-membr">
-        <i class="fas fa-history text-muted"></i>
-        <small class="text-muted">Member For, <%= time_ago_in_words(@user.created_at) %></small><br>
-        <i class="fas fa-calculator text-muted"></i>
-        <small class="text-muted"> Total Campaigns:</small> <span class="badge badge-primary"><%= @user.campaigns.count %></span><br>
-        <i class="far fa-life-ring text-muted"></i>
-        <small class="text-muted"> Backed Campaigns:</small> <span class="badge badge-primary"><%= @user.backers.count %></span><br>
-        <i class="fas fa-trophy text-muted"></i>
-        <small class="text-muted"> Champions:</small> <span class="badge badge-primary"><%= @user.projectchampions.count %></span>
-      </div>
     </div>
   </div>
 </div>

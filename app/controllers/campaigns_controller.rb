@@ -3,7 +3,7 @@ class CampaignsController < ApplicationController
   include ActionView::Helpers::NumberHelper  
   before_action :authenticate_me
   before_action :backer_params, only: [:show]
-  before_action :set_campaign_params, only: [:show, :edit, :update, :destroy, :pledgeamountperperson]
+  before_action :set_campaign_params, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource only: [:edit, :destroy, :new]
   
   def index
@@ -88,41 +88,37 @@ class CampaignsController < ApplicationController
   
     def backer_params
       @campaign = Campaign.find(params[:id])
-      if @campaign.backers.present?
-        @backers = @campaign.backers
-        if params[:paymentId].present? && params[:PayerID].present? && params[:token]
-          @backers.each do |backer|
-            if backer.user.id == current_user.id
-              paymentId = params[:paymentId]
-              payerId = params[:PayerID]
-              token = params[:token]
-              @payment = Payment.find(paymentId)
-              # Execute payment using payer_id obtained from query string following redirect
-              if @payment.execute( :payer_id => payerId )
-                logger.info "authorization executed successfully"
-                # Capture auth id
-                auth_id = @payment.transactions[0].related_resources[0].authorization.id;
-              else
-                logger.error @payment.error.inspect
-              end
+      if params[:paymentId].present? && params[:PayerID].present? && params[:token]
+        paymentId = params[:paymentId]
+        payerId = params[:PayerID]
+        token = params[:token]
+        @payment = Payment.find(paymentId)
+        # Execute payment using payer_id obtained from query string following redirect
+        if @payment.execute( :payer_id => payerId )
+          logger.info "authorization executed successfully"
+          # Capture auth id
+          auth_id = @payment.transactions[0].related_resources[0].authorization.id;
+        else
+          logger.error @payment.error.inspect
+        end
               
-              authorization = Authorization.find(auth_id)
-              capture = authorization.capture({
-                :amount => {
-                  :currency => "USD",
-                  :total => "1.00"
-                },
-                :is_final_capture => false
-              })
+        authorization = Authorization.find(auth_id)
+        capture = authorization.capture({
+          :amount => {
+            :currency => "USD",
+            :total => "1.00"
+          },
+          :is_final_capture => false
+        })
               
-              if capture.success?
-                logger.info "Capture[#{capture.id}]"
-              else
-                logger.error capture.error.inspect
-              end
-              backer.update_attributes(paymentid: paymentId, payerid: payerId, token: token, paymentstatus: true, authorization: auth_id)
-            end
-          end
+        if capture.success?
+          logger.info "Capture[#{capture.id}]"
+          # Backer Creation
+          @backer = Backer.create!(pledgeamountperperson: pledgeamountperperson, eachmilestoneamount: eachmilestoneamount, paymentid: paymentId, payerid: payerId, token: token, paymentstatus: true, authorization: auth_id, user_id: current_user.id, campaign_id: @campaign.id)
+          # Backer Invoice Creation
+          @transaction = Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: @backer.id)
+        else
+          logger.error capture.error.inspect
         end
       end
     end

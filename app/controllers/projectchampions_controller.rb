@@ -15,9 +15,6 @@ class ProjectchampionsController < ApplicationController
     @projectchampion = Projectchampion.new(projectchampion_params)
     if @projectchampion.save
       redirect_to @projectchampion.paypal_url(campaign_path(@projectchampion.campaign_id, anchor: 'nav-champion-tab'))
-      # redirect_to campaign_path(@projectchampion.campaign_id, anchor: 'nav-champion-tab')
-    else
-      render 'new'
     end
   end
   
@@ -40,4 +37,5 @@ class ProjectchampionsController < ApplicationController
     def projectchampion_params
       params.require(:projectchampion).permit(:projectchampiontotalamount, :projectchampionpaidamount, :campaign_id, :user_id)
     end
+    
 end

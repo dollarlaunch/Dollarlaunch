@@ -96,7 +96,6 @@
                 <%= f.hidden_field :user_id, value: current_user.id %>
                 <%= f.hidden_field :campaign_id, value: @campaign.id %>
                 <%= f.hidden_field :pledgeamountperperson, value: @pledgeamountperperson %>
-                <%= f.hidden_field :eachmilestoneamount, value: @eachmilestoneamount %>
                 <%= f.submit class:'btn btn-primary', value:'Proceed' %>
               <% end %>
             </div>
@@ -153,8 +152,6 @@
     </div>
 		<div class="tab-pane fade" id="nav-milestone" role="tabpanel" aria-labelledby="nav-milestone-tab">
 		  <%= @anchor %>
-		  <center>Milestones List</center>
-		  <hr>
       <% @campaign.milestones.each_with_index do |milestone, index| %>
         <div class="card bg-light text-dark mt-3 mb-3">
           <div class="card-body">

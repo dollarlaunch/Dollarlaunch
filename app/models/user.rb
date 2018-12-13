@@ -28,6 +28,16 @@ class User < ApplicationRecord
     return i
   end
   
+  def userprojectchampioncount
+    i = 0
+    self.projectchampions.each do |projectchampion|
+      if projectchampion.paymentstatus == true
+        i = i + 1
+      end
+    end
+    return i
+  end
+  
   private 
   
     def welcome_email

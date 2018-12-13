@@ -147,16 +147,14 @@ a #nav-campaign-tab, a #nav-milestone-tab, a #nav-champion-tab {
       margin: 0 auto !important;
 }
 .prfl-eml-icn {
-    font-size: 24px;
     color: #009e74;
-    top: 4px;
+    top: 2px;
     position: relative;
     margin-right: 8px;
 }
 .prfl-web-icn {
-    font-size: 24px;
     color: #009e74;
-    top: 4px;
+    top: 2px;
     position: relative;
     margin-right: 3px;
 }
