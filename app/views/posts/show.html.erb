@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Title: <small><%= @post.title %></small></h5>
+        </div>
+        <div class="card-body">
+          <h5>Description: <small><%= raw(@post.description) %></small></h5>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Created About: <small><%= time_ago_in_words(@post.created_at) %> ago</small></h5>
+            </div>
+            <div class="col-md-6">
+              <h5>Author: <small class="mark"><%= @post.user.username %></small></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h6 class="mt-4"><i class="far fa-comment-alt"></i> Comments:</h6>
+      <div id="comments">
+        <%= render @comments %>
+      </div>
+      <% if user_signed_in? %>
+        <span id="newcommentform">
+          New Comment <%= render 'comments/form', post: @post.id %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>
+

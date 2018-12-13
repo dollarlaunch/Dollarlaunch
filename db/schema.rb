@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_12_092108) do
+ActiveRecord::Schema.define(version: 2018_12_13_130238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,16 @@ ActiveRecord::Schema.define(version: 2018_12_12_092108) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "faqs", force: :cascade do |t|
     t.text "description"
     t.bigint "campaign_id"
@@ -114,6 +124,15 @@ ActiveRecord::Schema.define(version: 2018_12_12_092108) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campaign_id"], name: "index_milestones_on_campaign_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "projectchampions", force: :cascade do |t|
@@ -169,8 +188,11 @@ ActiveRecord::Schema.define(version: 2018_12_12_092108) do
   add_foreign_key "campaigns", "categories"
   add_foreign_key "campaigns", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "faqs", "campaigns"
   add_foreign_key "milestones", "campaigns"
+  add_foreign_key "posts", "users"
   add_foreign_key "projectchampions", "campaigns"
   add_foreign_key "projectchampions", "users"
   add_foreign_key "riskandchallenges", "campaigns"

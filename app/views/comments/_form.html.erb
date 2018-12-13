@@ -1,0 +1,8 @@
+<div id="commentform">
+  <%= simple_form_for @comment, remote: true do |f| %>
+    <%= f.input :body, label: false %>
+    <%= f.hidden_field :post_id, value: @post.id %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit class:'btn btn-primary btn-sm' %>
+  <% end %>
+</div>

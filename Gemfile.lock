@@ -72,6 +72,8 @@ GEM
     chromedriver-helper (2.1.0)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
+    ckeditor_rails (4.10.0)
+      railties (>= 3.0)
     climate_control (0.2.0)
     cocoon (1.2.12)
     coffee-rails (4.2.2)
@@ -258,6 +260,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15)
   chromedriver-helper
+  ckeditor_rails
   cocoon
   coffee-rails (~> 4.2)
   devise

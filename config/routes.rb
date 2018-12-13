@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   post '/hook' => 'projectchampions#hook'
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+  resources :posts
+  resources :comments
 end

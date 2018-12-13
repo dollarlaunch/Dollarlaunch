@@ -16,6 +16,9 @@
         <li class="active">
             <a class="nav-link nav-text" href="<%= root_path %>">HOME <span class="sr-only">(current)</span></a>
         </li>
+        <li>
+          <a class="nav-link nav-text" href="<%= posts_path %>">BLOG </a>
+        </li>
         <% if user_signed_in? %>
           <li class="dropdown">
             <a class="nav-link dropdown-toggle nav-text" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -6,7 +6,10 @@ class User < ApplicationRecord
   has_many :categories
   has_many :campaigns, dependent: :destroy
   has_many :backers, dependent: :destroy
-  has_many :projectchampions
+  has_many :projectchampions, dependent: :destroy
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  
   has_attached_file :avatar
   validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   

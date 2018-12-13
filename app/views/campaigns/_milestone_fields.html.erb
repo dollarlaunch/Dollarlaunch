@@ -10,10 +10,10 @@
             <div class="row">
               <div class="col">
                 <%= f.label 'Images' %> 
-                <%= f.input :images_array, as: :file, :input_html => { :multiple => true }, label: false %>
+                <%= f.input :images_array, as: :file, :input_html => { :multiple => true }, label: false, accept:'image/*' %>
               </div>
               <div class="col">
-                <%= f.label 'Video Clip' %> 
+                <%= f.label 'Video Clip' %> <small class="mark">Only Support mp4 videos</small>
                 <%= f.input :video, as: :file, label: false %>
               </div>
             </div>
