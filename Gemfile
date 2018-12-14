@@ -55,6 +55,5 @@ gem "figaro"
 gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'social-share-button'
 gem 'sidekiq'
-gem 'activemerchant'
 gem 'paypal-sdk-rest'
 gem 'ckeditor_rails'

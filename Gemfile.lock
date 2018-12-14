@@ -27,11 +27,6 @@ GEM
     activejob (5.2.1)
       activesupport (= 5.2.1)
       globalid (>= 0.3.6)
-    activemerchant (1.87.0)
-      activesupport (>= 4.2, < 6.x)
-      builder (>= 2.1.2, < 4.0.0)
-      i18n (>= 0.6.9)
-      nokogiri (~> 1.4)
     activemodel (5.2.1)
       activesupport (= 5.2.1)
     activerecord (5.2.1)
@@ -254,7 +249,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemerchant
   bootsnap (>= 1.1.0)
   byebug
   cancancan

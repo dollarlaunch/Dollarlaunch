@@ -11,8 +11,8 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require ckeditor-jquery
 //= require jquery
+//= require ckeditor-jquery
 //= require cocoon
 //= require activestorage
 //= require dataTables/jquery.dataTables

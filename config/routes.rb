@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   resources :posts
   resources :comments
+  get '/about', to: 'home#aboutus'
 end
