@@ -89,6 +89,23 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+<<<<<<< HEAD
+=======
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: "https://dollarmark.herokuapp.com" }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name:      ENV["pusher_mailgun_username"],
+    password:       ENV["pusher_mailgun_password"],
+    domain:         ENV["pusher_domain"],
+    address:       'smtp.mailgun.org',
+    port:          '587',
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+  
+>>>>>>> 9eb3a7a... mail settings
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
