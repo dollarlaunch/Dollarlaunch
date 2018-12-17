@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :users
   resources :backers, only: [:create]
+  resources :badges
   put '/admin/campaign/:id/change' => 'admins#change_campaign_status', :as => 'change_campaign_status'
   put 'campaign/:id/milestone/:id/change' => 'users#change_milestone_status', :as => 'change_milestone_status'
   get '/user/:id/dashboard', to: 'users#dashboard', :as => 'dashboard'

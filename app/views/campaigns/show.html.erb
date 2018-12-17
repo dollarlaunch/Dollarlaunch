@@ -244,7 +244,9 @@
                 <hr>
                 <p class="text-muted mb-0">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></p>
                 <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
-                <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
+                <div id="socialsharebadge">
+                  <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
+                </div>  
               <% end %>
             <% end %>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -344,4 +346,9 @@
     $('#nav-campaign-tab').removeClass('active');
     $('#nav-campaign-tab').removeClass('show');
   }
+  
+  $('#socialsharebadge').click(function(){
+    <% Userbadge.create(user_id: current_user.id,badge_id: 5)%>
+  });
+  
 </script>

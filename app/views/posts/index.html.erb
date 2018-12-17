@@ -1,47 +1,9 @@
 <div class="container">
-<<<<<<< HEAD
-  <div class="row">
-    <div class="col-md-12">
-      <table class='table'>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>User</th>
-            <th>Show</th>
-            <th>Edit</th>
-            <th>Destroy</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @posts.each do |post| %>
-            <tr>
-              <td><%= post.title %></td>
-              <td><%= post.description.truncate(20) %></td>
-              <td><%= post.user.username %></td>
-              <td><%= link_to "Show", post_path(post) %></td>
-              <% if can? :update, post %>
-                <td><%= link_to "Edit", edit_post_path(post) %></td>
-              <% else %>
-                <td><small class="mark">Access Denied</small></td>
-              <% end %>
-              <% if can? :destroy, post %>
-                <td><%= link_to "Destroy", post_path(post), method: :delete, data: { confirm: "Are You Sure?" }%></td>
-              <% else %>
-                <td><small class="mark">Access Denied</small></td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <hr>
-=======
   <div class="row mt-4">
     <div class="col-md-10">
       <h4>Blog</h4>
     </div>
     <div class="col-md-2">
->>>>>>> e981ec2... Home Page and Blog PaGe Design, All Phases Completed and The Site is on Production, doing some optimzations
       <%= link_to "New Post", new_post_path, class:"btn btn-primary btn-sm" %>
     </div>
   </div>

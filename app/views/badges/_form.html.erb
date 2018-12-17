@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <%= simple_form_for @badge do |f| %>
+        <%= f.input :name %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.submit %>
+      <% end %>
+    </div>
+  </div>
+</div>

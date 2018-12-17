@@ -30,6 +30,7 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(campaign_params)
     if @campaign.save
+      Userbadge.create!(user_id:current_user.id,badge_id:6)
       redirect_to @campaign
     else
       render 'new'
@@ -115,6 +116,23 @@ class CampaignsController < ApplicationController
           logger.info "Capture[#{capture.id}]"
           # Backer Creation
           @backer = Backer.create!(pledgeamountperperson: pledgeamountperperson, eachmilestoneamount: eachmilestoneamount, paymentid: paymentId, payerid: payerId, token: token, paymentstatus: true, authorization: auth_id, user_id: current_user.id, campaign_id: @campaign.id)
+          # Badges Creation
+          if current_user.userbadges.present?
+            current_user.userbadges.each do |badge|
+              if badge.id != 2
+                if current_user.backers.count >= 3
+                  Userbadge.create(user_id:current_user.id,backer_id:2)
+                end
+              end
+              if badge.id != 3
+                if current_user.backers.count >= 10
+                  Userbadge.create(user_id:current_user.id,backer_id:3)
+                end
+              end
+            end
+          else
+            Userbadge.create!(user_id:current_user.id,badge_id:1)
+          end
           # Backer Invoice Creation
           @transaction = Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: @backer.id)
         else
