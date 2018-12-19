@@ -4,6 +4,8 @@
       <%= simple_form_for @post do |f| %>
         <div class="for-group row">
           <div class="col-md-12">
+            <h4>Project Image</h4>
+            <%= f.input :image, as: :file, label: false  %>
             <h4>Post Title</h4>
             <%= f.input :title, required: true, placeholder: 'Title of your Post', label: false, input_html: { class: 'form control' } %>
             <h4>Post Description</h4>

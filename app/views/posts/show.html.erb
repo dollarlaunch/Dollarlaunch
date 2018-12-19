@@ -6,6 +6,7 @@
           <h5>Title: <small><%= @post.title %></small></h5>
         </div>
         <div class="card-body">
+          <%= image_tag(@post.image.url, class:'cmpgn-img') %>
           <h5>Description: <small><%= raw(@post.description) %></small></h5>
           <hr>
           <div class="row">

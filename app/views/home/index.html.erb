@@ -1,36 +1,24 @@
-<div class="container">
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <h4>Listing All the Campaigns</h4>
-      <% @campaigns.each do |campaign| %>
-        <div class="card">
-          <div class="card-header">
-            <%= campaign.blurb.truncate(100) %>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-8">
-                <h5 class="card-title"><%= campaign.title %></h5>
-                <small class="text-muted"><%= campaign.description.truncate(300) %></small><br>
-                <hr>
-                <%= link_to "Go to Campaign", campaign_path(campaign), class:"btn btn-primary" %>
-              </div>
-              <div class="col-md-4">
-                <div class="profile-shw-membr">
-                  <i class="fas fa-user text-muted"></i><span class="text-muted"> Created By <%= campaign.user.username %></span><br>
-                  <i class="fas fa-history text-muted"></i><span class="text-muted"> Created <%= time_ago_in_words(campaign.created_at) %> ago</span><br>
-                  <i class="fas fa-calculator text-muted"></i> <span class="text-muted">Total Milestones:</span> <span class="badge badge-info"><%= campaign.milestones.count %></span><br>
-                  <i class="far fa-life-ring text-muted"></i> <span class="text-muted">Total Backers:</span> <span class="badge badge-info"><%= campaign.backers.count %></span><br>
-                  <i class="fas fa-signal text-muted"></i> <span class="text-muted">Status:</span> <span class="badge badge-success"><%= campaign.status %></span><br>
-                  <i class="fas fa-trophy text-muted"></i> <span class="text-muted">Total ProjectChampions:</span> <span class="badge badge-info"> <%= campaign.projectchampions.count %></span><br>
-                  <i class="fas fa-tags text-muted"></i> <span class="text-muted">Category: </span> <span class="badge badge-info"> <%= campaign.category.name %></span>
-                </div>
-              </div>
+<div class="container mt-4">
+  <div class="row">
+    <% @campaigns.each do |campaign| %>
+      <div class="col-md-6 mb-4">
+        <%= link_to campaign_path(campaign), class:'link-dec' do %>
+          <%= image_tag(campaign.image.url, class:'cmpgn-img') %>
+          <div class="hding-brdr mt-3">
+            <h5 class="ml-3"><%= campaign.title %></h5>
+            <div class="ml-3">
+              <small class="text-muted"><%= campaign.description.truncate(300) %></small>
             </div>
           </div>
+<<<<<<< HEAD
         </div>
         <br>
       <% end %>
     </div>
+=======
+        <% end %>
+      </div>
+    <% end %>
+>>>>>>> e981ec2... Home Page and Blog PaGe Design, All Phases Completed and The Site is on Production, doing some optimzations
   </div>
 </div>

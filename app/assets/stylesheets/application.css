@@ -55,6 +55,13 @@
   width: 100% !important;
   height: 370px;
 }
+.post-img {
+  width: 100% !important;
+  height: 220px;
+}
+.link-dec:hover {
+  text-decoration: none;
+}
 .cmpgn-right {
   border: 1px solid #DCDEDD;
   padding:10px 15px;
@@ -139,12 +146,12 @@ a #nav-campaign-tab, a #nav-milestone-tab, a #nav-champion-tab {
   display: none;
 }
 .profile-show {
-      border: 1px solid #e4e6e8;
-      padding: 8px 5px;
-      border-radius: 5px;
-      width: 160px;
-      display: block;
-      margin: 0 auto !important;
+  border: 1px solid #e4e6e8;
+  padding: 8px 5px;
+  border-radius: 5px;
+  width: 160px;
+  display: block;
+  margin: 0 auto !important;
 }
 .prfl-eml-icn {
     color: #009e74;
@@ -163,3 +170,7 @@ a #nav-campaign-tab, a #nav-milestone-tab, a #nav-champion-tab {
       padding: 8px 30px;
       border-radius: 5px;
 }
+.hding-brdr {
+  border-left: 4px solid #009e74;
+}
+    
