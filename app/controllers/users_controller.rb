@@ -63,7 +63,9 @@ class UsersController < ApplicationController
         })
         if capture.success?
           logger.info "Capture[#{capture.id}]"
-          @transaction = Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: backer.id)
+          Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: backer.id)
+          UsermailerMailer.milestonecompletion_email(backer.user, capture.amount.total, backer.campaign.title).deliver
+          Userbadge.create(user_id: @campaign.user.id,badge_id: 7)
         else
           logger.error capture.error.inspect
         end

@@ -8,6 +8,15 @@
             <h5 class="ml-3"><%= campaign.title %></h5>
             <div class="ml-3">
               <small class="text-muted"><%= campaign.description.truncate(300) %></small>
+              <hr>
+            </div>
+            <div class="row ml-3">
+              <div class="col">
+                <small>Total Backers: <span class="text-muted"><%= campaign.backers.count %></span></small>
+              </div>
+              <div class="col">
+                <small>Pledge Amount: <span class="text-muted"><%= campaign.pledge_amount %></span></small>
+              </div>
             </div>
           </div>
         <% end %>

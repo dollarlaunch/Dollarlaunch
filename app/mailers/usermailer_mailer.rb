@@ -14,4 +14,12 @@ class UsermailerMailer < ApplicationMailer
     mail(to: @user.email, subject: "Welcome to DollarMark Website, This Website is for Open Source Projects")
   end
   
+  def milestonecompletion_email(user, amount, title)
+    @user = user
+    @amount = amount
+    @title = title
+    @url = 'http://kickstarter-mhamzajutt96.c9users.io'
+    mail(to: @user.email, subject: "Congratulations! Milestone is Completed")
+  end
+  
 end

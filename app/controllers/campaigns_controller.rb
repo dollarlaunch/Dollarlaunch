@@ -3,7 +3,7 @@ class CampaignsController < ApplicationController
   include ActionView::Helpers::NumberHelper  
   before_action :authenticate_me
   before_action :backer_params, only: [:show]
-  before_action :set_campaign_params, only: [:show, :edit, :update, :destroy]
+  before_action :set_campaign_params, only: [:show, :edit, :update, :destroy, :like]
   load_and_authorize_resource only: [:edit, :destroy, :new]
   
   def index
@@ -19,6 +19,9 @@ class CampaignsController < ApplicationController
     @projectchampion = Projectchampion.new
     @projectchampionsexist = @campaign.projectchampions.where(user_id: current_user.id, paymentstatus: true).first
     @backerexist = @campaign.backers.where(user_id: current_user.id, paymentstatus: true).first
+    @campaignreview = Campaignreview.new
+    @backers = @campaign.backers
+    @reviews = @campaign.campaignreviews
     pledgeamountperperson
     eachmilestoneamount
   end
@@ -54,6 +57,18 @@ class CampaignsController < ApplicationController
     redirect_to campaigns_path
   end
   
+  def like
+    respond_to do |format|
+      if !current_user.liked? @campaign
+        @campaign.liked_by current_user
+      elsif current_user.liked? @campaign
+        @campaign.unliked_by current_user
+      end
+    end
+    format.html { redirect_to :back }
+    format.js { render :layout => false }
+  end
+  
   private
   
     def set_campaign_params
@@ -61,7 +76,7 @@ class CampaignsController < ApplicationController
     end
     
     def campaign_params
-      params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :risksandchallenges, :faqs, :category_id, :user_id, projectchampionimages_array:[], riskandchallenges_attributes:[:id, :description], faqs_attributes:[:id, :description], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
+      params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :risksandchallenges, :faqs, :category_id, :user_id, :askfromcommunity, projectchampionimages_array:[], riskandchallenges_attributes:[:id, :description], faqs_attributes:[:id, :description], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
     end
     
     def authenticate_me
@@ -117,24 +132,24 @@ class CampaignsController < ApplicationController
           # Backer Creation
           @backer = Backer.create!(pledgeamountperperson: pledgeamountperperson, eachmilestoneamount: eachmilestoneamount, paymentid: paymentId, payerid: payerId, token: token, paymentstatus: true, authorization: auth_id, user_id: current_user.id, campaign_id: @campaign.id)
           # Badges Creation
-          if current_user.userbadges.present?
+          if current_user.userbadges.count > 0
             current_user.userbadges.each do |badge|
               if badge.id != 2
                 if current_user.backers.count >= 3
-                  Userbadge.create(user_id:current_user.id,backer_id:2)
+                  Userbadge.create(user_id: current_user.id, badge_id: 2)
                 end
               end
               if badge.id != 3
                 if current_user.backers.count >= 10
-                  Userbadge.create(user_id:current_user.id,backer_id:3)
+                  Userbadge.create(user_id: current_user.id, badge_id: 3)
                 end
               end
             end
           else
-            Userbadge.create!(user_id:current_user.id,badge_id:1)
+            Userbadge.create!(user_id: current_user.id, badge_id: 1)
           end
           # Backer Invoice Creation
-          @transaction = Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: @backer.id)
+          Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: @backer.id)
         else
           logger.error capture.error.inspect
         end

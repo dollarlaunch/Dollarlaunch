@@ -9,6 +9,10 @@
         <% end %>
         <p class="mt-2 mb-0 text-center">By <%=  @campaign.user.username %></p>
         <center><small><%= time_ago_in_words(@campaign.created_at) %> ago</small></center>
+        <center>
+          <%= link_to "Like", like_path(@campaign), method: :put, remote: true %>
+          <span class="likescount"><%= @campaign.get_upvotes.size %></span>
+        </center>
       </div>
     </div>
     <div class="col-md-10 mb-3">
@@ -111,6 +115,7 @@
       <a class="nav-item nav-link cmpgn-tb active" id="nav-campaign-tab" data-toggle="tab" href="#nav-campaign" role="tab" aria-controls="nav-campaign" aria-selected="true">Campaign</a>
       <a class="nav-item nav-link cmpgn-tb" id="nav-milestone-tab" data-toggle="tab" href="#nav-milestone" role="tab" aria-controls="nav-milestone" aria-selected="false">Milestones</a>
       <a class="nav-item nav-link cmpgn-tb" id="nav-champion-tab" data-toggle="tab" href="#nav-champion" role="tab" aria-controls="nav-champion" aria-selected="false">Project Champion</a>
+      <a class="nav-item nav-link cmpgn-tb" id="nav-campaignreview-tab" data-toggle="tab" href="#nav-campaignreview" role="tab" aria-controls="nav-campaignreview" aria-selected="false">Review</a>
     </div>
 	</nav>
 </div>
@@ -122,19 +127,30 @@
           <h4 class="text-muted">Description</h4>
           <p><%= @campaign.description %></p>
           <hr>
-          <h4 class="text-muted">Risks & Challenges</h4>
-          <ul>
-            <% @campaign.riskandchallenges.each do |risksandchallenge| %>
-              <li><%= risksandchallenge.description %></li>
-            <% end %>
-          </ul>
+          <h5 class="text-muted">Risks & Challenges</h5>
+          <% if @campaign.riskandchallenges.count > 0 %>
+            <ul>
+              <% @campaign.riskandchallenges.each do |risksandchallenge| %>
+                <li><%= risksandchallenge.description %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <small class="mark">Nill</small>
+          <% end %>
           <hr>
-          <h4 class="text-muted">Frequently Asked Questions</h4>
-          <ul>
-            <% @campaign.faqs.each do |faq| %>
-              <li><%= faq.description %></li>
-            <% end %>
-          </ul>
+          <h5 class="text-muted">Frequently Asked Questions</h5>
+          <% if @campaign.faqs.count > 0 %>
+            <ul>
+              <% @campaign.faqs.each do |faq| %>
+                <li><%= faq.description %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <small class="mark">Nill</small>
+          <% end %>
+          <hr>
+          <h5 class="text-muted">Community Helped You Asked ?</h5>
+          <small class="text-muted"><%= @campaign.askfromcommunity %></small>
         </div>
         <div class="col-md-4">
     			<div class="cmpgn-right">
@@ -303,17 +319,74 @@
         </div>
       </div>
     </div>
+    <div class="tab-pane fade" id="nav-campaignreview" role="tabpanel" aria-labelledby="nav-campaignreview-tab">
+      <div class="row">
+        <div class="col-md-12">
+          <% if @reviews.count == 0 %>
+            <small class="mark">No Campaign Reviews !</small>
+          <% else %>
+            <h5>Campaign Reviews</h5>
+            <% @reviews.each do |review| %>
+              <p><%= review.body %> | By <span class="mark"><%= review.user.username %></span> | about <%= time_ago_in_words(review.created_at) %> ago</p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <% @backers.each do |backer| %>
+            <% if current_user.id == backer.id %>
+              <% if @reviews.count > 0 %>
+                <% @reviews.each do |review| %>
+                  <% if backer.user.id != review.user.id %>
+                    <%= simple_form_for @campaignreview do |f| %>
+                      <h5>Body</h5>
+                      <%= f.input :body, label: false %>
+                      <%= f.hidden_field :user_id, value: backer.user.id %>
+                      <%= f.hidden_field :campaign_id, value: @campaign.id %>
+                      <%= f.submit %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= simple_form_for @campaignreview do |f| %>
+                  <h5>Body</h5>
+                  <%= f.input :body, label: false %>
+                  <%= f.hidden_field :user_id, value: backer.user.id %>
+                  <%= f.hidden_field :campaign_id, value: @campaign.id %>
+                  <%= f.submit class: 'btn btn-primary btn-sm' %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
 	</div>
 </div>
+<div class="container">
+  <hr>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      Offer help to this campaign
+    </div>
+  </div>
+</div>
 <div class="container my-3">
-	<div class="col-md-6 mx-auto">
-    <%= link_to "Back to Projects", campaigns_path, class:'btn btn-primary' %>
-    <% if can? :update, @campaign %>
-      <%= link_to "Edit Project", edit_campaign_path(@campaign), class:'btn btn btn-primary' %>
-    <% end %>
-    <% if can? :destroy, @campaign %>
-      <%= link_to "Delete Project", campaign_path(@campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn btn-danger' %>
-    <% end %>
+	<div class="row">
+  	<div class="col">
+      <%= link_to "Back to Projects", campaigns_path, class:'btn btn-primary btn-sm' %>
+    </div>
+    <div class="col">
+      <% if can? :update, @campaign %>
+        <%= link_to "Edit Project", edit_campaign_path(@campaign), class:'btn btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+    <div class="col">
+      <% if can? :destroy, @campaign %>
+        <%= link_to "Delete Project", campaign_path(@campaign), method: :delete, data: { confirm: 'Are You Sure?' }, class:'btn btn btn-danger btn-sm' %>
+      <% end %>
+    </div>
   </div>
 </div>
 <script>
@@ -339,16 +412,17 @@
     anchor_value = stripped_url[1];
     $('#' + anchor_value).addClass('active');
     $('#' + anchor_value).addClass('show');
-    $('#nav-champion').addClass('active');
-    $('#nav-champion').addClass('show');
+    $('#' + anchor_value + '-tab').addClass('active');
+    $('#' + anchor_value + '-tab').addClass('show');
     $('#nav-campaign').removeClass('active');
     $('#nav-campaign').removeClass('show');
     $('#nav-campaign-tab').removeClass('active');
     $('#nav-campaign-tab').removeClass('show');
+    
   }
   
   $('#socialsharebadge').click(function(){
-    <% Userbadge.create(user_id: current_user.id,badge_id: 5)%>
+    <% Userbadge.create(user_id: current_user.id, badge_id: 5)%>
   });
   
 </script>

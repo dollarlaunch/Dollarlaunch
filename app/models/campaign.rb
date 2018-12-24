@@ -6,6 +6,8 @@ class Campaign < ApplicationRecord
   has_attached_file :image
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   enum status: { prelaunch: 0, launched: 1 }
+  acts_as_votable
+  has_many :campaignreviews, dependent: :destroy
   
   # Milestone Scenario
   has_many :milestones, dependent: :destroy
@@ -47,8 +49,10 @@ class Campaign < ApplicationRecord
     end
     
     def update_images
-      projectchampionimages_array.each do |image|
-        images.create(image: image)
+      if projectchampionimages_array.present?
+        projectchampionimages_array.each do |image|
+          images.create(image: image)
+        end
       end
     end
   
