@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'messages/index'
+  get 'conversations/index'
   root 'home#index'
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords', confirmations: 'users/confirmations' }
   resources :campaigns
@@ -19,4 +21,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :comments
   get '/about', to: 'home#aboutus'
+  resources :conversations, only: [:index, :create] do
+    resources :messages, only: [:index, :create]
+  end
 end

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-md-8 mx-auto">
+      <h3>Inbox Messages</h3>
+      <ul>
+        <% @conversations.each do |conversation| %>
+          <li><%= link_to conversation.recipient(current_user).username, conversation_messages_path(conversation) %></li>
+          <% if !conversation.unread_message_count(current_user).zero? %>
+            (<%= conversation.unread_message_count(current_user) %>)
+          <% end %>
+        <% end %>
+      </ul>
+      <hr>
+      <h3>List of All the Users</h3>
+      <ul>
+        <% @users.each do |user| %>
+          <li><%= link_to user.username, conversations_path(sender_id: current_user.id, receiver_id: user.id), method: :post %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

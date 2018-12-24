@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_24_104942) do
+ActiveRecord::Schema.define(version: 2018_12_24_131403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,8 +91,6 @@ ActiveRecord::Schema.define(version: 2018_12_24_104942) do
     t.integer "cached_weighted_score", default: 0
     t.integer "cached_weighted_total", default: 0
     t.float "cached_weighted_average", default: 0.0
-    t.string "askfromcoummumity"
-    t.string "askfromcommumity"
     t.string "askfromcommunity"
     t.index ["category_id"], name: "index_campaigns_on_category_id"
     t.index ["user_id"], name: "index_campaigns_on_user_id"
@@ -117,6 +115,13 @@ ActiveRecord::Schema.define(version: 2018_12_24_104942) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "faqs", force: :cascade do |t|
     t.text "description"
     t.bigint "campaign_id"
@@ -135,6 +140,17 @@ ActiveRecord::Schema.define(version: 2018_12_24_104942) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_type", "owner_id"], name: "index_images_on_owner_type_and_owner_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "conversation_id"
+    t.bigint "user_id"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "milestones", force: :cascade do |t|
@@ -249,6 +265,8 @@ ActiveRecord::Schema.define(version: 2018_12_24_104942) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "faqs", "campaigns"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "milestones", "campaigns"
   add_foreign_key "posts", "users"
   add_foreign_key "projectchampions", "campaigns"

@@ -48,4 +48,5 @@ class BadgesController < ApplicationController
     def badge_params
       params.require(:badge).permit(:name,:user_id)
     end
+    
 end
