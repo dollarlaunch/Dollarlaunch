@@ -364,14 +364,17 @@
     </div>
 	</div>
 </div>
-<div class="container">
-  <hr>
-  <div class="row">
-    <div class="col-md-6 mx-auto">
-      Offer help to this campaign
+<% if @campaign.user.id != current_user.id %>
+  <div class="container">
+    <hr>
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <small class="text-muted">Message Admin to offer any help to this Campaign</small>
+        <%= link_to @admin.username, conversations_path(sender_id: current_user.id, receiver_id: @admin.id), method: :post %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 <div class="container my-3">
 	<div class="row">
   	<div class="col">
@@ -397,7 +400,7 @@
           $(".mil-dec<%=milestone.id%>").slideToggle("500");
           $("i", this).toggleClass("fas fa-plus-square fas fa-minus-square");
         })
-    <%end%>
+    <% end %>
   });
   var minval = <%= @campaign.projectchampionminimumamount %>;
   $('.min-value').attr('min',minval);
@@ -422,7 +425,7 @@
   }
   
   $('#socialsharebadge').click(function(){
-    <% Userbadge.create(user_id: current_user.id, badge_id: 5)%>
+    $.ajax({url: "/badge/socialsharebadge", type: "POST"});
   });
   
 </script>

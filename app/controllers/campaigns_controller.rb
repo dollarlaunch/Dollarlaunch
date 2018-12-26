@@ -15,6 +15,7 @@ class CampaignsController < ApplicationController
   end
   
   def show
+    @admin = User.first 
     @backer = Backer.new
     @projectchampion = Projectchampion.new
     @projectchampionsexist = @campaign.projectchampions.where(user_id: current_user.id, paymentstatus: true).first
@@ -76,7 +77,7 @@ class CampaignsController < ApplicationController
     end
     
     def campaign_params
-      params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :risksandchallenges, :faqs, :category_id, :user_id, :askfromcommunity, projectchampionimages_array:[], riskandchallenges_attributes:[:id, :description], faqs_attributes:[:id, :description], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
+      params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :risksandchallenges, :faqs, :category_id, :user_id, :askfromcommunity, projectchampionimages_array:[], riskandchallenges_attributes:[:id, :description, :_destroy], faqs_attributes:[:id, :description, :_destroy], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
     end
     
     def authenticate_me

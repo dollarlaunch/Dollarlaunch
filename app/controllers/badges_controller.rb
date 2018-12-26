@@ -2,7 +2,8 @@ class BadgesController < ApplicationController
   
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_badge_param, only: [:show,:edit,:update,:destroy]
-  load_and_authorize_resource except: [:index,:show]
+  load_and_authorize_resource except: [:index,:show,:socialsharebadge]
+  skip_before_action :verify_authenticity_token
   
   def index
     @badges = Badge.all
@@ -38,6 +39,14 @@ class BadgesController < ApplicationController
   def destroy
     @badge.destroy
     redirect_to badges_path
+  end
+  
+  def socialsharebadge
+    @a = current_user.userbadges.where(badge_id: 5)
+    if !@a.present?
+      Userbadge.create!(user_id: current_user.id, badge_id: 5)
+    end
+    head :ok
   end
   
   private

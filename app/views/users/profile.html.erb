@@ -54,7 +54,7 @@
             <small class="text-muted"> Champions:</small> <span class="badge badge-primary"><%= current_user.userprojectchampioncount %></span>
           </div>
           <div>
-            <%= link_to "Update Profile", edit_user_registration_path, class:"btn btn-primary mt-3 ml-5" %>
+            <%= link_to "Update Profile", edit_user_registration_path, class:"btn btn-primary btn-sm mt-3 ml-5" %>
           </div>
         </div>
       </div>
@@ -169,8 +169,40 @@
     </div>
     <div class="tab-pane fade show" id="nav-invoice" role="tabpanel" aria-labelledby="nav-invoice-tab">
       <div class="card">
-        <% @user.backers.each do |backer| %>
-          <h5 class="card-header">Payment Invoices Details</h5>
+        <% if @user.backers.count == 0 %>
+          <small class="mark">No Payments for Backers, You Have not Backed any Campaign</small>
+        <% else %>
+          <% @user.backers.each do |backer| %>
+            <h5 class="card-header">Backer Payment Invoices Details</h5>
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Invoice Amount</th>
+                    <th>Corresponding Campaign</th>
+                    <th>Invoice Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% backer.backerinvoices.each do |invoice| %>
+                    <tr>
+                      <td>$<%= invoice.amount %></td>
+                      <td><%= invoice.backer.campaign.title %></td>
+                      <% @time = invoice.created_at.to_s %>
+                      <td><%= Date.parse(@time) %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="card mt-2">
+        <% if @user.projectchampions.count == 0 %>
+          <small class="mark">No Payments for ProjectChampions, You are not the ProjectChampion of any Campaign</small>
+        <% else %>
+          <h5 class="card-header">ProjectChampion Payment Details</h5>
           <div class="card-body">
             <table class="table">
               <thead>
@@ -181,11 +213,11 @@
                 </tr>
               </thead>
               <tbody>
-                <% backer.backerinvoices.each do |invoice| %>
+                <% @user.projectchampions.each do |projectchampion| %>
                   <tr>
-                    <td>$<%= invoice.amount %></td>
-                    <td><%= invoice.backer.campaign.title %></td>
-                    <% @time = invoice.created_at.to_s %>
+                    <td>$<%= projectchampion.projectchampionpaidamount %></td>
+                    <td><%= projectchampion.campaign.title %></td>
+                    <% @time = projectchampion.created_at.to_s %>
                     <td><%= Date.parse(@time) %></td>
                   </tr>
                 <% end %>
@@ -193,6 +225,7 @@
             </table>
           </div>
         <% end %>
+      </div>
     </div>
   </div>
 </div>
