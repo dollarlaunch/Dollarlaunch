@@ -1,6 +1,6 @@
 <div>
   <small id="comment<%= comment.id %>"><%= comment.body %> 
-    | Created By: <span class='badge badge-primary'><%= comment.user.username %></span>
+    | Created By: <span class='mark'><%= comment.user.username %></span>
     | <span><%= time_ago_in_words(comment.created_at)%> ago</span>
     <% if can? :update, comment %>
     | <%= link_to "Edit", edit_comment_path(comment), remote: true, class:'badge badge-info' %>

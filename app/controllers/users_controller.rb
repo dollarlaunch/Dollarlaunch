@@ -65,7 +65,10 @@ class UsersController < ApplicationController
           logger.info "Capture[#{capture.id}]"
           Backerinvoice.create!(amount: capture.amount.total, captureid: capture.id ,backer_id: backer.id)
           UsermailerMailer.milestonecompletion_email(backer.user, capture.amount.total, backer.campaign.title).deliver
-          Userbadge.create(user_id: @campaign.user.id,badge_id: 7)
+          @a = current_user.userbadges.where(badge_id: 5)
+          if !@a.present?
+            Userbadge.create!(user_id: current_user.id, badge_id: 7)
+          end
         else
           logger.error capture.error.inspect
         end

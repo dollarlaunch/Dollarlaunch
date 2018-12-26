@@ -1,22 +1,14 @@
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h5>Title: <small><%= @post.title %></small></h5>
-        </div>
-        <div class="card-body">
+    <div class="col-md-8">
+      <div>
+        <h1><%= @post.title %></h1>
+        <small>By: <span class="text-muted"><%= @post.user.username %></span> / Created about <span class="text-muted"><%= time_ago_in_words(@post.created_at)%> ago</span> / <i class="far fa-comment-alt"></i> Comments: <span class="text-muted"><%= @post.comments.count %></span></small> 
+        <hr>
+        <div>
           <%= image_tag(@post.image.url, class:'cmpgn-img') %>
-          <h5>Description: <small><%= raw(@post.description) %></small></h5>
+          <p><small><%= raw(@post.description) %></small></p>
           <hr>
-          <div class="row">
-            <div class="col-md-6">
-              <h5>Created About: <small><%= time_ago_in_words(@post.created_at) %> ago</small></h5>
-            </div>
-            <div class="col-md-6">
-              <h5>Author: <small class="mark"><%= @post.user.username %></small></h5>
-            </div>
-          </div>
         </div>
       </div>
       <h6 class="mt-4"><i class="far fa-comment-alt"></i> Comments:</h6>
@@ -27,6 +19,18 @@
         <span id="newcommentform">
           New Comment <%= render 'comments/form', post: @post.id %>
         </span>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <h4>Related Posts</h4>
+      <% @posts.each do |post| %>
+        <ul>
+          <li>
+            <%= link_to post_path(post) do %>
+              <%= post.title %>
+            <% end %>
+          </li>
+        </ul>
       <% end %>
     </div>
   </div>

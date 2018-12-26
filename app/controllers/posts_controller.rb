@@ -11,6 +11,7 @@ class PostsController < ApplicationController
   def show
     @comment = Comment.new
     @comments = @post.comments
+    @posts = Post.where.not(id: @post.id)
   end
   
   def new
