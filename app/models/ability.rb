@@ -26,6 +26,9 @@ class Ability
       can :destroy, Comment do |comment|
         comment.user == user
       end
+      can :destroy, Milestoneupdate do |milestoneupdate|
+        milestoneupdate.milestone.campaign.user == user
+      end
       can :read, :all
     end
     

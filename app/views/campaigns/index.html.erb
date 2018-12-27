@@ -10,6 +10,7 @@
         <th>Project Title</th>
         <% if current_user.admin == true%>
           <th>Status</th>
+          <th>Featured</th>
           <th>Username</th>
         <% end %>
         <th>Show</th>
@@ -26,6 +27,12 @@
               <small class="text-muted"><%= campaign.status %></small>
               <% if campaign.status == 'prelaunch' %>
               | <%= link_to 'Launch', change_campaign_status_path(campaign), method: :put %>
+              <% end %>
+            </td>
+            <td>
+              <small class="text-muted"><%= campaign.featuredstatus %></small>
+              <% if campaign.featuredstatus == false %>
+              | <%= link_to 'Make Featured', change_campaign_featuredstatus_path(campaign), method: :put %>
               <% end %>
             </td>
             <td><%= campaign.user.username %></td>

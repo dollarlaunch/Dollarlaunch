@@ -1,0 +1,7 @@
+<div>
+  <small id="milestoneupdate<%= milestoneupdate.id %>"><%= milestoneupdate.body %> | <span class="mark"><%= time_ago_in_words(milestoneupdate.created_at)%> ago</span> | This update is relevant to <span class="mark"><%= milestoneupdate.milestone.title %></span>
+    <% if can? :destroy, milestoneupdate %>
+    | <%= link_to "Delete", milestoneupdate, method: :delete, data: {confirm: 'Are You Sure?'}, remote: true, class:'badge badge-danger' %>
+    <% end %>
+  </small>
+</div>

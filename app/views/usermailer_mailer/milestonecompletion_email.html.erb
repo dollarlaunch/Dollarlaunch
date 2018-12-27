@@ -4,9 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Dear <%= @user %></h1>
+    <h1>Dear <%= @user.username %></h1>
     <p>Your Backed Campaign, <%= @title %> has completed its milestone</p>
-    <p>The Payment it involves is, <%= @amount %>, You can Backed more Campaigns here: <%= @url %></p>
+    <p>The Payment it involves is, $<%= @amount %>, You can Backed more Campaigns here: <%= @url %></p>
     <p>To login to the site, just follow this link: <%= @url %> <br> Thanks for becoming a part of our community</p>
   </body>
 </html>

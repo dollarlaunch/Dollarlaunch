@@ -26,11 +26,7 @@
               </div>
               <div class="col-md-6">
                 <h5>Select Category</h5>
-                <% if current_user.admin == true %>
-                  <%= f.collection_select :category_id, Category.all, :id, :name, {}, { class: 'form control form-control-lg' } %>
-                <% else %>
-                  <%= f.collection_select :category_id, Category.where.not(name: "Featured"), :id, :name, {}, { class: 'form control form-control-lg' } %>
-                <% end %>
+                <%= f.collection_select :category_id, Category.all, :id, :name, {}, { class: 'form control form-control-lg' } %>
               </div>
             </div>
             <div class="form-group row">

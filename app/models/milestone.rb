@@ -7,6 +7,7 @@ class Milestone < ApplicationRecord
   has_attached_file :video
   validates_attachment_content_type :video, :content_type => ["video/mp4"]
   enum status: { NotCompleted: 0, Completed: 1 }
+  has_many :milestoneupdates, dependent: :destroy
   
   after_create :create_images
   after_update :update_images

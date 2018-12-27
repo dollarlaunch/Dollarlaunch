@@ -15,7 +15,6 @@ class CampaignsController < ApplicationController
   end
   
   def show
-    @admin = User.first 
     @backer = Backer.new
     @projectchampion = Projectchampion.new
     @projectchampionsexist = @campaign.projectchampions.where(user_id: current_user.id, paymentstatus: true).first
@@ -23,6 +22,8 @@ class CampaignsController < ApplicationController
     @campaignreview = Campaignreview.new
     @backers = @campaign.backers
     @reviews = @campaign.campaignreviews
+    @milestoneupdate = Milestoneupdate.new
+    @milestoneupdates = @campaign.milestones.map{|x| x.milestoneupdates}.flatten.sort.reverse
     pledgeamountperperson
     eachmilestoneamount
   end
@@ -34,7 +35,10 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(campaign_params)
     if @campaign.save
-      Userbadge.create!(user_id:current_user.id,badge_id:6)
+      @a = current_user.userbadges.where(badge_id: 6)
+      if !@a.present?
+        Userbadge.create!(user_id: current_user.id,badge_id: 6)
+      end
       redirect_to @campaign
     else
       render 'new'

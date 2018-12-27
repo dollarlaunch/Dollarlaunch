@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_24_131403) do
+ActiveRecord::Schema.define(version: 2018_12_26_133414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2018_12_24_131403) do
     t.integer "cached_weighted_total", default: 0
     t.float "cached_weighted_average", default: 0.0
     t.string "askfromcommunity"
+    t.boolean "featuredstatus", default: false
     t.index ["category_id"], name: "index_campaigns_on_category_id"
     t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
@@ -168,6 +169,14 @@ ActiveRecord::Schema.define(version: 2018_12_24_131403) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campaign_id"], name: "index_milestones_on_campaign_id"
+  end
+
+  create_table "milestoneupdates", force: :cascade do |t|
+    t.bigint "milestone_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["milestone_id"], name: "index_milestoneupdates_on_milestone_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -268,6 +277,7 @@ ActiveRecord::Schema.define(version: 2018_12_24_131403) do
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "milestones", "campaigns"
+  add_foreign_key "milestoneupdates", "milestones"
   add_foreign_key "posts", "users"
   add_foreign_key "projectchampions", "campaigns"
   add_foreign_key "projectchampions", "users"
