@@ -1,0 +1,71 @@
+<hr class="divider">
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <% @categories = Category.all %>
+      <% @categories.each do |category| %>
+        <ul class="ctgry-tp">
+          <%= link_to category_path(category) do %>
+            <li><%= category.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+<hr class="mt-1">
+<footer class="py-3">
+	<div class="container-fluid mt-1 home-container">
+		<div class="row">
+			<div class="col-md-3">
+				<strong>SITE INFO</strong><br>
+				<small class="text-muted">This Website is Based on a Funding Platform for Creating Projects, It includes all the Categories like the Music, film, art, theater, games, comics, design, photography, and a lot more.</small><br>
+				<small class="text-muted">Total Users: <%= User.count %></small><br>
+			</div>
+			<div class="col-md-3">
+				<strong>Categories</strong>
+				<br>
+				<% @categories.each do |category| %>
+	        <%= link_to category_path(category) do %>
+	          <small><%= category.name %></small><br>
+	        <% end %>
+	      <% end %>
+			</div>
+			<div class="col-md-3">
+				<strong>QUICK LINKS</strong><br>
+				<small><%= link_to "About", about_path %></small><br>
+				<small><%= link_to "Posts", posts_path %></small><br>
+				<small><%= link_to "Categories", categories_path %></small><br>
+				<small><%= link_to "Badges", badges_path %></small><br>
+				<small><%= link_to "Start A Project ", new_campaign_path %></small><br>
+				<% if user_signed_in? %>
+					<small><%= link_to 'Logout', destroy_user_session_path, method: :delete %></small>
+				<% else %>
+					<small><%= link_to 'Login', new_user_session_path %></small><br>
+          <small><%= link_to 'Register', new_user_registration_path %></small>
+         <% end %>
+			</div>
+			<div class="col-md-3">
+				<strong>MORE FROM DOLLAR LAUNCH</strong><br>
+				<small><%= link_to "Terms & Conditions" %></small><br>
+				<small><%= link_to "Customer Support" %></small><br>
+				<small><%= link_to "Contact Admin" %></small><br>
+				<small class="text-muted">201-Bakerly Street, California</small>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="copyright-bar">
+	<div class="container-fluid home-container">
+		<div class="row">
+			<div class="col-sm-8">
+				<small>Copyright 2018 | All Rights Reserved | Powered by System Plus</small>
+			</div>
+			<div class="col-sm-4">
+				<i class="fab fa-twitter-square ftr-icon mr-2"></i>
+				<i class="fab fa-facebook-square ftr-icon mr-2"></i>
+				<i class="fab fa-google-plus-square ftr-icon mr-2"></i>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,26 +1,104 @@
 <div class="container mt-4">
   <div class="row">
-    <% @campaigns.each do |campaign| %>
+    <div class="col-md-8 mx-auto">
+      <% @categories.each do |category| %>
+        <ul class="ctgry-tp">
+          <%= link_to category_path(category) do %>
+            <li><%= category.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+<hr class="mt-1">
+<div class="container-fluid mt-3 home-container">
+  <h6 class="mb-3 text-muted">FEATURED CAMPAIGNS</h6>  
+  <div class="row">
+    <% @featuredcampaigns.each do |campaign| %>
       <div class="col-md-6 mb-4">
         <%= link_to campaign_path(campaign), class:'link-dec' do %>
-          <%= image_tag(campaign.image.url, class:'cmpgn-img') %>
+          <div class="home-top-cmpgn" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">
-            <h5 class="ml-3"><%= campaign.title %></h5>
+            <div class="home-cmpgn-title">
+              <h6 class="ml-3"><%= campaign.title %></h6>
+            </div>
             <div class="ml-3">
-              <small class="text-muted"><%= campaign.description.truncate(300) %></small>
+              <small style="color: #000"><%= campaign.description.truncate(260) %></small>
               <hr>
             </div>
             <div class="row ml-3">
-              <div class="col">
-                <small>Total Backers: <span class="text-muted"><%= campaign.backers.count %></span></small>
+              <div class="col-3">
+                <small class="badge badge-warning">FEATURED</small>
               </div>
-              <div class="col">
-                <small>Pledge Amount: <span class="text-muted"><%= campaign.pledge_amount %></span></small>
+              <div class="col-5">
+                <small class="text-muted">By: <%= campaign.user.username  %></small><br>
+              </div>
+              <div class="col-4">
+                <small class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></small>
               </div>
             </div>
           </div>
         <% end %>
         <br>
+      </div>
+    <% end %>
+  </div>
+</div>
+<hr>
+<div class="container-fluid mt-3 home-container">
+  <h6 class="mb-3 text-muted">OTHER CAMPAIGNS</h6>  
+  <div class="row">
+    <% @campaigns.each do |campaign| %>
+      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <%= link_to campaign_path(campaign), class:'link-dec' do %>
+          <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
+          <div class="hding-brdr mt-3">
+            <div class="home-cmpgn-title">
+              <h6 class="ml-3"><%= campaign.title %></h6>
+            </div>
+            <div class="ml-3">
+              <div class="home-cmpgn-othr">
+                <small class="text-muted"><%= campaign.description.truncate(65) %></small>
+              </div>
+              <hr>
+            </div>
+            <div class="row ml-3">
+              <div class="mr-3">
+                <small><span class="text-muted">By: <%= campaign.user.username %></span></small>
+              </div>
+              <div>
+                <small><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <br>
+      </div>
+    <% end %>
+  </div>
+</div>
+<hr>
+<div class="container-fluid mt-3 home-container">
+  <h6 class="mb-3 text-muted">BLOG POSTS</h6>  
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
+        <%= link_to post_path(post), class:'link-dec' do %>
+        <div class="home-blog">
+          <div class="home-cmpgn-img" style="background:url('<%= post.image.url %>')"></div>
+          <div class="blog-cntnt blog-title-h">
+              <h6><%= post.title %></h6>
+              <small class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></small>
+          </div>
+              <hr>
+              <div class="blog-meta">
+              <small class="text-muted mr-3">Author: <%= post.user.username %></small>
+            <small class="text-muted"><%= post.created_at.strftime("%b %d, %Y") %></small>
+          </div>
+        <% end %>
+        <br>
+        </div>
       </div>
     <% end %>
   </div>

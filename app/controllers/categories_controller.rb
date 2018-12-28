@@ -9,6 +9,7 @@ class CategoriesController < ApplicationController
   end
   
   def show
+    @campaigns = @category.campaigns
   end
   
   def new

@@ -1,8 +1,39 @@
 <div class="container">
-  <div class="row">
+  <div class="row mt-4">
     <div class="col-md-12">
-      <h1><%= @category.name %></h1>
+      <h3><%= @category.name %></h3>
       <p><%= @category.description %></p>
     </div>
+  </div>
+</div>
+<div class="container-fluid mt-3 home-container">
+  <div class="row">
+    <% @campaigns.each do |campaign| %>
+      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <%= link_to campaign_path(campaign), class:'link-dec' do %>
+          <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
+          <div class="hding-brdr mt-3">
+            <div class="home-cmpgn-title">
+              <h6 class="ml-3"><%= campaign.title %></h6>
+            </div>
+            <div class="ml-3">
+              <div class="home-cmpgn-othr">
+                <small class="text-muted"><%= campaign.description.truncate(65) %></small>
+              </div>
+              <hr>
+            </div>
+            <div class="row ml-3">
+              <div class="mr-3">
+                <small><span class="text-muted">By: <%= campaign.user.username %></span></small>
+              </div>
+              <div>
+                <small><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></small>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <br>
+      </div>
+    <% end %>
   </div>
 </div>
