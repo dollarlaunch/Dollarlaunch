@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :comments
   get '/about', to: 'home#aboutus'
+  get '/featuredcampaigns', to: 'home#featuredcampaigns'
   resources :conversations, only: [:index, :create] do
     resources :messages, only: [:index, :create]
   end

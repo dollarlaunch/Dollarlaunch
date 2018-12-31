@@ -2,7 +2,6 @@
 	<nav>
     <div class="nav nav-tabs nav-fill cmpg-tab" id="nav-tab" role="tablist">
       <a class="nav-item nav-link cmpgn-tb active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="fas fa-user"></i> Profile</a>
-      <a class="nav-item nav-link cmpgn-tb" id="nav-follow-tab" data-toggle="tab" href="#nav-follow" role="tab" aria-controls="nav-follow" aria-selected="false"><i class="far fa-thumbs-up"></i> Followed Campaigns</a>
       <a class="nav-item nav-link cmpgn-tb" id="nav-invoice-tab" data-toggle="tab" href="#nav-invoice" role="tab" aria-controls="nav-invoice" aria-selected="false"><i class="fas fa-money-check-alt"></i> Payment Settings</a>
     </div>
 	</nav>
@@ -20,7 +19,7 @@
             <% end %>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <h2><%= @user.username %></h2>
           <i class="fas fa-envelope-square prfl-eml-icn"></i><%= @user.email %><br>
           <i class="fas fa-globe prfl-web-icn"></i>
@@ -42,13 +41,7 @@
             <span class="text-muted">No Biography Available</span><br>
           <% end %>
         </div>
-        <div class="col-lg-3">
-          <h3>Badges</h3>
-          <% @user.userbadges.each do |userbadge| %>
-            <small class="badge badge-light"><%= userbadge.badge.name %></small><br>
-          <% end %>
-        </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="profile-shw-membr">
             <i class="fas fa-history text-muted"></i>
             <small class="text-muted">Member For, <%= time_ago_in_words(@user.created_at) %></small><br>
@@ -64,112 +57,33 @@
           </div>
         </div>
       </div>
-      <div class="row mt-3">
-        <div class="col-md-12">
-          <h3>My Campaigns</h3>
-          <% if current_user.campaigns.count == 0 %>
-            <h5>You Don't have any Projects! Want to Create?</h5>
-            <%= link_to 'Start a Project', new_campaign_path, class:'btn btn-primary btn-sm' %>
-          <% else %>
-            <% @campaigns.each do |campaign| %>
-              <div class="card">
-                <div class="card-header">
-                  <%= campaign.blurb.truncate(100) %>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <h5 class="card-title"><%= campaign.title %></h5>
-                      <small class="text-muted"><%= campaign.description.truncate(300) %></small><br>
-                      <%= link_to "Go to Campaign", campaign_path(campaign), class:"btn btn-primary m-2" %>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="profile-shw-membr">
-                        <i class="fas fa-history text-muted"></i><span class="text-muted"> Created <%= time_ago_in_words(campaign.created_at) %> ago</span><br>
-                        <i class="fas fa-calculator text-muted"></i> <span class="text-muted">Total Milestones:</span> <span class="badge badge-info"><%= campaign.milestones.count %></span><br>
-                        <i class="far fa-life-ring text-muted"></i> <span class="text-muted">Total Backers:</span> <span class="badge badge-info"><%= campaign.backers.count %></span><br>
-                        <i class="fas fa-signal text-muted"></i> <span class="text-muted">Status:</span> <span class="badge badge-success"><%= campaign.status %></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br>
-            <% end %>
-            <p><center><%= link_to "Show All Campaigns", campaigns_path %></center></p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="tab-pane fade show" id="nav-follow" role="tabpanel" aria-labelledby="nav-follow-tab">
+      <hr>
       <div class="row">
-        <div class="col-md-12">
-          <h3>Campaigns I Backed</h3>
-          <% if current_user.backers.count == 0 %>
-            <h5>You Don't Backed any Projects! Want to Backed?</h5>
-            <%= link_to 'Browse Projects', root_path, class:'btn btn-primary btn-sm' %>
-          <% else %>
-            <% current_user.backers.each do |backer| %>
-              <div class="card">
-                <div class="card-header">
-                  <%= backer.campaign.blurb.truncate(100) %>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <h5 class="card-title"><%= backer.campaign.title %></h5>
-                      <small class="text-muted"><%= backer.campaign.description.truncate(300) %></small><br>
-                      <%= link_to "Go to Campaign", campaign_path(backer.campaign), class:"btn btn-primary mt-2" %>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="profile-shw-membr">
-                        <i class="fas fa-user text-muted"></i> <span class="text-muted">Created by <%= backer.campaign.user.username %><br>
-                        <i class="fas fa-history text-muted"></i> Created <span class="text-muted"><%= time_ago_in_words(backer.campaign.created_at) %> ago</span><br>
-                        <i class="fas fa-dollar-sign text-muted"></i> Pledged Amount: <span class="text-muted">$<%= backer.pledgeamountperperson %></span><br>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br>
+        <div class="col-lg-12">
+          <h6>Your Badges</h6>
+          <% if @user.userbadges.count > 0 %>
+            <% @user.userbadges.each do |userbadge| %>
+              <small class="badge badge-warning"><%= userbadge.badge.name %></small>
             <% end %>
+          <% else %>
+            <small class="mark">You Don't have any Badge</small>
           <% end %>
         </div>
       </div>
       <hr>
-      <div class="row mt-3">
-        <div class="col-md-12">
-          <h3>ProjectChampion of Campaigns</h3>
-          <% if current_user.projectchampions.count == 0 %>
-            <h5>You are not the ProjectChampion of any Project! Want to Become a one?</h5>
-            <%= link_to 'Browse Projects', root_path, class:'btn btn-primary btn-sm' %>
+      <div class="row">
+        <div class="col-md-6">
+          <h6>My Campaigns</h6>
+          <% if current_user.campaigns.count == 0 %>
+            <small class="mark">You Don't have any Projects! Want to Create?</small>
+            <%= link_to 'Start a Project', new_campaign_path %>
           <% else %>
-            <% current_user.projectchampions.each do |projectchampion| %>
-              <div class="card">
-                <div class="card-header">
-                  <%= projectchampion.campaign.blurb.truncate(100) %>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <h5 class="card-title"><%= projectchampion.campaign.title %></h5>
-                      <small class="text-muted"><%= projectchampion.campaign.description.truncate(300) %></small><br>
-                      <%= link_to "Go to Campaign", campaign_path(projectchampion.campaign), class:"btn btn-primary mt-2" %>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="profile-shw-membr">
-                        <i class="fas fa-user text-muted"></i> <span class="text-muted">Created by <%= projectchampion.campaign.user.username %><br>
-                        <i class="fas fa-history text-muted"></i> Created <span class="text-muted"><%= time_ago_in_words(projectchampion.campaign.created_at) %> ago</span><br>
-                        <i class="fas fa-dollar-sign text-muted"></i> Amount You Paid: <span class="text-muted">$<%= projectchampion.projectchampionpaidamount %></span><br>
-                        <i class="fas fa-users text-muted"></i> Total Users You Invited: <span class="badge badge-info"><%= current_user.userreferalcodemacth %></span><br>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br>
-            <% end %>
+            <small class="mark">Quickly Search your Campaign!</small> | <%= link_to "Show My Campaigns", campaigns_path %>
           <% end %>
+        </div>
+        <div class="col-md-6">
+          <h6>Your Activity</h6>
+          <%= link_to "Go to your Dashboard!", dashboard_path %>
         </div>
       </div>
     </div>

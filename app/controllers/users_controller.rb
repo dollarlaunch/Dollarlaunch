@@ -9,15 +9,9 @@ class UsersController < ApplicationController
   end
   
   def dashboard
-    if current_user.admin != true
-      @campaigns = current_user.campaigns.limit(3)
-    else
-      @campaigns = Campaign.limit(1)
-    end
   end
   
   def profile
-    @campaigns = current_user.campaigns.limit(3)
   end
   
   private

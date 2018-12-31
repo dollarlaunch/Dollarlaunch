@@ -1908,12 +1908,12 @@ pre code {
     display: block;
     width: 100%;
     height: calc(2.25rem + 2px);
-    padding: 20px .75rem;
+    padding: 6px .75rem;
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
     background-clip: padding-box;
-    border: 1px solid #000000;
+    border: 1px solid #dad7d4;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-bottom: 20px

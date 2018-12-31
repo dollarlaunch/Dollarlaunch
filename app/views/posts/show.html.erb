@@ -13,7 +13,11 @@
       </div>
       <h6 class="mt-4"><i class="far fa-comment-alt"></i> Comments:</h6>
       <div id="comments">
-        <%= render @comments %>
+        <% if user_signed_in? %>
+          <%= render @comments %>
+        <% else %>
+          <small class="mark">You Need to LogIn First</small>
+        <% end %>
       </div>
       <% if user_signed_in? %>
         <span id="newcommentform">

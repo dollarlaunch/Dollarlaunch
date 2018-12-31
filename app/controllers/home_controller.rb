@@ -10,4 +10,8 @@ class HomeController < ApplicationController
   def aboutus
   end
   
+  def featuredcampaigns
+    @campaigns = Campaign.where(featuredstatus: 1).order("created_at DESC")
+  end
+  
 end

@@ -1,29 +1,26 @@
-<div class="container">
-  <div class="row mt-4">
-    <div class="col-md-10">
-      <h4>Blog</h4>
-    </div>
-    <div class="col-md-2">
-      <%= link_to "New Post", new_post_path, class:"btn btn-primary btn-sm" %>
-    </div>
+<div class="container-fluid mt-4 home-container">
+  <div class="mb-4">
+    <h3 class="text-muted blog-pge-hdr">BLOG POSTS</h3>  
+    <%= link_to "New Post", new_post_path, class:"btn btn-primary btn-sm float-right" %>
   </div>
-  <hr>
   <div class="row">
     <% @posts.each do |post| %>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <%= image_tag(post.image.url, class:'post-img') %>
-          <div class="card-body">
-            <div class="mb-3">
-            <small data-toggle="tooltip" data-placement="top" title="Writen By" class="text-muted"><%= post.user.username%></small>
-            <small data-toggle="tooltip" data-placement="top" title="Published Date" class="ml-2 text-muted"><%= time_ago_in_words(post.created_at) %> ago</small>
+      <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
+        <%= link_to post_path(post), class:'link-dec' do %>
+          <div class="home-blog">
+            <div class="home-cmpgn-img" style="background:url('<%= post.image.url %>')"></div>
+            <div class="blog-cntnt blog-title-h">
+              <h6><%= post.title %></h6>
+              <small class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></small>
             </div>
-            <h5 class="card-title mb-3" style="color: #009e74;" ><%= post.title.truncate(30) %></h5>
-            <p class="card-text"><%= post.description.truncate(45) %></p>
             <hr>
-              <%= link_to "Read More", post_path(post), class:"btn btn-primary btn-sm" %>
+            <div class="blog-meta">
+              <small class="text-muted mr-3">Author: <%= post.user.username %></small>
+              <small class="text-muted"><%= post.created_at.strftime("%b %d, %Y") %></small>
+            </div>
+          <br>
           </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>

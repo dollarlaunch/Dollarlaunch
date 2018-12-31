@@ -245,4 +245,29 @@ a #nav-campaign-tab, a #nav-milestone-tab, a #nav-champion-tab {
   background-size: cover !important;
   background-position: top center !important;
 }
-
+.blog-pge-hdr {
+  display: inline !important;
+}
+.new-frm-img {
+    background: #f5f5f5;
+    padding: 30px 10px;
+    border-radius: 4px;
+    border: 1px dotted #dad7d4;
+    cursor: pointer;
+    width: 100%;
+}
+.img-icon {
+  background: #fff;
+  border-radius: 50px;
+  padding: 25px 10px 0px 10px;
+  width: 70px;
+  height: 70px;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.17);
+}
+.img-btn {
+  display: none !important;
+}
+.frm-divider {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}

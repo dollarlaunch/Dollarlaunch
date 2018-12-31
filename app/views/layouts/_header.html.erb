@@ -14,10 +14,16 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="active">
-            <a class="nav-link nav-text" href="<%= root_path %>">HOME <span class="sr-only">(current)</span></a>
+          <a class="nav-link nav-text" href="<%= root_path %>">HOME <span class="sr-only">(current)</span></a>
         </li>
         <li>
           <a class="nav-link nav-text" href="<%= posts_path %>">BLOG </a>
+        </li>
+        <li>
+          <a class="nav-link nav-text" href="<%= about_path %>">ABOUT US </a>
+        </li>
+        <li>
+          <a class="nav-link nav-text" href="<%= featuredcampaigns_path %>">FEATURED CAMPAIGNS </a>
         </li>
         <% if user_signed_in? %>
           <li class="dropdown">

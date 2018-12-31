@@ -1,36 +1,90 @@
 <div class='nested-fields'>
+  <h5 class="text-center mt-3">Milestone Form</h5>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-10 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
-            <h3 class="card-title text-center">Milestone Form</h3>
-            <%= f.input :title, required: true, placeholder: 'Milestone Title', input_html: { class: 'form control form-control-sm' } %>
-            <%= f.input :description, required: true, placeholder: 'Description of the Milestone', input_html: { class: 'form control form-control-sm' } %>
-            <div class="row">
-              <div class="col">
-                <%= f.label 'Images' %> 
-                <%= f.input :images_array, as: :file, :input_html => { :multiple => true }, label: false, accept:'image/*' %>
-              </div>
-              <div class="col">
-                <%= f.label 'Video Clip' %> <small class="mark">Only Support mp4 videos</small>
-                <%= f.input :video, as: :file, label: false %>
-              </div>
-            </div>
-            </br>
-            <div class="row">
-              <div class="col">
-                <%= f.input :duration_type, required: true, collection: Milestone.duration_types.keys, label: 'Duration Type', input_html: { class: 'form control form-control-sm' } %>
-              </div>
-              <div class="col">
-                <%= f.input :duration_limit, required: true ,as: :integer, label: 'Duration Limit', input_html: { min: 0, class: 'form control form-control-sm' } %>
-              </div>
-            </div>
-            <%= f.input :budget, required: true, as: :integer, input_html: { min: 0, class: 'form control form-control-sm' } %>
-            <%= link_to_remove_association "Remove Milestone", f, class:'btn btn-outline-success btn-sm my-2 my-sm-0' %>
-          </div>
-        </div>
+    <div class="form-group row">
+      <div class="col-md-4">
+        <p class="mb-0">Project Title</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.input :title, required: true, placeholder: 'Milestone Title', input_html: { class: 'form-control' } %>
       </div>
     </div>
+  </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <p class="mb-0">Description</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.input :description, required: true, placeholder: 'Description of the Milestone', input_html: { class: 'form control form-control-sm', :rows => 8 } %>
+      </div>
+    </div>
+  </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-4">
+         <p class="mb-0">Images</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.label 'Images' %> <small class="mark">Only Support JPG, JPEG, GIF, PNG Format</small>
+        <%= f.input :images_array, as: :file, :input_html => { :multiple => true }, label: false, accept:'image/*' %>
+      </div>
+    </div>
+  </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <p class="mb-0">Videos</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.label 'Video Clip' %> <small class="mark">Only Support mp4 videos</small>
+        <%= f.input :video, as: :file, label: false %>
+      </div>
+    </div>
+  </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <p class="mb-0">Duration Type</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.input :duration_type, required: true, collection: Milestone.duration_types.keys, label: 'Duration Type', input_html: { class: 'form control form-control-sm' } %>
+      </div>
+    </div>
+  </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <p class="mb-0">Duration Limit</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.input :duration_limit, required: true ,as: :integer, label: 'Duration Limit', input_html: { min: 0, class: 'form-control' } %>
+      </div>
+    </div>
+  </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-4">
+        <p class="mb-0">Budget</p>
+        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+      </div>
+      <div class="col-md-8">
+        <%= f.input :budget, required: true, as: :integer, input_html: { min: 0, class: 'form control form-control-sm' } %>
+      </div>
+    </div>
+    <%= link_to_remove_association "Remove Milestone", f, class:'btn btn-danger btn-sm my-2 my-sm-0' %>
+    <hr class="frm-divider">
   </div>
 </div>
