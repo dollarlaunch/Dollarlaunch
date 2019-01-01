@@ -40,33 +40,31 @@
   <% if current_user.backers.count > 0 %>
     <div class="row">
       <% current_user.backers.each do |backer| %>
-        <% backer.campaigns.each do |campaign| %>
-          <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-            <%= link_to campaign_path(campaign), class:'link-dec' do %>
-              <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
-              <div class="hding-brdr mt-3">
-                <div class="home-cmpgn-title">
-                  <h6 class="ml-3"><%= campaign.title %></h6>
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <%= link_to campaign_path(backer.campaign), class:'link-dec' do %>
+            <div class="home-cmpgn-img" style="background:url('<%= backer.campaign.image.url %>')"></div>
+            <div class="hding-brdr mt-3">
+              <div class="home-cmpgn-title">
+                <h6 class="ml-3"><%= backer.campaign.title %></h6>
+              </div>
+              <div class="ml-3">
+                <div class="home-cmpgn-othr">
+                  <small class="text-muted"><%= backer.campaign.description.truncate(65) %></small>
                 </div>
-                <div class="ml-3">
-                  <div class="home-cmpgn-othr">
-                    <small class="text-muted"><%= campaign.description.truncate(65) %></small>
-                  </div>
-                  <hr>
+                <hr>
+              </div>
+              <div class="row ml-3">
+                <div class="mr-3">
+                  <small><span class="text-muted">By: <%= backer.campaign.user.username %></span></small>
                 </div>
-                <div class="row ml-3">
-                  <div class="mr-3">
-                    <small><span class="text-muted">By: <%= campaign.user.username %></span></small>
-                  </div>
-                  <div>
-                    <small><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></small>
-                  </div>
+                <div>
+                  <small><span class="text-muted"><%= backer.campaign.created_at.strftime("%b %d, %Y") %></span></small>
                 </div>
               </div>
-            <% end %>
-            <br>
-          </div>
-        <% end %>
+            </div>
+          <% end %>
+          <br>
+        </div>
       <% end %>
     </div>
   <% else %>
@@ -79,33 +77,31 @@
   <% if current_user.projectchampions.count > 0 %>
     <div class="row">
       <% current_user.projectchampions.each do |projectchampion| %>
-        <% projectchampion.campaigns.each do |campaign| %>
-          <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-            <%= link_to campaign_path(campaign), class:'link-dec' do %>
-              <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
-              <div class="hding-brdr mt-3">
-                <div class="home-cmpgn-title">
-                  <h6 class="ml-3"><%= campaign.title %></h6>
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <%= link_to campaign_path(projectchampion.campaign), class:'link-dec' do %>
+            <div class="home-cmpgn-img" style="background:url('<%= projectchampion.campaign.image.url %>')"></div>
+            <div class="hding-brdr mt-3">
+              <div class="home-cmpgn-title">
+                <h6 class="ml-3"><%= projectchampion.campaign.title %></h6>
+              </div>
+              <div class="ml-3">
+                <div class="home-cmpgn-othr">
+                  <small class="text-muted"><%= projectchampion.campaign.description.truncate(65) %></small>
                 </div>
-                <div class="ml-3">
-                  <div class="home-cmpgn-othr">
-                    <small class="text-muted"><%= campaign.description.truncate(65) %></small>
-                  </div>
-                  <hr>
+                <hr>
+              </div>
+              <div class="row ml-3">
+                <div class="mr-3">
+                  <small><span class="text-muted">By: <%= projectchampion.campaign.user.username %></span></small>
                 </div>
-                <div class="row ml-3">
-                  <div class="mr-3">
-                    <small><span class="text-muted">By: <%= campaign.user.username %></span></small>
-                  </div>
-                  <div>
-                    <small><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></small>
-                  </div>
+                <div>
+                  <small><span class="text-muted"><%= projectchampion.campaign.created_at.strftime("%b %d, %Y") %></span></small>
                 </div>
               </div>
-            <% end %>
-            <br>
-          </div>
-        <% end %>
+            </div>
+          <% end %>
+          <br>
+        </div>
       <% end %>
     </div>
   <% else %>

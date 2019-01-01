@@ -1,25 +1,55 @@
-<div class="container">
-  <div class="row mt-3">
-    <div class="col-md-8 mx-auto">
-      <ul>
-        <% @messages.each do |message| %>
-          <% if message.body %>
-            <li>
-              <h4><%= message.user.username %></h4>
-              <p><%= message.body %> | <small class="mark">Created about <%= time_ago_in_words(message.created_at) %> ago</small></p>
-            </li>
-          <% end %>
+<div style="background: #f8f8f8;">
+<div class="container py-4 chat-main">
+  <div class="col-md-8 mx-auto chat-main-top">
+    <h6><%= @username %></h6>
+    <hr>
+    <% @messages.each do |message| %>
+      <% if message.body %>
+        <% if message.user == current_user %>
+          <div class="main-right mb-2">
+            <div class="msg-right">
+              <div class="chat-avatar right">
+                <% if message.user.avatar.present? %>
+                  <%= image_tag(message.user.avatar.url, class:'user-chat') %>
+                <% else %>
+                  <img src="/user-1.png" class="user-chat">
+                <% end %>
+              </div>
+              <div class="chat-body right">
+                <p class="mb-0"><%= message.body %></p> <small><%= time_ago_in_words(message.created_at) %> ago</small>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <div class="main-left mb-2">
+            <div class="msg-left">
+              <div class="chat-avatar left">
+                <% if message.user.avatar.present? %>
+                  <%= image_tag(message.user.avatar.url, class:'user-chat') %>
+                <% else %>
+                  <img src="/user-1.png" class="user-chat">
+                <% end %>
+              </div>
+              <div class="chat-body left">
+                <p class="mb-0"><%= message.body %></p> <small><%= time_ago_in_words(message.created_at) %> ago</small>
+              </div>
+            </div>
+          </div>
         <% end %>
-      </ul>
-      <hr>
-      <h6>New Message: </h6>
-      <%= form_for [@conversation, @message] do |f| %>
-        <div class="field">
-          <%= f.text_area :body, placeholder: "Your message", class:'form-control' %>
-        </div>
-      
-        <%= f.submit "Send", :class => 'btn btn-primary btn-sm'  %>
       <% end %>
-    </div>
+    <% end %>
+    <hr>
+    <h6>New Message: </h6>
+    <%= form_for [@conversation, @message] do |f| %>
+      <div class="field">
+        <%= f.text_area :body, placeholder: "Your message", class:'form-control' %>
+      </div>
+      <div class="row">
+        <div class="col-12 text-right">
+          <%= f.submit "Send", :class => 'btn btn-primary btn-sm'  %>
+        </div>
+      </div>
+    <% end %>
   </div>
+</div>
 </div>
