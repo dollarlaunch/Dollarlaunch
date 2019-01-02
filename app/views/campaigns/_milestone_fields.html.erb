@@ -32,7 +32,7 @@
       </div>
       <div class="col-md-8">
         <%= f.label 'Images' %> <small class="mark">Only Support JPG, JPEG, GIF, PNG Format</small>
-        <%= f.input :images_array, as: :file, :input_html => { :multiple => true }, label: false, accept:'image/*' %>
+        <%= f.input :images_array, as: :file, :input_html => { :multiple => true, accept: 'image/png,image/gif,image/jpeg,image/jpg' }, label: false %>
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@
       </div>
       <div class="col-md-8">
         <%= f.label 'Video Clip' %> <small class="mark">Only Support mp4 videos</small>
-        <%= f.input :video, as: :file, label: false %>
+        <%= f.input :video, as: :file, label: false, :input_html => { accept: 'video/mp4'  } %>
       </div>
     </div>
   </div>

@@ -39,7 +39,7 @@ class CampaignsController < ApplicationController
       if !@a.present?
         Userbadge.create!(user_id: current_user.id,badge_id: 6)
       end
-      redirect_to @campaign
+      redirect_to @campaign, flash: {success: 'Campaign Created Successfully'}
     else
       render 'new'
     end
@@ -50,7 +50,7 @@ class CampaignsController < ApplicationController
   
   def update
     if @campaign.update(campaign_params)
-      redirect_to @campaign
+      redirect_to @campaign, flash: {success: 'Campaign Updated Successfully'}
     else
       render 'edit'
     end
@@ -59,7 +59,7 @@ class CampaignsController < ApplicationController
   def destroy
     @campaign.destroy
 
-    redirect_to campaigns_path
+    redirect_to campaigns_path, flash: {success: 'Campaign Deleted Successfully'}
   end
   
   def like

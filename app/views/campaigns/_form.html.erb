@@ -57,7 +57,7 @@
               <div class="new-frm-preview d-non"></div>
             </label>
             <div class="img-btn">
-              <%= f.input :image, as: :file, label: false %>
+              <%= f.input :image, as: :file, label: false, input_html: { accept: 'image/png,image/gif,image/jpeg,image/jpg' } %>
             </div>
           </div>
         </div>
@@ -228,11 +228,11 @@
           <div class="form-group row">
             <div class="col-md-6">
               <label>Project Champion Images</label> <small class="mark">Only Support JPG, JPEG, GIF or PNG</small>
-              <%= f.input :projectchampionimages_array, as: :file, :input_html => { :multiple => true }, label: false %>
+              <%= f.input :projectchampionimages_array, as: :file, :input_html => { :multiple => true, accept: 'image/png,image/gif,image/jpeg,image/jpg'  }, label: false %>
             </div>
             <div class="col-md-6">
               <label>Project Champion Video</label> <small class="mark">Only Support mp4 videos</small>
-              <%= f.input :projectchampionvideo, as: :file, label: false %>
+              <%= f.input :projectchampionvideo, as: :file, label: false, :input_html => { accept: 'video/mp4' } %>
             </div>
           </div>
         </div>

@@ -12,13 +12,13 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require toastr
 //= require ckeditor-jquery
 //= require cocoon
 //= require activestorage
 //= require dataTables/jquery.dataTables
 //= require social-share-button
 //= require_tree .
-// Images
 $(function() {
   // Multiple images preview in browser
   var imagesPreview = function(input, placeToInsertImagePreview) {
