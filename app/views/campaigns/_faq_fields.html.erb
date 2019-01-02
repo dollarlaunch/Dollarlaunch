@@ -6,7 +6,8 @@
         <small class="text-muted">Tell people what you’re raising funds to do, how you plan to make it happen.</small>
       </div>
       <div class="col-md-8">
-        <%= f.input :description, required: true, placeholder: 'Frequently Asked Questions', input_html: { class: 'form control form-control-sm', :rows => 8 } %>
+        <%= f.input :question, required: true, placeholder: 'Write a Question', input_html: { class: 'form control form-control-sm', :rows => 3 } %>
+        <%= f.input :answer, required: true, placeholder: 'Write an Answer', input_html: { class: 'form control form-control-sm', :rows => 6 } %>
         <%= link_to_remove_association "Remove FAQ", f, class:'btn btn-danger btn-sm my-2 my-sm-0' %>
       </div>
     </div>

@@ -31,7 +31,7 @@
       <% end %>
     </div>
   <% else %>
-    <small class="mark">You Have not Start any Project</small> | <%= link_to "Start a Project !", new_campaign_path %>
+    <small class="mark">You Have not Start any Project</small> | <%= link_to "Start a Project", new_campaign_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>
 <hr>
@@ -68,7 +68,7 @@
       <% end %>
     </div>
   <% else %>
-    <small class="mark">You Have not Backed any Campaign</small> | <%= link_to "Browse Projects !", root_path %>
+    <small class="mark">You Have not Backed any Campaign</small> | <%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>
 <hr>
@@ -105,35 +105,6 @@
       <% end %>
     </div>
   <% else %>
-    <small class="mark">You are not the ProjectChampion of any Campaign</small> | <%= link_to "Browse Projects !", root_path %>
-  <% end %>
-</div>
-<hr>
-<div class="container-fluid mt-3 home-container">
-  <h6 class="mb-3 text-muted py-2"><strong>POSTS CREATED BY YOU</strong></h6>
-  <% if current_user.posts.count > 0 %>
-    <div class="row">
-      <% current_user.posts.each do |post| %>
-        <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
-          <%= link_to post_path(post), class:'link-dec' do %>
-            <div class="home-blog">
-              <div class="home-cmpgn-img" style="background:url('<%= post.image.url %>')"></div>
-              <div class="blog-cntnt blog-title-h">
-                <h6><%= post.title %></h6>
-                <small class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></small>
-              </div>
-              <hr>
-              <div class="blog-meta">
-                <small class="text-muted mr-3">Author: <%= post.user.username %></small>
-                <small class="text-muted"><%= post.created_at.strftime("%b %d, %Y") %></small>
-              </div>
-              <br>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <small class="mark">You Have not created any Posts.</small> | <%= link_to "Create a Post !", new_post_path %>
+    <small class="mark">You are not the ProjectChampion of any Campaign</small> | <%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>

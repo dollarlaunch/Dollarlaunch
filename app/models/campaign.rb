@@ -2,10 +2,10 @@ class Campaign < ApplicationRecord
   
   belongs_to :user
   belongs_to :category
-  validates_presence_of :title, :blurb, :description, :duration, :goal, :pledge_amount, :no_of_participants, :pledge_deadline, :location
+  validates_presence_of :title, :blurb, :description, :pledge_amount, :no_of_participants, :pledge_deadline, :location
   has_attached_file :image
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-  enum status: { prelaunch: 0, launched: 1 }
+  enum status: { Draft: 0, Launched: 1 }
   acts_as_votable
   has_many :campaignreviews, dependent: :destroy
   
@@ -15,7 +15,7 @@ class Campaign < ApplicationRecord
   
   # Project Champion Scenario
   has_many :projectchampions, dependent: :destroy
-  enum projectchampionstatus: { Disable: 0, Activate: 1 }
+  enum projectchampionstatus: { Disabled: 0, Activated: 1 }
   has_attached_file :projectchampionvideo
   validates_attachment_content_type :projectchampionvideo, :content_type => ["video/mp4"]
   
@@ -41,7 +41,7 @@ class Campaign < ApplicationRecord
   private
   
     def create_images
-      if self.projectchampionstatus == "Activate"
+      if self.projectchampionstatus == "Activated"
         self.projectchampionimages_array.each do |image|
           self.images.create(image: image)
         end

@@ -35,8 +35,6 @@
 				<strong>QUICK LINKS</strong><br>
 				<small><%= link_to "About", about_path %></small><br>
 				<small><%= link_to "Posts", posts_path %></small><br>
-				<small><%= link_to "Categories", categories_path %></small><br>
-				<small><%= link_to "Badges", badges_path %></small><br>
 				<small><%= link_to "Start A Project ", new_campaign_path %></small><br>
 				<% if user_signed_in? %>
 					<small><%= link_to 'Logout', destroy_user_session_path, method: :delete %></small>

@@ -2,7 +2,7 @@ class BadgesController < ApplicationController
   
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_badge_param, only: [:show,:edit,:update,:destroy]
-  load_and_authorize_resource except: [:index,:show,:socialsharebadge]
+  load_and_authorize_resource except: [:socialsharebadge]
   skip_before_action :verify_authenticity_token
   
   def index

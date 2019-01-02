@@ -76,14 +76,14 @@
           <h6>My Campaigns</h6>
           <% if current_user.campaigns.count == 0 %>
             <small class="mark">You Don't have any Projects! Want to Create?</small>
-            <%= link_to 'Start a Project', new_campaign_path %>
+            <%= link_to 'Start a Project', new_campaign_path, class:'btn btn-primary btn-sm' %>
           <% else %>
-            <small class="mark">Quickly Search your Campaign!</small> | <%= link_to "Show My Campaigns", campaigns_path %>
+            <small class="mark">Quickly Search your Campaign!</small> <%= link_to "Show My Campaigns", campaigns_path, class:'btn btn-primary btn-sm'  %>
           <% end %>
         </div>
         <div class="col-md-6">
           <h6>Your Activity</h6>
-          <%= link_to "Go to your Dashboard!", dashboard_path %>
+          <%= link_to "Go to your Dashboard", dashboard_path, class:'btn btn-primary btn-sm'  %>
         </div>
       </div>
     </div>

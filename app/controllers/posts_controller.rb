@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post_params, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource only: [:edit,:destroy]
+  load_and_authorize_resource except: [:index,:show]
   
   def index
     @posts = Post.all

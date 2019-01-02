@@ -73,18 +73,4 @@
       </div>
     </div>
   </div>
-  <hr class="frm-divider">
-  <div class="container">
-    <div class="form-group row">
-      <div class="col-md-4">
-        <p class="mb-0">Budget</p>
-        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
-      </div>
-      <div class="col-md-8">
-        <%= f.input :budget, required: true, as: :integer, input_html: { min: 0, class: 'form control form-control-sm' } %>
-      </div>
-    </div>
-    <%= link_to_remove_association "Remove Milestone", f, class:'btn btn-danger btn-sm my-2 my-sm-0' %>
-    <hr class="frm-divider">
-  </div>
 </div>

@@ -31,12 +31,12 @@
               <%= current_user.username %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to "Categories", categories_path, class:"dropdown-item nav-drp" %>
               <%= link_to "Projects", campaigns_path, class:"dropdown-item nav-drp" %>
               <%= link_to "Profile", profile_path(current_user.id), class:"dropdown-item nav-drp" %>
               <%= link_to "Dashboard", dashboard_path(current_user.id), class:"dropdown-item nav-drp" %>
               <%= link_to "Inbox", conversations_path, class:"dropdown-item nav-drp" %>
               <% if current_user.admin == true %>
+                <%= link_to "Categories", categories_path, class:"dropdown-item nav-drp" %>
                 <%= link_to "Users", users_path, class:'dropdown-item nav-drp' %>
                 <%= link_to "Badges", badges_path, class:'dropdown-item nav-drp' %>
               <% end %>

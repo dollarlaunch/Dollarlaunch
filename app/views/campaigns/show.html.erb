@@ -120,7 +120,7 @@
       <a class="nav-item nav-link cmpgn-tb active" id="nav-campaign-tab" data-toggle="tab" href="#nav-campaign" role="tab" aria-controls="nav-campaign" aria-selected="true">Campaign</a>
       <a class="nav-item nav-link cmpgn-tb" id="nav-milestone-tab" data-toggle="tab" href="#nav-milestone" role="tab" aria-controls="nav-milestone" aria-selected="false">Milestones</a>
       <a class="nav-item nav-link cmpgn-tb" id="nav-champion-tab" data-toggle="tab" href="#nav-champion" role="tab" aria-controls="nav-champion" aria-selected="false">Project Champion</a>
-      <a class="nav-item nav-link cmpgn-tb" id="nav-campaignreview-tab" data-toggle="tab" href="#nav-campaignreview" role="tab" aria-controls="nav-campaignreview" aria-selected="false">Review</a>
+      <a class="nav-item nav-link cmpgn-tb" id="nav-campaignreview-tab" data-toggle="tab" href="#nav-campaignreview" role="tab" aria-controls="nav-campaignreview" aria-selected="false">Reviews</a>
       <a class="nav-item nav-link cmpgn-tb" id="nav-updates-tab" data-toggle="tab" href="#nav-updates" role="tab" aria-controls="nav-updates" aria-selected="false">Updates</a>
     </div>
 	</nav>
@@ -146,25 +146,21 @@
           <hr>
           <h5 class="text-muted">Frequently Asked Questions</h5>
           <% if @campaign.faqs.count > 0 %>
-            <ul>
-              <% @campaign.faqs.each do |faq| %>
-                <li><%= faq.description %></li>
-              <% end %>
-            </ul>
+            <% @campaign.faqs.each do |faq| %>
+              <p> <i class="fas fa-arrow-right"></i> <%= faq.question %></p>
+              <small class="mark"><%= faq.answer %></small>
+              <hr>
+            <% end %>
           <% else %>
             <small class="mark">Nill</small>
           <% end %>
-          <hr>
-          <h5 class="text-muted">Community Helped You Asked ?</h5>
+          <h5 class="text-muted">Community Help</h5>
           <small class="text-muted"><%= @campaign.askfromcommunity %></small>
         </div>
         <div class="col-md-4">
     			<div class="cmpgn-right">
             <p class="mb-0">Location</p>
             <small class="text-muted"><%= @campaign.location %></small>
-            <hr>
-            <p class="mb-0">Goal</p>
-            <small class="text-muted"><%= @campaign.goal %></small>
             <hr>
             <p class="mb-0">Category</p>
             <small class="text-muted" class='badge badge-primary'><%= @campaign.category.name %></small>
@@ -209,9 +205,6 @@
                       <p class="mb-0">Milestone Duration</p>
                       <small class="text-muted"><%= milestone.duration_limit %></small>
                       <small class="text-muted"><%= milestone.duration_type %></small>
-                      <hr>
-                      <p class="mb-0">Milestone Budget</p>
-                      <small class="text-muted"><%= milestone.budget %></small>
                       <hr>
                       <% if milestone.status == "Completed" %>
                         <p class="mb-0">Status: <span class="border border-success p-1">Completed</span></p>
@@ -264,7 +257,7 @@
           <% if @campaign.projectchampionstatus == 'Disable' %>
             You, have to make a request to the Project Owner to Activate the <span class="badge badge-primary">Project Champion Feature</span>
           <% end %>
-          <% if @campaign.projectchampionstatus == 'Activate' %>
+          <% if @campaign.projectchampionstatus == 'Activated' %>
             <% if @campaign.user.id != current_user.id %>
               <% if !@projectchampionsexist.present? %>
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
@@ -374,7 +367,8 @@
                 <% @reviews.each do |review| %>
                   <% if backer.user.id != review.user.id %>
                     <%= simple_form_for @campaignreview do |f| %>
-                      <h5>Body</h5>
+                      <hr>
+                      <label>Write a Review</label> 
                       <%= f.input :body, label: false %>
                       <%= f.hidden_field :user_id, value: backer.user.id %>
                       <%= f.hidden_field :campaign_id, value: @campaign.id %>
@@ -384,7 +378,8 @@
                 <% end %>
               <% else %>
                 <%= simple_form_for @campaignreview do |f| %>
-                  <h5>Body</h5>
+                  <hr>
+                  <label>Write a Review</label> 
                   <%= f.input :body, label: false %>
                   <%= f.hidden_field :user_id, value: backer.user.id %>
                   <%= f.hidden_field :campaign_id, value: @campaign.id %>
@@ -405,7 +400,7 @@
         <%= simple_form_for @milestoneupdate, remote: true do |f| %>
           <div class="row">
             <div class="col-md-7">
-              <h6>Body</h6>
+              <label>Write an Update</label>
               <%= f.input :body, required: true, placeholder: 'Update of the Milestone', label: false, input_html: { class: 'form control', id: 'milestoneupdate_body1' } %>
             </div>
             <div class="col-md-5">
@@ -423,7 +418,6 @@
 </div>
 <% if @campaign.user.id != current_user.id %>
   <div class="container">
-    <hr>
     <div class="row">
       <div class="col-md-6 mx-auto">
         <small class="text-muted">Message <small class="mark"><%= @campaign.user.username %></small> to offer any help to this Campaign</small>

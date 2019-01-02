@@ -81,7 +81,7 @@ class CampaignsController < ApplicationController
     end
     
     def campaign_params
-      params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :duration, :goal, :pledge_amount, :no_of_participants, :status, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :risksandchallenges, :faqs, :category_id, :user_id, :askfromcommunity, projectchampionimages_array:[], riskandchallenges_attributes:[:id, :description, :_destroy], faqs_attributes:[:id, :description, :_destroy], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :budget, :video, :_destroy, images_array:[]])
+      params.require(:campaign).permit(:image, :title, :blurb, :description, :location, :pledge_amount, :no_of_participants, :status, :featuredstatus, :pledge_deadline, :projectchampionminimumamount, :projectchampiontext, :projectchampionvideo ,:projectchampionstatus, :risksandchallenges, :faqs, :category_id, :user_id, :askfromcommunity, projectchampionimages_array:[], riskandchallenges_attributes:[:id, :description, :_destroy], faqs_attributes:[:id, :question, :answer, :_destroy], milestones_attributes: [:id, :title, :description, :duration_type, :duration_limit, :video, :_destroy, images_array:[]])
     end
     
     def authenticate_me

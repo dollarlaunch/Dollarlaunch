@@ -5,7 +5,6 @@ class CreateMilestones < ActiveRecord::Migration[5.2]
       t.text :description
       t.integer :duration_type
       t.integer :duration_limit
-      t.integer :budget
       t.attachment :video
       t.integer :status, default: 0
       

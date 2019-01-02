@@ -67,12 +67,12 @@ ActiveRecord::Schema.define(version: 2018_12_26_133414) do
     t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.text "location"
-    t.integer "duration"
-    t.integer "goal"
     t.integer "pledge_amount"
     t.integer "no_of_participants"
-    t.integer "status", default: 0
     t.date "pledge_deadline"
+    t.integer "status", default: 0
+    t.boolean "featuredstatus", default: false
+    t.string "askfromcommunity"
     t.integer "projectchampionstatus", default: 0
     t.integer "projectchampionminimumamount"
     t.text "projectchampiontext"
@@ -91,8 +91,6 @@ ActiveRecord::Schema.define(version: 2018_12_26_133414) do
     t.integer "cached_weighted_score", default: 0
     t.integer "cached_weighted_total", default: 0
     t.float "cached_weighted_average", default: 0.0
-    t.string "askfromcommunity"
-    t.boolean "featuredstatus", default: false
     t.index ["category_id"], name: "index_campaigns_on_category_id"
     t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
@@ -124,7 +122,8 @@ ActiveRecord::Schema.define(version: 2018_12_26_133414) do
   end
 
   create_table "faqs", force: :cascade do |t|
-    t.text "description"
+    t.text "question"
+    t.text "answer"
     t.bigint "campaign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -159,7 +158,6 @@ ActiveRecord::Schema.define(version: 2018_12_26_133414) do
     t.text "description"
     t.integer "duration_type"
     t.integer "duration_limit"
-    t.integer "budget"
     t.string "video_file_name"
     t.string "video_content_type"
     t.integer "video_file_size"

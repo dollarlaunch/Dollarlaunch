@@ -1,7 +1,9 @@
 <div class="container-fluid mt-4 home-container">
   <div class="mb-4">
-    <h3 class="text-muted blog-pge-hdr">BLOG POSTS</h3>  
-    <%= link_to "New Post", new_post_path, class:"btn btn-primary btn-sm float-right" %>
+    <h3 class="text-muted blog-pge-hdr">BLOG POSTS</h3>
+    <% if can? :new, Post %>
+      <%= link_to "New Post", new_post_path, class:"btn btn-primary btn-sm float-right" %>
+    <% end %>
   </div>
   <div class="row">
     <% @posts.each do |post| %>

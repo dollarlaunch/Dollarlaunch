@@ -6,12 +6,12 @@ class CreateCampaigns < ActiveRecord::Migration[5.2]
       t.text :description
       t.attachment :image
       t.text :location
-      t.integer :duration
-      t.integer :goal
       t.integer :pledge_amount
       t.integer :no_of_participants
-      t.integer :status, default: 0
       t.date :pledge_deadline
+      t.integer :status, default: 0
+      t.boolean :featuredstatus, default: false
+      t.string :askfromcommunity
       t.integer :projectchampionstatus, default: 0
       t.integer :projectchampionminimumamount
       t.text :projectchampiontext
