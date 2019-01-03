@@ -40,6 +40,8 @@ class PostsController < ApplicationController
   
   def destroy
     @post.destroy
+    @post.clear
+    @post.save
     redirect_to posts_path
   end
   
