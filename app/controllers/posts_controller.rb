@@ -39,8 +39,8 @@ class PostsController < ApplicationController
   end
   
   def destroy
-    @post.destroy, flash: {success: 'Post Deleted Successfully'}
-    redirect_to posts_path
+    @post.destroy
+    redirect_to posts_path, flash: {success: 'Post Deleted Successfully'}
   end
   
   private
