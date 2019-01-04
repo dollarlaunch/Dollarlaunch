@@ -5,6 +5,6 @@ development: &default
 test:
   <<: *default
 production:
-  mode: live
+  mode: sandbox
   client_id: <%= ENV["dollarlaunchclientid"] %>
   client_secret: <%= ENV["dollarlaunchclientsecret"] %>
