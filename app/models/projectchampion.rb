@@ -9,7 +9,7 @@ class Projectchampion < ApplicationRecord
       cmd: "_xclick",
       upload: 1,
       return: "#{ENV['app_host']}#{return_path}",
-      invoice: id,
+      invoice: self.id,
       amount: self.projectchampionpaidamount,
       item_name: self.campaign.title,
       item_number: self.id,
