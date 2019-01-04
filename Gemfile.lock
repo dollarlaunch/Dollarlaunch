@@ -48,6 +48,7 @@ GEM
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
+    awesome_print (1.8.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.127.0)
     aws-sdk-core (3.44.1)
@@ -269,6 +270,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_votable (~> 0.12.0)
+  awesome_print
   aws-sdk-s3
   bootsnap (>= 1.1.0)
   byebug
