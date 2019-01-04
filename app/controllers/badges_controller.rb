@@ -29,7 +29,7 @@ class BadgesController < ApplicationController
   end
   
   def update
-    if @badge = Badge.update(badge_params)
+    if @badge.update(badge_params)
       redirect_to @badge, flash: {success: 'Badge Updated Successfully'}
     else
       render 'edit'
