@@ -19,7 +19,7 @@ class BadgesController < ApplicationController
   def create
     @badge = Badge.new(badge_params)
     if @badge.save
-      redirect_to @badge
+      redirect_to @badge, flash: {success: 'Badge Created Successfully'}
     else
       render 'new'
     end
@@ -30,7 +30,7 @@ class BadgesController < ApplicationController
   
   def update
     if @badge = Badge.update(badge_params)
-      redirect_to @badge
+      redirect_to @badge, flash: {success: 'Badge Updated Successfully'}
     else
       render 'edit'
     end
@@ -38,7 +38,7 @@ class BadgesController < ApplicationController
   
   def destroy
     @badge.destroy
-    redirect_to badges_path
+    redirect_to badges_path, flash: {success: 'Badge Deleted Successfully'}
   end
   
   def socialsharebadge

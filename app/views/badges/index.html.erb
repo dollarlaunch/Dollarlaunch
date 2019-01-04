@@ -10,3 +10,39 @@
     </div>
   </div>
 </div>
+
+<div class="container mt-4">
+  <h3>Listing All the Badges</h3>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Show</th>
+        <% if can? :edit, Badge %>
+          <th>Edit</th>
+        <% end %>
+        <% if can? :delete, Badge %>
+          <th>Delete</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @badges.each do |badge| %>
+        <tr>
+          <td><%= badge.name %></td>
+          <td><%= link_to '<i class="fas fa-eye"></i>'.html_safe, badge_path(badge) %></td>
+          <% if can? :edit, badge %>
+            <td><%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_badge_path(badge) %></td>
+          <% end %>
+          <% if can? :delete, badge %>
+            <td><%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, badge_path(badge), method: :delete, data: { confirm: 'Are You Sure ?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if can? :new, @badge %>
+    <hr>
+    <%= link_to "New badge", new_badge_path %>
+  <% end %>
+</div>

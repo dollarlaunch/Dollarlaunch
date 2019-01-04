@@ -58,8 +58,6 @@ class CampaignsController < ApplicationController
   
   def destroy
     @campaign.destroy
-    # @campaign.clear
-    # @campaign.save
     redirect_to campaigns_path, flash: {success: 'Campaign Deleted Successfully'}
   end
   

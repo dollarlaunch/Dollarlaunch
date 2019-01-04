@@ -396,21 +396,23 @@
         <h6>Updates for this Campaign</h6>
         <%= render @milestoneupdates %>
       </div>
-      <% if current_user.id == @campaign.user.id %>
-        <%= simple_form_for @milestoneupdate, remote: true do |f| %>
-          <div class="row">
-            <div class="col-md-7">
-              <label>Write an Update</label>
-              <%= f.input :body, required: true, placeholder: 'Update of the Milestone', label: false, input_html: { class: 'form control', id: 'milestoneupdate_body1' } %>
+      <% if @campaign.milestones.count > 0 %>
+        <% if current_user.id == @campaign.user.id %>
+          <%= simple_form_for @milestoneupdate, remote: true do |f| %>
+            <div class="row">
+              <div class="col-md-7">
+                <label>Write an Update</label>
+                <%= f.input :body, required: true, placeholder: 'Update of the Milestone', label: false, input_html: { class: 'form control', id: 'milestoneupdate_body1' } %>
+              </div>
+              <div class="col-md-5">
+                <h6>Select Milestone</h6>
+                <%= f.collection_select :milestone_id, @campaign.milestones, :id, :title, {}, { class: 'form control form-control-lg' } %>
+              </div>
+              <div class="col-md-12">
+                <%= f.submit 'Post Update', class:'btn btn-primary btn-sm' %>
+              </div>
             </div>
-            <div class="col-md-5">
-              <h6>Select Milestone</h6>
-              <%= f.collection_select :milestone_id, @campaign.milestones, :id, :title, {}, { class: 'form control form-control-lg' } %>
-            </div>
-            <div class="col-md-12">
-              <%= f.submit 'Post Update', class:'btn btn-primary btn-sm' %>
-            </div>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>

@@ -24,7 +24,10 @@ class ProjectchampionsController < ApplicationController
     if status == "Completed"
       @projectchampion = Projectchampion.find(params[:item_number])
       @projectchampion.update_attributes(paymentstatus: true)
-      Userbadge.create!(user_id: current_user.id, badge_id: 1)
+      @a = current_user.userbadges.where(badge_id: 1)
+      if !@a.present?
+        Userbadge.create!(user_id: current_user.id, badge_id: 1)
+      end
     end
     head :ok
   end

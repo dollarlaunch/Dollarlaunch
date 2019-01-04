@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post
+      redirect_to @post, flash: {success: 'Post Created Successfully'}
     else
       render 'new'
     end
@@ -32,16 +32,14 @@ class PostsController < ApplicationController
   
   def update
     if @post.update(post_params)
-      redirect_to @post
+      redirect_to @post, flash: {success: 'Post Updated Successfully'}
     else
       render 'edit'
     end
   end
   
   def destroy
-    @post.destroy
-    # @post.clear
-    # @post.save
+    @post.destroy, flash: {success: 'Post Deleted Successfully'}
     redirect_to posts_path
   end
   

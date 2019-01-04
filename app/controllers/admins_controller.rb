@@ -9,14 +9,14 @@ class AdminsController < ApplicationController
     @campaign = Campaign.find(params[:id])
     @campaign.status = 1
     @campaign.save
-    redirect_to @campaign
+    redirect_to @campaign, flash: {success: 'Campaign Launched Successfully'}
   end
   
   def change_campaign_featuredstatus
     @campaign = Campaign.find(params[:id])
     @campaign.featuredstatus = true
     @campaign.save
-    redirect_to @campaign
+    redirect_to @campaign, flash: {success: 'Campaign is now Feaetured'}
   end
   
 end
