@@ -4,6 +4,7 @@ class Projectchampion < ApplicationRecord
   belongs_to :user
 
   def paypal_url(return_path)
+    logger.info "PAYPAL #{self.id}"
     values = {
       business: "#{ENV['business']}",
       cmd: "_xclick",
