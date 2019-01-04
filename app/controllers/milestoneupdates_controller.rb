@@ -44,6 +44,9 @@ class MilestoneupdatesController < ApplicationController
         @pledgeamountperperson = @pledgeamountperpersoninstring.to_i
         @milestones = @campaign.milestones.count
         @eachmilestoneamount = @pledgeamountperperson/@milestones
+        if @campaign.milestones.count == 1
+          @eachmilestoneamount = @eachmilestoneamount - 1
+        end
         @milestoneamount = number_with_precision(@eachmilestoneamount, precision: 2)
         @auth_id = backer.authorization
         @authorization = Authorization.find(@auth_id)
