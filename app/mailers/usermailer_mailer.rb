@@ -22,4 +22,9 @@ class UsermailerMailer < ApplicationMailer
     mail(to: @user.email, subject: "Congratulations! Milestone is Completed")
   end
   
+  def message_email(user)
+    @user = user
+    mail(to: @user.email, subject: "You got some Messages, go Check it!")
+  end
+  
 end

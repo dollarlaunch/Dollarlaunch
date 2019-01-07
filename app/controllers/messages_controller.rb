@@ -17,9 +17,14 @@ class MessagesController < ApplicationController
     @message.user = current_user
     if @message.save
       redirect_to conversation_messages_path(@conversation)
+      sendemail
     end
   end
 
+  def sendemail
+    UsermailerMailer.message_email(@conversation.recipient(current_user)).deliver
+  end
+  
   private
     def message_params
       params.require(:message).permit(:body, :user_id)
