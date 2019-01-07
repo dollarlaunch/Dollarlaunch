@@ -225,6 +225,9 @@ a #nav-champion-tab {
     padding-left: 50px !important;
     padding-right: 50px !important;
   }
+  .dropdown-menu {
+    left: -44px !important;
+  }
 }
 .home-blog {
   box-shadow: 0px 15px 45px -9px rgba(0, 0, 0, .2);
