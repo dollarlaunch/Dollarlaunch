@@ -1,6 +1,6 @@
 <div class="container-fluid mt-4 home-container">
   <div class="mb-4">
-    <h3 class="text-muted blog-pge-hdr">BLOG POSTS</h3>
+    <h2 class="text-muted blog-pge-hdr">BLOG POSTS</h2>
     <% if can? :new, Post %>
       <%= link_to "New Post", new_post_path, class:"btn btn-primary btn-sm float-right" %>
     <% end %>
@@ -12,8 +12,8 @@
           <div class="home-blog">
             <div class="home-cmpgn-img" style="background:url('<%= post.image.url %>')"></div>
             <div class="blog-cntnt blog-title-h">
-              <h6><%= post.title %></h6>
-              <small class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></small>
+              <h3><%= post.title.truncate(50) %></h3>
+              <p class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></p>
             </div>
             <hr>
             <div class="blog-meta">

@@ -5,7 +5,7 @@
     <% if @campaign.errors.any? %>
       <ul>
         <% @campaign.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+          <li class="mark"><%= msg %></li>
         <% end %>
       </ul>
     <% end %>
@@ -49,15 +49,17 @@
             <label for="campaign_image" class="new-frm-img">
               <div class="label_preview">
                 <center><div class="img-icon"><i class="fas fa-image mb-3"></i></div></center>
-                <center><small class="text-center">Drop an image here, or select a file.</small></center>
+                <center><small class="text-center">Upload an image here, or select a file.</small></center>
                 <center><small class="text-muted">It must be a JPG, PNG, GIF, or JPEG.</small></center>
+                <center><small style="color:red;">Image is Required</small></center>
               </div>
             </label>
             <label for="campaign_image">
               <div class="new-frm-preview d-non"></div>
             </label>
             <div class="img-btn">
-              <%= f.input :image, as: :file, label: false, input_html: { accept: 'image/png,image/gif,image/jpeg,image/jpg' } %>
+              <%= f.input :image, as: :file, label: false, input_html: { accept: 'image/png,image/gif,image/jpeg,image/jpg' }, :hint => f.object.image.present? \
+                ? image_tag(f.object.image.url) : content_tag(:span, "No Image Present") %>
             </div>
           </div>
         </div>

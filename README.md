@@ -4,17 +4,6 @@ This Website is Based on a Funding Platform for Creating Projects, It includes a
 
 [You can ge the Site Demo Here](https://dollarlaunch.herokuapp.com)
 
-###### Some Screens of the Sites:
-
-![Home Page](https://github.com/dollarlaunch/Dollarlaunch/blob/master/gitimages/Home-Page.png)
-------
-![Home-Mid Page](https://github.com/dollarlaunch/Dollarlaunch/blob/master/gitimages/Home-Page-Mid.png)
-------
-![Profile Page](https://github.com/dollarlaunch/Dollarlaunch/blob/master/gitimages/Profile.png)
-------
-![Blog Page](https://github.com/dollarlaunch/Dollarlaunch/blob/master/gitimages/Blog.png)
-------
-
 ##### License
 [This Project is Copyright to the DollarLaunch Community](https://github.com/dollarlaunch/Dollarlaunch)
 

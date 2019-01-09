@@ -3,6 +3,7 @@ class Campaign < ApplicationRecord
   belongs_to :user
   belongs_to :category
   validates_presence_of :title, :blurb, :description, :pledge_amount, :no_of_participants, :pledge_deadline, :location
+  validates :title, :uniqueness => true
   has_attached_file :image
   validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   enum status: { Draft: 0, Launched: 1 }

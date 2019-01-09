@@ -1,7 +1,7 @@
 <div class="container-fluid mt-3 home-container">
   <div class="row mt-4">
     <div class="col-md-12">
-      <h3><%= @category.name %></h3>
+      <h2><%= @category.name %></h2>
       <p><%= @category.description %></p>
     </div>
   </div>
@@ -12,20 +12,20 @@
           <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">
             <div class="home-cmpgn-title">
-              <h6 class="ml-3"><%= campaign.title %></h6>
+              <h3 class="ml-3"><%= campaign.title.truncate(50) %></h3>
             </div>
             <div class="ml-3">
               <div class="home-cmpgn-othr">
-                <small class="text-muted"><%= campaign.description.truncate(65) %></small>
+                <p class="text-muted"><%= campaign.description.truncate(65) %></p>
               </div>
               <hr>
             </div>
             <div class="row ml-3">
               <div class="mr-3">
-                <small><span class="text-muted">By: <%= campaign.user.username %></span></small>
+                <p><span class="text-muted">By: <%= campaign.user.username %></span></p>
               </div>
               <div>
-                <small><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></small>
+                <p><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></p>
               </div>
             </div>
           </div>

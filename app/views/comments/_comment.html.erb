@@ -1,5 +1,5 @@
 <div>
-  <small id="comment<%= comment.id %>"><%= comment.body %> 
+  <p id="comment<%= comment.id %>"><%= comment.body %> 
     | Created By: <span class='mark'><%= comment.user.username %></span>
     | <span><%= time_ago_in_words(comment.created_at)%> ago</span>
     <% if can? :update, comment %>
@@ -8,5 +8,5 @@
     <% if can? :destroy, comment %>
     | <%= link_to "Delete", comment, method: :delete, data: {confirm: 'Are You Sure?'}, remote: true, class:'badge badge-danger' %>
     <% end %>
-  </small>
+  </p>
 </div>

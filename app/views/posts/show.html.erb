@@ -3,11 +3,11 @@
     <div class="col-md-8">
       <div>
         <h1><%= @post.title %></h1>
-        <small>By: <span class="text-muted"><%= @post.user.username %></span> / Created about <span class="text-muted"><%= time_ago_in_words(@post.created_at)%> ago</span> / <i class="far fa-comment-alt"></i> Comments: <span class="text-muted"><%= @post.comments.count %></span></small> 
+        <p>By: <span class="text-muted"><%= @post.user.username %></span> / Created about <span class="text-muted"><%= time_ago_in_words(@post.created_at)%> ago</span> / <i class="far fa-comment-alt"> </i> Comments: <span class="text-muted"><%= @post.comments.count %></span></p> 
         <hr>
         <div>
           <%= image_tag(@post.image.url, class:'cmpgn-img') %>
-          <p><small><%= raw(@post.description) %></small></p>
+          <p><%= raw(@post.description) %></p>
           <hr>
         </div>
       </div>

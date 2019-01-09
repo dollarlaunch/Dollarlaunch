@@ -19,36 +19,36 @@
 		<div class="row">
 			<div class="col-md-3 mb-2">
 				<strong>SITE INFO</strong><br>
-				<small class="text-muted">This Website is Based on a Funding Platform for Creating Projects, It includes all the Categories like the Music, film, art, theater, games, comics, design, photography, and a lot more.</small><br>
-				<small class="text-muted">Total Users: <%= User.count %></small><br>
+				<p class="text-muted">This Website is Based on a Funding Platform for Creating Projects, It includes all the Categories like the Music, film, art, theater, games, comics, design, photography, and a lot more.</p>
+				<p class="text-muted">Total Users: <%= User.count %></p><br>
 			</div>
 			<div class="col-md-3 mb-3">
 				<strong>Categories</strong>
 				<br>
 				<% @categories.each do |category| %>
 	        <%= link_to category_path(category) do %>
-	          <small><%= category.name %></small><br>
+	          <%= category.name %><br>
 	        <% end %>
 	      <% end %>
 			</div>
 			<div class="col-md-3 mb-3">
 				<strong>QUICK LINKS</strong><br>
-				<small><%= link_to "About", about_path %></small><br>
-				<small><%= link_to "Posts", posts_path %></small><br>
-				<small><%= link_to "Start A Project ", new_campaign_path %></small><br>
+				<%= link_to "About", about_path %><br>
+				<%= link_to "Posts", posts_path %><br>
+				<%= link_to "Start A Project ", new_campaign_path %><br>
 				<% if user_signed_in? %>
-					<small><%= link_to 'Logout', destroy_user_session_path, method: :delete %></small>
+					<%= link_to 'Logout', destroy_user_session_path, method: :delete %><br>
 				<% else %>
-					<small><%= link_to 'Login', new_user_session_path %></small><br>
-          <small><%= link_to 'Register', new_user_registration_path %></small>
+					<%= link_to 'Login', new_user_session_path %><br>
+          <%= link_to 'Register', new_user_registration_path %><br>
          <% end %>
 			</div>
 			<div class="col-md-3 mb-3">
 				<strong>MORE FROM DOLLAR LAUNCH</strong><br>
-				<small><%= link_to "Terms & Conditions" %></small><br>
-				<small><%= link_to "Customer Support" %></small><br>
-				<small><%= link_to "Contact Admin" %></small><br>
-				<small class="text-muted">201-Bakerly Street, California</small>
+				<%= link_to "Terms & Conditions" %><br>
+				<%= link_to "Customer Support" %><br>
+				<%= link_to "Contact Admin" %><br>
+				<p class="text-muted">201-Bakerly Street, California<br>
 			</div>
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 	<div class="container-fluid home-container">
 		<div class="row">
 			<div class="col-sm-8">
-				<small>Copyright 2018 | All Rights Reserved | Powered by System Plus</small>
+				Copyright 2018 | All Rights Reserved | Powered by System Plus<br>
 			</div>
 			<div class="col-sm-4">
 				<i class="fab fa-twitter-square ftr-icon mr-2"></i>

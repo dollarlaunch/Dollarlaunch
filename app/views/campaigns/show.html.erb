@@ -9,12 +9,12 @@
         <% end %>
         <p class="mt-2 mb-0 text-center">By <%=  @campaign.user.username %></p>
         <center><small><%= time_ago_in_words(@campaign.created_at) %> ago</small></center>
-        <center>
-          <% if current_user != @campaign.user %>
-            <%= link_to '<i class="fas fa-thumbs-up"></i>'.html_safe, like_path(@campaign), method: :put, remote: true %> |
-          <% end %>
-          <span class="likescount"><%= @campaign.get_upvotes.size %> <small class="text-muted">likes</small></span>
-        </center>
+        <!--<center>-->
+        <!--  <%# if current_user != @campaign.user %>-->
+        <!--    <%#= link_to '<i class="fas fa-thumbs-up"></i>'.html_safe, like_path(@campaign), method: :put, remote: true %> |-->
+        <!--  <%# end %>-->
+        <!--  <span class="likescount"><%#= @campaign.get_upvotes.size %> <small class="text-muted">likes</small></span>-->
+        <!--</center>-->
       </div>
     </div>
     <div class="col-md-10 mb-3">
@@ -31,23 +31,23 @@
     <div class="col-md-4">
       <div class="cmpgn-top-right-side">
         <p class="mb-0 mt-2">Pledge Amount</p>
-        <small class="text-muted">$<%= @campaign.pledge_amount %></small>
+        <p class="text-muted mb-0">$<%= @campaign.pledge_amount %></p>
         <hr>
         <p class="mb-0 mt-2">Pledge Amount Per Person</p>
-        <small class="text-muted">$<%= @pledgeamountperperson %></small>
+        <p class="text-muted mb-0">$<%= @pledgeamountperperson %></p>
         <hr>
         <p class="mb-0">No of Participants</p>
-        <small class="text-muted"><%= @campaign.no_of_participants  %></small>
+        <p class="text-muted mb-0"><%= @campaign.no_of_participants  %></p>
         <hr>
         <p class="mb-0">Pledge Deadline</p>
-        <small class="text-muted"><%= @campaign.pledge_deadline %></small>
+        <p class="text-muted mb-0"><%= @campaign.pledge_deadline %></p>
         <hr>
         <% if current_user.admin == true  %>
           <p class="mb-0">Status</p>
-          <small class="text-muted"><%= @campaign.status %></small>
+          <p class="text-muted mb-0"><%= @campaign.status %></p>
         <% end %>
         <% if @campaign.featuredstatus == true %>
-          <small class="badge badge-warning">FEATURED</small>
+          <small class="badge badge-warning"><i class="fas fa-award"></i> FEATURED</small>
         <% end %>
       </div>
       <% if @campaign.user.id != current_user.id %>
@@ -130,10 +130,10 @@
     <div class="tab-pane fade show active" id="nav-campaign" role="tabpanel" aria-labelledby="nav-campaign-tab">
       <div class="row">
         <div class="col-md-8">
-          <h4 class="text-muted">Description</h4>
+          <h3>Description</h3>
           <p><%= @campaign.description %></p>
           <hr>
-          <h5 class="text-muted">Risks & Challenges</h5>
+          <h3>Risks & Challenges</h3>
           <% if @campaign.riskandchallenges.count > 0 %>
             <ul>
               <% @campaign.riskandchallenges.each do |risksandchallenge| %>
@@ -144,7 +144,7 @@
             <small class="mark">Nill</small>
           <% end %>
           <hr>
-          <h5 class="text-muted">Frequently Asked Questions</h5>
+          <h3>Frequently Asked Questions</h3>
           <% if @campaign.faqs.count > 0 %>
             <% @campaign.faqs.each do |faq| %>
               <p> <i class="fas fa-arrow-right"></i> <%= faq.question %></p>
@@ -154,16 +154,16 @@
           <% else %>
             <small class="mark">Nill</small>
           <% end %>
-          <h5 class="text-muted">Community Help</h5>
-          <small class="text-muted"><%= @campaign.askfromcommunity %></small>
+          <h3>Community Help</h3>
+          <p class="text-muted mb-0"><%= @campaign.askfromcommunity %></p>
         </div>
         <div class="col-md-4">
     			<div class="cmpgn-right">
             <p class="mb-0">Location</p>
-            <small class="text-muted"><%= @campaign.location %></small>
+            <p class="text-muted mb-0"><%= @campaign.location %></p>
             <hr>
             <p class="mb-0">Category</p>
-            <small class="text-muted" class='badge badge-primary'><%= @campaign.category.name %></small>
+            <p class="text-muted mb-0" class='badge badge-primary'><%= @campaign.category.name %></p>
     			</div>
         </div>
       </div>
@@ -203,8 +203,8 @@
                   <div class="col-md-4">
                     <div class="cmpgn-right">
                       <p class="mb-0">Milestone Duration</p>
-                      <small class="text-muted"><%= milestone.duration_limit %></small>
-                      <small class="text-muted"><%= milestone.duration_type %></small>
+                      <span class="text-muted mb-0"><%= milestone.duration_limit %></span>
+                      <span class="text-muted mb-0"><%= milestone.duration_type %></span>
                       <hr>
                       <% if milestone.status == "Completed" %>
                         <p class="mb-0">Status: <span class="border border-success p-1">Completed</span></p>
@@ -280,12 +280,12 @@
                 </div>
                 <%= video_tag((@campaign.projectchampionvideo.url), controls: '', width:"100%") %>
               <% else %>  
-                <span>Congratulations, You are a Project Champion of this Campaign.</span><br>
+                <h3>Congratulations, You are a Project Champion of this Campaign.</h3><br>
                 <% @remainingamount = @projectchampionsexist.projectchampiontotalamount - @projectchampionsexist.projectchampionpaidamount %>
-                <small>Remaining Amount Needed to Complete the Pledge: </small><strong class="badge badge-primary">$<%= @remainingamount %></strong><br>
-                <small>Total Users You Invited </small><strong class="badge badge-primary"><%= current_user.userreferalcodemacth %></strong>
+                <span class="mb-0">Remaining Amount Needed to Complete the Pledge: </span><span class="badge badge-primary">$<%= @remainingamount %></span><br>
+                <span class="mb-0">Total Users You Invited </span><span class="badge badge-primary"><%= current_user.userreferalcodemacth %></span>
                 <hr>
-                <p class="text-muted mb-0">Note: <small>Remaining Amount will be Pledged by the Users you'll invite</small></p>
+                <p class="text-muted mb-0">Note: Remaining Amount will be Pledged by the Users you'll invite</p>
                 <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
                 <div id="socialsharebadge">
                   <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
@@ -296,38 +296,33 @@
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Project Champion Form</h5>
+                    <h3 class="modal-title" id="exampleModalLabel">Project Champion Form</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
                     <%= simple_form_for @projectchampion do |f| %>
+                      <center class="mb-3">Project Champion Minimum Amount is: <span class="border p-1">$<%= @campaign.projectchampionminimumamount %></span></center>
                       <div class="row">
-                        <div class="col-md-4">
-                          <h6 class="mark">Total Amount you'll bring</h6>
-                          <small>Project Champion Minimum Amount is: <span class="border p-1">$<%= @campaign.projectchampionminimumamount %></span></small>
+                        <div class="col-md-3">
+                          <label>Total Amount you'll bring</label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                           <%= f.input :projectchampiontotalamount, required: true, label: false, input_html: { class: 'form control form-control-sm min-value' }  %>
                         </div>
                       </div>
-                      <hr>
                       <div class="row">
-                        <div class="col-md-4">
-                          <h6 class="mark">Amount to be paid by you</h6>
+                        <div class="col-md-3">
+                          <label>Amount to be paid by you</label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                           <%= f.input :projectchampionpaidamount, required: true, label: false, input_html: { class: 'form control form-control-sm paid-by-you', min: 0 }  %>
                           <%= f.hidden_field :campaign_id, value: @campaign.id %>
                           <%= f.hidden_field :user_id, value: current_user.id %>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <center><small class="mark">By Clicking Proceed, You Will be redirected to the Paypal Login Page!</small></center>
-                        </div>
-                      </div>
+                      <center class="mb-3"><small>By Clicking Proceed, You Will be redirected to the Paypal Login Page!</small></center>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <%= f.submit class:'btn btn-primary', value:'Proceed' %>
@@ -393,7 +388,7 @@
     </div>
     <div class="tab-pane fade" id="nav-updates" role="tabpanel" aria-labelledby="nav-updates-tab">
       <div id="milestoneupdates">
-        <h6>Updates for this Campaign</h6>
+        <h2>Updates for this Campaign</h2>
         <%= render @milestoneupdates %>
       </div>
       <% if @campaign.milestones.count > 0 %>
@@ -405,8 +400,8 @@
                 <%= f.input :body, required: true, placeholder: 'Update of the Milestone', label: false, input_html: { class: 'form control', id: 'milestoneupdate_body1' } %>
               </div>
               <div class="col-md-5">
-                <h6>Select Milestone</h6>
-                <%= f.collection_select :milestone_id, @campaign.milestones, :id, :title, {}, { class: 'form control form-control-lg' } %>
+                <label class="mt-2">Select Milestone</label>
+                <%= f.collection_select :milestone_id, @campaign.milestones, :id, :title, {}, { class: 'form-control form-control-lg' } %>
               </div>
               <div class="col-md-12">
                 <%= f.submit 'Post Update', class:'btn btn-primary btn-sm' %>
@@ -422,7 +417,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 mx-auto">
-        <small class="text-muted">Message <small class="mark"><%= @campaign.user.username %></small> to offer any help to this Campaign</small>
+        <span class="text-muted">Message <span class="mark"><%= @campaign.user.username %></span> to offer any help to this Campaign</span>
         <%= link_to @campaign.user.username, conversations_path(sender_id: current_user.id, receiver_id: @campaign.user.id), method: :post %>
       </div>
     </div>

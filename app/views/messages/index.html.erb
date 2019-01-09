@@ -1,7 +1,7 @@
 <div style="background: #f8f8f8;">
 <div class="container py-4 chat-main">
   <div class="col-md-8 mx-auto chat-main-top">
-    <h6><%= @username %></h6>
+    <h3><%= @username %></h3>
     <hr>
     <% @messages.each do |message| %>
       <% if message.body %>
@@ -46,7 +46,7 @@
       </div>
       <div class="row">
         <div class="col-12 text-right">
-          <%= f.submit "Send", :class => 'btn btn-primary btn-sm'  %>
+          <%= f.submit "Send", :class => 'btn btn-primary btn-sm mt-2'  %>
         </div>
       </div>
     <% end %>

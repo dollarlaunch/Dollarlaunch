@@ -16,13 +16,48 @@
  *= require social-share-button
  *= require_self
  */
+ @font-face {
+  font-family: 'Agency FB';
+  src: url('agency.ttf') format('truetype'); 
+    
+}
+body,
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+button,
+input,
+li,
+ul,
+ol,
+table,
+td,
+tr,
+th,
+fieldset,
+font,
+select,
+option,
+strong,
+b {
+  font-family: 'Agency FB';
+  }
+  .logo-set {
+        vertical-align: sub;
+  } 
 .card-signin {
   border: 0;
   border-radius: 5px;
-  background: #f8fafc;
+  background: #f1f1f1;
 }
 .login-icn {
-  background-color: #009e74 !important;
+  background-color: #668926 !important;
   color: #fff !important;
 }
 .login-bg {
@@ -41,7 +76,7 @@
   padding: 2rem;
 }
 .cmpgn-top-right-side {
-  border-top: 2px solid #009e74;
+  border-top: 2px solid #668926;
   padding: 10px 15px;
 }
 .user-dmy {
@@ -50,7 +85,7 @@
   border-radius: 50%;
 }
 .cmpgn-tb:hover {
-  color: #009e74;
+  color: #668926;
 }
 .cmpgn-img {
   width: 100% !important;
@@ -118,7 +153,7 @@ a #nav-champion-tab {
 }
 .nav-text {
   color: #000;
-  FONT-SIZE: 14px;
+  font-size: 20px;
   text-transform: uppercase;
 }
 .nav-bdr {
@@ -129,20 +164,20 @@ a #nav-champion-tab {
 }
 .nav-drp {
   color: #000;
-  font-size: 14px;
+  font-size: 18px;
 }
 .rightnav {
   float: right !important;
 }
 .mob-tog {
-  color: #009e74;
+  color: #668926;
 }
 .mob-tog-mb {
   float: right;
 }
 .new-iplus {
   float: right;
-  color: #009e74;
+  color: #668926;
 }
 .carousel-control-prev,
 .carousel-control-next {
@@ -160,13 +195,13 @@ a #nav-champion-tab {
   margin: 0 auto !important;
 }
 .prfl-eml-icn {
-  color: #009e74;
+  color: #668926;
   top: 2px;
   position: relative;
   margin-right: 8px;
 }
 .prfl-web-icn {
-  color: #009e74;
+  color: #668926;
   top: 2px;
   position: relative;
   margin-right: 3px;
@@ -177,14 +212,14 @@ a #nav-champion-tab {
   border-radius: 5px;
 }
 .hding-brdr {
-  border-left: 2px solid #009e74;
+  border-left: 2px solid #668926;
 }
 .ctgry-tp {
   list-style-type: none;
   display: inline-block;
 }
 .ctgry-tp a li:hover {
-  border-bottom: 2px solid #009e74;
+  border-bottom: 2px solid #668926;
 }
 .ctgry-tp a li {
   border-bottom: 2px solid transparent;
@@ -200,7 +235,7 @@ a #nav-champion-tab {
   background-position: top center !important;
 }
 .home-cmpgn-title {
-  height: 35px;
+  height: 70px;
 }
 .home-cmpgn-desc {
   height: 70px;
@@ -244,7 +279,7 @@ a #nav-champion-tab {
   background-color: #fff;
 }
 .blog-title-h {
-  height: 120px;
+  height: 160px;
 }
 .home-top-cmpgn {
   height: 240px;
@@ -310,7 +345,7 @@ a #nav-champion-tab {
   text-align: justify;
   margin-top: 0px;
   padding: 6px 10px;
-  font-size: 13px;
+  font-size: 20px;
   position: relative;
   display: inline-block;
 }
@@ -322,7 +357,7 @@ a #nav-champion-tab {
 }
 .chat-body.right {
   border-radius: 8px 8px 0 8px;
-  background: #009e74;
+  background: #668926;
   color: #ffffff;
   margin-right: 25px;
 }
@@ -340,7 +375,7 @@ a #nav-champion-tab {
 }
 .chat-body.right:before {
   right: -30px;
-  border-left-color: #009e74 !important;
+  border-left-color: #668926 !important;
 }
 .user-chat {
   height: 35px;
@@ -348,7 +383,7 @@ a #nav-champion-tab {
   border-radius: 50%;
 }
 .chat-main small {
-  font-size: 9px !important;
+  font-size: 13px !important;
   float: right !important;
 }
 .chat-main-top {
@@ -371,10 +406,17 @@ a #nav-champion-tab {
   right: 25px;
   top: 10px;
   color: #fff;
-  background: #009e74;
+  background: #668926;
   padding: 5px 7px 5px 10px;
   cursor: pointer;
 }
 .d-non{
   display: none;
+}
+.badge-feauter {
+  background: #668926;
+  color: #fff;
+}
+a:hover {
+  text-decoration: none;
 }

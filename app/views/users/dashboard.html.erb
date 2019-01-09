@@ -1,5 +1,5 @@
 <div class="container-fluid mt-3 home-container">
-  <h6 class="mb-3 text-muted py-2"><strong>CAMPAIGNS CREATED BY YOU</strong></h6>
+  <h2 class="mb-3 text-muted py-2">CAMPAIGNS CREATED BY YOU</h2>
   <% if current_user.campaigns.count > 0 %>
     <div class="row">
       <% current_user.campaigns.each do |campaign| %>
@@ -8,20 +8,20 @@
             <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
             <div class="hding-brdr mt-3">
               <div class="home-cmpgn-title">
-                <h6 class="ml-3"><%= campaign.title %></h6>
+                <h3 class="ml-3"><%= campaign.title.truncate(50) %></h3>
               </div>
               <div class="ml-3">
                 <div class="home-cmpgn-othr">
-                  <small class="text-muted"><%= campaign.description.truncate(65) %></small>
+                  <p class="text-muted"><%= campaign.description.truncate(65) %></p>
                 </div>
                 <hr>
               </div>
               <div class="row ml-3">
                 <div class="mr-3">
-                  <small><span class="text-muted">By: <%= campaign.user.username %></span></small>
+                  <p><span class="text-muted">By: <%= campaign.user.username %></span></p>
                 </div>
                 <div>
-                  <small><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></small>
+                  <p><span class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></span></p>
                 </div>
               </div>
             </div>
@@ -31,12 +31,12 @@
       <% end %>
     </div>
   <% else %>
-    <small class="mark">You Have not Start any Project</small> | <%= link_to "Start a Project", new_campaign_path, class:'btn btn-primary btn-sm' %>
+    <p class="mark">You Have not Start any Project</p> | <%= link_to "Start a Project", new_campaign_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>
 <hr>
 <div class="container-fluid mt-3 home-container">
-  <h6 class="mb-3 text-muted py-2"><strong>CAMPAIGNS BACKED BY YOU</strong></h6>
+  <h2 class="mb-3 text-muted py-2">CAMPAIGNS BACKED BY YOU</h2>
   <% if current_user.backers.count > 0 %>
     <div class="row">
       <% current_user.backers.each do |backer| %>
@@ -45,20 +45,20 @@
             <div class="home-cmpgn-img" style="background:url('<%= backer.campaign.image.url %>')"></div>
             <div class="hding-brdr mt-3">
               <div class="home-cmpgn-title">
-                <h6 class="ml-3"><%= backer.campaign.title %></h6>
+                <h3 class="ml-3"><%= backer.campaign.title.truncate(50) %></h3>
               </div>
               <div class="ml-3">
                 <div class="home-cmpgn-othr">
-                  <small class="text-muted"><%= backer.campaign.description.truncate(65) %></small>
+                  <p class="text-muted"><%= backer.campaign.description.truncate(65) %></p>
                 </div>
                 <hr>
               </div>
               <div class="row ml-3">
                 <div class="mr-3">
-                  <small><span class="text-muted">By: <%= backer.campaign.user.username %></span></small>
+                  <p><span class="text-muted">By: <%= backer.campaign.user.username %></span></p>
                 </div>
                 <div>
-                  <small><span class="text-muted"><%= backer.campaign.created_at.strftime("%b %d, %Y") %></span></small>
+                  <p><span class="text-muted"><%= backer.campaign.created_at.strftime("%b %d, %Y") %></span></p>
                 </div>
               </div>
             </div>
@@ -68,12 +68,12 @@
       <% end %>
     </div>
   <% else %>
-    <small class="mark">You Have not Backed any Campaign</small> | <%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
+    <p class="mark">You Have not Backed any Campaign</p><%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>
 <hr>
 <div class="container-fluid mt-3 home-container">
-  <h6 class="mb-3 text-muted py-2"><strong>CAMPAIGNS YOU'RE PROJECTCHAMPION OF</strong></h6>
+  <h2 class="mb-3 text-muted py-2">CAMPAIGNS YOU'RE PROJECTCHAMPION OF</h2>
   <% if current_user.projectchampions.count > 0 %>
     <div class="row">
       <% current_user.projectchampions.each do |projectchampion| %>
@@ -82,20 +82,20 @@
             <div class="home-cmpgn-img" style="background:url('<%= projectchampion.campaign.image.url %>')"></div>
             <div class="hding-brdr mt-3">
               <div class="home-cmpgn-title">
-                <h6 class="ml-3"><%= projectchampion.campaign.title %></h6>
+                <h3 class="ml-3"><%= projectchampion.campaign.title.truncate(50) %></h3>
               </div>
               <div class="ml-3">
                 <div class="home-cmpgn-othr">
-                  <small class="text-muted"><%= projectchampion.campaign.description.truncate(65) %></small>
+                  <p class="text-muted"><%= projectchampion.campaign.description.truncate(65) %></p>
                 </div>
                 <hr>
               </div>
               <div class="row ml-3">
                 <div class="mr-3">
-                  <small><span class="text-muted">By: <%= projectchampion.campaign.user.username %></span></small>
+                  <p><span class="text-muted">By: <%= projectchampion.campaign.user.username %></span></p>
                 </div>
                 <div>
-                  <small><span class="text-muted"><%= projectchampion.campaign.created_at.strftime("%b %d, %Y") %></span></small>
+                  <p><span class="text-muted"><%= projectchampion.campaign.created_at.strftime("%b %d, %Y") %></span></p>
                 </div>
               </div>
             </div>
@@ -105,6 +105,6 @@
       <% end %>
     </div>
   <% else %>
-    <small class="mark">You are not the ProjectChampion of any Campaign</small> | <%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
+    <p class="mark">You are not the ProjectChampion of any Campaign</p><%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>

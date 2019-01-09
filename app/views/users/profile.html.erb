@@ -44,23 +44,23 @@
         <div class="col-lg-4">
           <div class="profile-shw-membr">
             <i class="fas fa-history text-muted"></i>
-            <small class="text-muted">Member For, <%= time_ago_in_words(@user.created_at) %></small><br>
+            <span class="text-muted">Member For, <%= time_ago_in_words(@user.created_at) %></span><br>
             <i class="fas fa-calculator text-muted"></i>
-            <small class="text-muted"> Total Campaigns:</small> <span class="badge badge-primary"><%= @user.campaigns.count %></span><br>
+            <span class="text-muted"> Total Campaigns:</span> <span class="badge badge-primary"><%= @user.campaigns.count %></span><br>
             <i class="far fa-life-ring text-muted"></i>
-            <small class="text-muted"> Backed Campaigns:</small> <span class="badge badge-primary"><%= @user.backers.count %></span><br>
+            <span class="text-muted"> Backed Campaigns:</span> <span class="badge badge-primary"><%= @user.backers.count %></span><br>
             <i class="fas fa-trophy text-muted"></i>
-            <small class="text-muted"> Champions:</small> <span class="badge badge-primary"><%= current_user.userprojectchampioncount %></span>
+            <span class="text-muted"> Champions:</span> <span class="badge badge-primary"><%= current_user.userprojectchampioncount %></span>
           </div>
           <div>
-            <%= link_to "Update Profile", edit_user_registration_path, class:"btn btn-primary btn-sm mt-3 ml-5" %>
+            <%= link_to "Update Profile", edit_user_registration_path, class:"btn btn-primary btn-sm my-3 float-right" %>
           </div>
         </div>
       </div>
       <hr>
       <div class="row">
         <div class="col-lg-12">
-          <h6>Your Badges</h6>
+          <h3>Your Badges</h3>
           <% if @user.userbadges.count > 0 %>
             <% @user.userbadges.each do |userbadge| %>
               <small class="badge badge-warning"><%= userbadge.badge.name %></small>
@@ -73,16 +73,16 @@
       <hr>
       <div class="row">
         <div class="col-md-6">
-          <h6>My Campaigns</h6>
+          <h3>My Campaigns</h3>
           <% if current_user.campaigns.count == 0 %>
             <small class="mark">You Don't have any Projects! Want to Create?</small>
             <%= link_to 'Start a Project', new_campaign_path, class:'btn btn-primary btn-sm' %>
           <% else %>
-            <small class="mark">Quickly Search your Campaign!</small> <%= link_to "Show My Campaigns", campaigns_path, class:'btn btn-primary btn-sm'  %>
+            <%= link_to "Show My Campaigns", campaigns_path, class:'btn btn-primary btn-sm'  %>
           <% end %>
         </div>
         <div class="col-md-6">
-          <h6>Your Activity</h6>
+          <h3>Your Activity</h3>
           <%= link_to "Go to your Dashboard", dashboard_path, class:'btn btn-primary btn-sm'  %>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <div class="container-fluid mt-3 home-container">
-  <h6 class="mb-3 text-muted">FEATURED CAMPAIGNS</h6>  
+  <h2 class="mb-3 text-muted">FEATURED CAMPAIGNS</h2>  
   <div class="row">
     <% @campaigns.each do |campaign| %>
       <div class="col-md-4 mb-4">
@@ -7,18 +7,18 @@
           <div class="home-top-cmpgn" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">
             <div class="home-cmpgn-title">
-              <h6 class="ml-3"><%= campaign.title %></h6>
+              <h3 class="ml-3"><%= campaign.title %></h3>
             </div>
             <div class="ml-3">
-              <small style="color: #000"><%= campaign.description.truncate(260) %></small>
+              <p style="color: #000"><%= campaign.description.truncate(260) %></p>
               <hr>
             </div>
             <div class="row ml-3">
               <div class="col-3">
-                <small class="badge badge-warning">FEATURED</small>
+                <center><small class="badge badge-warning badge-feauter"><i class="fas fa-award"></i> FEATURED</small></center>
               </div>
               <div class="col-9">
-                <small class="text-muted">By: <%= campaign.user.username  %></small> | <small class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></small>
+                <center><small class="text-muted">By: <%= campaign.user.username  %></small> | <small class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></small></center>
               </div>
             </div>
           </div>
