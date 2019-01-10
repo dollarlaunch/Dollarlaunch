@@ -21,7 +21,7 @@
           <div class="home-top-cmpgn" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">
             <div class="home-cmpgn-title">
-              <h3 class="ml-3"><%= campaign.title %></h3>
+              <h3 class="ml-3"><%= campaign.title.truncate(50) %></h3>
             </div>
             <div class="ml-3">
               <p style="color: #000"><%= campaign.description.truncate(260) %></p>
@@ -29,7 +29,7 @@
             </div>
             <div class="row">
               <div class="col-3">
-                <center><small class="badge badge-warning"><i class="fas fa-award"></i> FEATURED</small></center>
+                <center class="ml-3"><small class="badge badge-warning"><i class="fas fa-award"></i> FEATURED</small></center>
               </div>
               <div class="col-5">
                <center> <small class="text-muted">By: <%= campaign.user.username  %></small></center>
@@ -56,7 +56,7 @@
           <div class="home-cmpgn-img" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">
             <div class="home-cmpgn-title">
-              <h3 class="ml-3"><%= campaign.title %></h3>
+              <h3 class="ml-3"><%= campaign.title.truncate(50) %></h3>
             </div>
             <div class="ml-3">
               <div class="home-cmpgn-othr">
@@ -89,7 +89,7 @@
           <div class="home-blog">
             <div class="home-cmpgn-img" style="background:url('<%= post.image.url %>')"></div>
             <div class="blog-cntnt blog-title-h">
-              <h3><%= post.title %></h3>
+              <h3><%= post.title.truncate(50) %></h3>
               <p class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></p>
             </div>
             <hr>

@@ -7,7 +7,7 @@
           <div class="home-top-cmpgn" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">
             <div class="home-cmpgn-title">
-              <h3 class="ml-3"><%= campaign.title %></h3>
+              <h3 class="ml-3"><%= campaign.title.truncate(50) %></h3>
             </div>
             <div class="ml-3">
               <p style="color: #000"><%= campaign.description.truncate(260) %></p>
@@ -15,7 +15,7 @@
             </div>
             <div class="row ml-3">
               <div class="col-3">
-                <center><small class="badge badge-warning badge-feauter"><i class="fas fa-award"></i> FEATURED</small></center>
+                <center class="ml-3"><small class="badge badge-warning"><i class="fas fa-award"></i> FEATURED</small></center>
               </div>
               <div class="col-9">
                 <center><small class="text-muted">By: <%= campaign.user.username  %></small> | <small class="text-muted"><%= campaign.created_at.strftime("%b %d, %Y") %></small></center>

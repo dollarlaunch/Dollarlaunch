@@ -61,46 +61,69 @@
           </span>
         <% end %>
       <% end %>
+      <!--Modal 1-->
       <div class="modal fade" id="backModal" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="backModalLabel">Details of the Backing</h5>
+              <h2 class="modal-title" id="backModalLabel">Pledge Information</h2>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="mark">Details of Payment</p>
-                  <small class="text-muted">You Pledged for this Project <span class="border p-1 m-1">$<%= @pledgeamountperperson %></span></small><br>
-                </div>
-                <div class="col-md-6">
-                  <p class="mark">Note:</p>
-                  <small class="text-muted"><span class="border p-1 m-1">$1</span> deducted right now and the remaining amount divides on the milestones</small>
-                </div>
-              </div>
+              <h4 class="ml-1">Campaign Details</h4>
+              <p class="ml-1">Title: <small class="text-muted"><%= @campaign.title %></small></p>
+              <p class="ml-1">Description: <small class="text-muted"><%= @campaign.blurb %></small></p>
               <hr>
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="mark">Campaign Details</p>
-                  <p>Title: <small class="text-muted"><%= @campaign.title %></small></p>
-                  <p>Description: <small class="text-muted"><%= @campaign.blurb %></small></p>
-                  <p>Total Milestones: <small class="text-muted border p-1"><%= @campaign.milestones.count %></small></p>
-                  <p>Total Remaining Amount: <small class="text-muted border p-1">$<%= @remainingamount %> will be deduct during the milestones completion</small></p>
-                  <p>After each Milestone: <small class="text-muted border p-1">$<%= @eachmilestoneamount %> will be deduct</small></p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="mark">Click on the Proceed to Pledge this Project</p>
-                </div>
-              </div>
+              <h5 class="ml-1">The Amount You Pledge for this Project is $<%= @pledgeamountperperson %></h5>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#backModal2">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Modal 2-->
+      <div class="modal fade" id="backModal2" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="backModalLabel">Pledge Process Overview</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="ml-1">Total Milestones of this Campaign <%= @campaign.milestones.count %></p>
+              <hr>
+              <h4 class="ml-1">Amount Deduction</h4>
+              <p class="ml-1">$1 will deduct right now, Remaining Amount $<%= @remainingamount %> will be deduct during the milestones completion </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#backModal">Back</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#backModal3">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Modal 3-->
+      <div class="modal fade" id="backModal3" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="backModalLabel">Become A Backer</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h4 class="ml-1">Proceed Instructions</h4>
+              <p class="ml-1">By Clicking Proceed, Your Total Pledge Amount will be shown in The Paypal Checkout, but it only deducts $1</p>
+              <h5 class="ml-1">After each Milestone Completion, $<%= @eachmilestoneamount %> will be deduct</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#backModal2">Back</button>
               <%= simple_form_for @backer do |f| %>
                 <%= f.hidden_field :user_id, value: current_user.id %>
                 <%= f.hidden_field :campaign_id, value: @campaign.id %>
@@ -112,7 +135,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 </div>
 <div class="container mt-5">
 	<nav>
