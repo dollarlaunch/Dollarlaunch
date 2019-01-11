@@ -17,9 +17,14 @@
         <!--</center>-->
       </div>
     </div>
-    <div class="col-md-10 mb-3">
+    <div class="col-md-8 mb-3">
       <h3><%= @campaign.title  %></h3>
       <p><%= @campaign.blurb %></p>
+    </div>
+    <div class="col-md-2">
+      Share This Project
+      <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
+      <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
     </div>
   </div>
 </div>
@@ -309,7 +314,6 @@
                 <span class="mb-0">Total Users You Invited </span><span class="badge badge-primary"><%= current_user.userreferalcodemacth %></span>
                 <hr>
                 <p class="text-muted mb-0">Note: Remaining Amount will be Pledged by the Users you'll invite</p>
-                <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
                 <div id="socialsharebadge">
                   <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
                 </div>  
