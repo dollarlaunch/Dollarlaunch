@@ -16,7 +16,7 @@
     <div class="form-group row">
       <div class="col-md-4">
         <p class="mb-0">Description</p>
-        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+        <small class="text-muted">Write a clear, brief Description that helps people quickly understand the gist of your project</small>
       </div>
       <div class="col-md-8">
         <%= f.input :description, required: true, placeholder: 'Description of the Milestone', input_html: { class: 'form control form-control-sm', :rows => 8 } %>
@@ -27,8 +27,9 @@
   <div class="container">
     <div class="form-group row">
       <div class="col-md-4">
-         <p class="mb-0">Images</p>
-        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+        <p class="mb-0">Images</p>
+        <small class="text-muted">Add an image that clearly represents your project.
+          <br>You may want to avoid including banners, badges, and text because they may not be legible at smaller size.</small>
       </div>
       <div class="col-md-8">
         <%= f.label 'Images' %> <small class="mark">Only Support JPG, JPEG, GIF, PNG Format</small>
@@ -41,7 +42,7 @@
     <div class="form-group row">
       <div class="col-md-4">
         <p class="mb-0">Videos</p>
-        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+        <small class="text-muted">Add an Video that clearly represents your project</small>
       </div>
       <div class="col-md-8">
         <%= f.label 'Video Clip' %> <small class="mark">Only Support mp4 videos</small>
@@ -54,7 +55,7 @@
     <div class="form-group row">
       <div class="col-md-4">
         <p class="mb-0">Duration Type</p>
-        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+        <small class="text-muted">Mention the Duration of your Milestone, and specified the type of the Project</small>
       </div>
       <div class="col-md-8">
         <%= f.input :duration_type, required: true, collection: Milestone.duration_types.keys, label: 'Duration Type', input_html: { class: 'form control form-control-sm' } %>
@@ -66,11 +67,20 @@
     <div class="form-group row">
       <div class="col-md-4">
         <p class="mb-0">Duration Limit</p>
-        <small class="text-muted">Write a clear, brief title that helps people quickly understand the gist of your project</small>
+        <small class="text-muted">Mention the Duration of your Milestone, how long it takes to complete the milestone</small>
       </div>
       <div class="col-md-8">
         <%= f.input :duration_limit, required: true ,as: :integer, label: 'Duration Limit', input_html: { min: 0, class: 'form-control' } %>
       </div>
     </div>
   </div>
+  <hr class="frm-divider">
+  <div class="container">
+    <div class="form-group row">
+      <div class="col-md-12">
+        <center><%= link_to_remove_association "Remove Milestone", f, class:'btn btn-danger btn-sm my-2 my-sm-0' %></center>
+      </div>
+    </div>
+  </div>
+  <hr class="frm-divider">
 </div>

@@ -5,7 +5,6 @@
       <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>Show</th>
       </tr>
     </thead>
     <tbody>
@@ -13,7 +12,6 @@
       <tr>
         <td><%= user.username %></td>
         <td><%= user.email %></td>
-        <td><%= link_to '<i class="fas fa-eye"></i>'.html_safe, profile_path(user) %></td>
       </tr>
       <% end %>
     </tbody>
