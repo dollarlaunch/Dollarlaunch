@@ -62,15 +62,13 @@ class CampaignsController < ApplicationController
   end
   
   def like
-    respond_to do |format|
-      if !current_user.liked? @campaign
-        @campaign.liked_by current_user
-      elsif current_user.liked? @campaign
-        @campaign.unliked_by current_user
-      end
+    if !current_user.liked? @campaign
+      @campaign.liked_by current_user
+      redirect_to @campaign, flash: {success: 'You Liked the Campaign'}
+    elsif current_user.liked? @campaign
+      @campaign.unliked_by current_user
+      redirect_to @campaign, flash: {success: 'You UnLiked the Campaign'}
     end
-    format.html { redirect_to :back }
-    format.js { render :layout => false }
   end
   
   private

@@ -9,12 +9,6 @@
         <% end %>
         <p class="mt-2 mb-0 text-center">By <%=  @campaign.user.username %></p>
         <center><small><%= time_ago_in_words(@campaign.created_at) %> ago</small></center>
-        <!--<center>-->
-        <!--  <%# if current_user != @campaign.user %>-->
-        <!--    <%#= link_to '<i class="fas fa-thumbs-up"></i>'.html_safe, like_path(@campaign), method: :put, remote: true %> |-->
-        <!--  <%# end %>-->
-        <!--  <span class="likescount"><%#= @campaign.get_upvotes.size %> <small class="text-muted">likes</small></span>-->
-        <!--</center>-->
       </div>
     </div>
     <div class="col-md-8 mb-3">
@@ -25,6 +19,11 @@
       Share This Project
       <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
       <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
+      <hr class="mt-0">
+      <% if current_user != @campaign.user %>
+        <%= link_to '<i class="far fa-heart"></i>'.html_safe, like_path(@campaign), method: :put, title: 'Mark as Favourite', 'data-toggle' => 'tooltip', 'data-placement' => 'right'%>
+      <% end %>
+      <span class="likescount"><%= @campaign.get_upvotes.size %> <small class="text-muted"></small></span>
     </div>
   </div>
 </div>
