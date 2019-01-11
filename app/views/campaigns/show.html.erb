@@ -21,7 +21,7 @@
       <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
       <hr class="mt-0">
       <% if current_user != @campaign.user %>
-        <%= link_to '<i class="far fa-heart"></i>'.html_safe, like_path(@campaign), method: :put, title: 'Mark as Favourite', 'data-toggle' => 'tooltip', 'data-placement' => 'right'%>
+        <%= link_to '<i class="far fa-heart"></i>'.html_safe, like_path(@campaign), method: :put, remote: true, title: 'Mark as Favourite', 'data-toggle' => 'tooltip', 'data-placement' => 'right'%>
       <% end %>
       <span class="likescount"><%= @campaign.get_upvotes.size %> <small class="text-muted"></small></span>
     </div>

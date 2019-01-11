@@ -62,12 +62,25 @@ class CampaignsController < ApplicationController
   end
   
   def like
-    if !current_user.liked? @campaign
-      @campaign.liked_by current_user
-      redirect_to @campaign, flash: {success: 'You Liked the Campaign'}
-    elsif current_user.liked? @campaign
-      @campaign.unliked_by current_user
-      redirect_to @campaign, flash: {success: 'You UnLiked the Campaign'}
+    respond_to do |format|
+      format.html {
+        if !current_user.liked? @campaign
+          @campaign.liked_by current_user
+          redirect_to @campaign, flash: {success: 'You Liked the Campaign Successfully'}
+        elsif current_user.liked? @campaign
+          @campaign.unliked_by current_user
+          redirect_to @campaign, flash: {success: 'You UnLiked the Campaign Successfully'}
+        end
+      }
+      format.js {
+        if !current_user.liked? @campaign
+          @campaign.liked_by current_user
+          render :layout => false
+        elsif current_user.liked? @campaign
+          @campaign.unliked_by current_user
+          render :layout => false
+        end
+      }
     end
   end
   
