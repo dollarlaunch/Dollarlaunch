@@ -2,13 +2,15 @@ class CampaignsController < ApplicationController
   
   include ActionView::Helpers::NumberHelper  
   before_action :authenticate_me
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :like]
   before_action :backer_params, only: [:show]
   before_action :set_campaign_params, only: [:show, :edit, :update, :destroy, :like]
   load_and_authorize_resource only: [:edit, :destroy, :new]
   
   def index
     if current_user.admin == true
-      @campaigns = Campaign.all
+      @campaigns = Campaign.joins(:user).where("users.admin = ?", false)
+      @admincampaigns = Campaign.joins(:user).where("users.admin = ?", true)
     else
       @campaigns = current_user.campaigns
     end
@@ -17,8 +19,10 @@ class CampaignsController < ApplicationController
   def show
     @backer = Backer.new
     @projectchampion = Projectchampion.new
-    @projectchampionsexist = @campaign.projectchampions.where(user_id: current_user.id, paymentstatus: true).first
-    @backerexist = @campaign.backers.where(user_id: current_user.id, paymentstatus: true).first
+    if user_signed_in?
+      @projectchampionsexist = @campaign.projectchampions.where(user_id: current_user.id, paymentstatus: true).first
+      @backerexist = @campaign.backers.where(user_id: current_user.id, paymentstatus: true).first
+    end
     @campaignreview = Campaignreview.new
     @backers = @campaign.backers
     @reviews = @campaign.campaignreviews
@@ -26,6 +30,7 @@ class CampaignsController < ApplicationController
     @milestoneupdates = @campaign.milestones.map{|x| x.milestoneupdates}.flatten.sort.reverse
     pledgeamountperperson
     eachmilestoneamount
+    checktotalbackers
   end
   
   def new
@@ -84,6 +89,17 @@ class CampaignsController < ApplicationController
     end
   end
   
+  def checktotalbackers
+    if @campaign.allowmilestone == false
+      if @campaign.backers.count == @campaign.no_of_participants
+        @admins = User.where(admin:true)
+        @admins.each do |admin|
+          UsermailerMailer.allowmilestone_email(admin, @campaign.title, @campaign.user.username).deliver
+        end
+      end
+    end
+  end
+  
   private
   
     def set_campaign_params
@@ -98,7 +114,6 @@ class CampaignsController < ApplicationController
       if params[:referalcode].present?
         session[:referalcode] = params[:referalcode]
       end
-      authenticate_user!
     end
     
     def pledgeamountperperson

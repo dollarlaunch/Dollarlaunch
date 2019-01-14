@@ -19,4 +19,11 @@ class AdminsController < ApplicationController
     redirect_to @campaign, flash: {success: 'Campaign is now Feaetured'}
   end
   
+  def change_campaign_allowmilestone
+    @campaign = Campaign.find(params[:id])
+    @campaign.allowmilestone = true
+    @campaign.save
+    redirect_to @campaign, flash: {success: 'Campaign can now Start its Milestones'}
+  end
+  
 end

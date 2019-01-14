@@ -16,14 +16,16 @@
       <p><%= @campaign.blurb %></p>
     </div>
     <div class="col-md-2">
-      Share This Project
-      <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
-      <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
-      <hr class="mt-0">
-      <% if current_user != @campaign.user %>
-        <%= link_to '<i class="far fa-heart"></i>'.html_safe, like_path(@campaign), method: :put, remote: true, title: 'Mark as Favourite', 'data-toggle' => 'tooltip', 'data-placement' => 'right'%>
+      <% if user_signed_in? %>
+        Share This Project
+        <% @desc = "Campaign Title is:  " + @campaign.title + " My referal Code is:  " + current_user.referalcode + " and the Campaign link is : " %>
+        <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
+        <hr class="mt-0">
+        <% if current_user != @campaign.user %>
+          <%= link_to '<i class="far fa-heart"></i>'.html_safe, like_path(@campaign), method: :put, remote: true, title: 'Mark as Favourite', 'data-toggle' => 'tooltip', 'data-placement' => 'right'%>
+        <% end %>
+        <span class="likescount"><%= @campaign.get_upvotes.size %> <small class="text-muted"></small></span>
       <% end %>
-      <span class="likescount"><%= @campaign.get_upvotes.size %> <small class="text-muted"></small></span>
     </div>
   </div>
 </div>
@@ -46,98 +48,97 @@
         <p class="mb-0">Pledge Deadline</p>
         <p class="text-muted mb-0"><%= @campaign.pledge_deadline %></p>
         <hr>
-        <% if current_user.admin == true  %>
-          <p class="mb-0">Status</p>
-          <p class="text-muted mb-0"><%= @campaign.status %></p>
-        <% end %>
+        <small class="badge badge-light mb-0"><%= @campaign.status %></small>
         <% if @campaign.featuredstatus == true %>
-          <small class="badge badge-warning"><i class="fas fa-award"></i> FEATURED</small>
+          | <small class="badge badge-warning"><i class="fas fa-award"></i> FEATURED</small>
         <% end %>
       </div>
-      <% if @campaign.user.id != current_user.id %>
-        <% if !@backerexist %>
-          <button type="button" class="btn btn-primary btn-block mt-3" data-toggle="modal" data-target="#backModal">
-            Back this Project
-          </button>
-        <% else %>
-          <span class="mark">
-            Congratulations <i class="fas fa-thumbs-up"></i> You BACKED this Project
-          </span>
+      <% if user_signed_in? %>
+        <% if @campaign.user.id != current_user.id %>
+          <% if !@backerexist %>
+            <button type="button" class="btn btn-primary btn-block mt-3" data-toggle="modal" data-target="#backModal">
+              Back this Project
+            </button>
+          <% else %>
+            <span class="mark">
+              Congratulations <i class="fas fa-thumbs-up"></i> You BACKED this Project
+            </span>
+          <% end %>
         <% end %>
+        <!--Modal 1-->
+        <div class="modal fade" id="backModal" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="backModalLabel">Pledge Information</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4 class="ml-1">Campaign Details</h4>
+                <p class="ml-1">Title: <small class="text-muted"><%= @campaign.title %></small></p>
+                <p class="ml-1">Description: <small class="text-muted"><%= @campaign.blurb %></small></p>
+                <hr>
+                <h5 class="ml-1">The Amount You Pledge for this Project is $<%= @pledgeamountperperson %></h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#backModal2">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Modal 2-->
+        <div class="modal fade" id="backModal2" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="backModalLabel">Pledge Process Overview</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p class="ml-1">Total Milestones of this Campaign <%= @campaign.milestones.count %></p>
+                <hr>
+                <h4 class="ml-1">Amount Deduction</h4>
+                <p class="ml-1">$1 will deduct right now, Remaining Amount $<%= @remainingamount %> will be deduct during the milestones completion </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#backModal">Back</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#backModal3">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Modal 3-->
+        <div class="modal fade" id="backModal3" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="backModalLabel">Become A Backer</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4 class="ml-1">Proceed Instructions</h4>
+                <p class="ml-1">By Clicking Proceed, Your Total Pledge Amount will be shown in The Paypal Checkout, but it only deducts $1</p>
+                <h5 class="ml-1">After each Milestone Completion, $<%= @eachmilestoneamount %> will be deduct</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#backModal2">Back</button>
+                <%= simple_form_for @backer do |f| %>
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <%= f.hidden_field :campaign_id, value: @campaign.id %>
+                  <%= f.hidden_field :pledgeamountperperson, value: @pledgeamountperperson %>
+                  <%= f.submit class:'btn btn-primary', value:'Proceed' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
-      <!--Modal 1-->
-      <div class="modal fade" id="backModal" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 class="modal-title" id="backModalLabel">Pledge Information</h2>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <h4 class="ml-1">Campaign Details</h4>
-              <p class="ml-1">Title: <small class="text-muted"><%= @campaign.title %></small></p>
-              <p class="ml-1">Description: <small class="text-muted"><%= @campaign.blurb %></small></p>
-              <hr>
-              <h5 class="ml-1">The Amount You Pledge for this Project is $<%= @pledgeamountperperson %></h5>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#backModal2">Next</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Modal 2-->
-      <div class="modal fade" id="backModal2" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 class="modal-title" id="backModalLabel">Pledge Process Overview</h2>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p class="ml-1">Total Milestones of this Campaign <%= @campaign.milestones.count %></p>
-              <hr>
-              <h4 class="ml-1">Amount Deduction</h4>
-              <p class="ml-1">$1 will deduct right now, Remaining Amount $<%= @remainingamount %> will be deduct during the milestones completion </p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#backModal">Back</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#backModal3">Next</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Modal 3-->
-      <div class="modal fade" id="backModal3" tabindex="-1" role="dialog" aria-labelledby="backModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 class="modal-title" id="backModalLabel">Become A Backer</h2>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <h4 class="ml-1">Proceed Instructions</h4>
-              <p class="ml-1">By Clicking Proceed, Your Total Pledge Amount will be shown in The Paypal Checkout, but it only deducts $1</p>
-              <h5 class="ml-1">After each Milestone Completion, $<%= @eachmilestoneamount %> will be deduct</h5>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#backModal2">Back</button>
-              <%= simple_form_for @backer do |f| %>
-                <%= f.hidden_field :user_id, value: current_user.id %>
-                <%= f.hidden_field :campaign_id, value: @campaign.id %>
-                <%= f.hidden_field :pledgeamountperperson, value: @pledgeamountperperson %>
-                <%= f.submit class:'btn btn-primary', value:'Proceed' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>  
 </div>
@@ -236,38 +237,46 @@
                       <% if milestone.status == "Completed" %>
                         <p class="mb-0">Status: <span class="border border-success p-1">Completed</span></p>
                       <% else %>
-                        <p class="mb-0">Status: <span class="border border-danger p-1">Not Completed</span></p>
-                        <% if @campaign.user.id == current_user.id %>
-                          <hr>
-                          <center><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#milestoneupdate">
-                            Mark as Complete
-                          </button></center>
-                          <div class="modal fade" id="milestoneupdate" tabindex="-1" role="dialog" aria-labelledby="milestoneupdateLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="milestoneupdateLabel">Post an Update for this Milestone</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <%= simple_form_for @milestoneupdate do |f| %>
-                                    <div class="form-group row">
-                                      <div class="col-md-12">
-                                        <%= f.input :body, required: true, placeholder: 'Major Update for this Milestone', label: false, input_html: { class: 'form control' } %>
-                                        <%= f.hidden_field :milestone_id, value: milestone.id %>
+                        <% if @campaign.backers.count == @campaign.no_of_participants %>
+                          <p>Backers Completed!</p>
+                        <% else %>
+                          <p>Backers of this Campaign: <%= @campaign.backers.count %></p>
+                          <p>Need <%= @campaign.no_of_participants %> Backers to Start Milestone</p>
+                        <% end %>
+                        <% if @campaign.allowmilestone == true %>
+                          <p class="mb-0">Status: <span class="border border-danger p-1">Not Completed</span></p>
+                          <% if @campaign.user.id == current_user.id %>
+                            <hr>
+                            <center><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#milestoneupdate">
+                              Mark as Complete
+                            </button></center>
+                            <div class="modal fade" id="milestoneupdate" tabindex="-1" role="dialog" aria-labelledby="milestoneupdateLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="milestoneupdateLabel">Post an Update for this Milestone</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <%= simple_form_for @milestoneupdate do |f| %>
+                                      <div class="form-group row">
+                                        <div class="col-md-12">
+                                          <%= f.input :body, required: true, placeholder: 'Major Update for this Milestone', label: false, input_html: { class: 'form control' } %>
+                                          <%= f.hidden_field :milestone_id, value: milestone.id %>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                                      <%= f.submit 'Mark as Completed', class:'btn btn-primary btn-sm' %>
-                                    </div>
-                                  <% end %>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                        <%= f.submit 'Mark as Completed', class:'btn btn-primary btn-sm' %>
+                                      </div>
+                                    <% end %>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          <% end %>
                         <% end %>
                       <% end %>
                     </div>
@@ -285,39 +294,40 @@
             You, have to make a request to the Project Owner to Activate the <span class="badge badge-primary">Project Champion Feature</span>
           <% end %>
           <% if @campaign.projectchampionstatus == 'Activated' %>
-            <% if @campaign.user.id != current_user.id %>
-              <% if !@projectchampionsexist.present? %>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                  Become a Project Champion
-                </button>
-                <div id="demo" class="carousel slide mb-3 mt-3" data-ride="carousel">
-                  <div class="carousel-inner">
-                    <% @campaign.images.each_with_index  do |image, index| %>
-                      <div class="carousel-item <%= "active" if index == 0 %>">
-                        <%= image_tag(image.image.url) %>
-                      </div>
-                    <% end %>
+            <% if user_signed_in? %>
+              <% if @campaign.user.id != current_user.id %>
+                <% if !@projectchampionsexist.present? %>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                    Become a Project Champion
+                  </button>
+                  <div id="demo" class="carousel slide mb-3 mt-3" data-ride="carousel">
+                    <div class="carousel-inner">
+                      <% @campaign.images.each_with_index  do |image, index| %>
+                        <div class="carousel-item <%= "active" if index == 0 %>">
+                          <%= image_tag(image.image.url) %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#demo" data-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </a>
                   </div>
-                  <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                  </a>
-                  <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                  </a>
-                </div>
-                <%= video_tag((@campaign.projectchampionvideo.url), controls: '', width:"100%") %>
-              <% else %>  
-                <h3>Congratulations, You are a Project Champion of this Campaign.</h3><br>
-                <% @remainingamount = @projectchampionsexist.projectchampiontotalamount - @projectchampionsexist.projectchampionpaidamount %>
-                <span class="mb-0">Remaining Amount Needed to Complete the Pledge: </span><span class="badge badge-primary">$<%= @remainingamount %></span><br>
-                <span class="mb-0">Total Users You Invited </span><span class="badge badge-primary"><%= current_user.userreferalcodemacth %></span>
-                <hr>
-                <p class="text-muted mb-0">Note: Remaining Amount will be Pledged by the Users you'll invite</p>
-                <div id="socialsharebadge">
-                  <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
-                </div>  
+                  <%= video_tag((@campaign.projectchampionvideo.url), controls: '', width:"100%") %>
+                <% else %>  
+                  <h3>Congratulations, You are a Project Champion of this Campaign.</h3><br>
+                  <% @remainingamount = @projectchampionsexist.projectchampiontotalamount - @projectchampionsexist.projectchampionpaidamount %>
+                  <span class="mb-0">Remaining Amount Needed to Complete the Pledge: </span><span class="badge badge-primary">$<%= @remainingamount %></span><br>
+                  <span class="mb-0">Total Users You Invited </span><span class="badge badge-primary"><%= current_user.userreferalcodemacth %></span>
+                  <hr>
+                  <p class="text-muted mb-0">Note: Remaining Amount will be Pledged by the Users you'll invite</p>
+                  <div id="socialsharebadge">
+                    <%= social_share_button_tag(@desc, :url => campaign_url(@campaign,referalcode: current_user.referalcode), desc: @desc ) %>
+                  </div>  
+                <% end %>
               <% end %>
-            <% end %>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -358,6 +368,7 @@
                 </div>
               </div>
             </div>
+            <% end %>
           <% end %>
         </div>
         <div class="col-md-4">
@@ -380,7 +391,8 @@
           <% end %>
         </div>
       </div>
-      <div class="row">
+      <% if user_signed_in? %>
+        <div class="row">
         <div class="col-md-10">
           <% @backers.each do |backer| %>
             <% if current_user.id == backer.id %>
@@ -411,43 +423,48 @@
           <% end %>
         </div>
       </div>
+      <% end %>
     </div>
     <div class="tab-pane fade" id="nav-updates" role="tabpanel" aria-labelledby="nav-updates-tab">
       <div id="milestoneupdates">
         <h2>Updates for this Campaign</h2>
         <%= render @milestoneupdates %>
       </div>
-      <% if @campaign.milestones.count > 0 %>
-        <% if current_user.id == @campaign.user.id %>
-          <%= simple_form_for @milestoneupdate, remote: true do |f| %>
-            <div class="row">
-              <div class="col-md-7">
-                <label>Write an Update</label>
-                <%= f.input :body, required: true, placeholder: 'Update of the Milestone', label: false, input_html: { class: 'form control', id: 'milestoneupdate_body1' } %>
+      <% if user_signed_in? %>
+        <% if @campaign.milestones.count > 0 %>
+          <% if current_user.id == @campaign.user.id %>
+            <%= simple_form_for @milestoneupdate, remote: true do |f| %>
+              <div class="row">
+                <div class="col-md-7">
+                  <label>Write an Update</label>
+                  <%= f.input :body, required: true, placeholder: 'Update of the Milestone', label: false, input_html: { class: 'form control', id: 'milestoneupdate_body1' } %>
+                </div>
+                <div class="col-md-5">
+                  <label class="mt-2">Select Milestone</label>
+                  <%= f.collection_select :milestone_id, @campaign.milestones, :id, :title, {}, { class: 'form-control form-control-lg' } %>
+                </div>
+                <div class="col-md-12">
+                  <%= f.submit 'Post Update', class:'btn btn-primary btn-sm' %>
+                </div>
               </div>
-              <div class="col-md-5">
-                <label class="mt-2">Select Milestone</label>
-                <%= f.collection_select :milestone_id, @campaign.milestones, :id, :title, {}, { class: 'form-control form-control-lg' } %>
-              </div>
-              <div class="col-md-12">
-                <%= f.submit 'Post Update', class:'btn btn-primary btn-sm' %>
-              </div>
-            </div>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
     </div>
 	</div>
 </div>
-<% if @campaign.user.id != current_user.id %>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 mx-auto">
-        <span class="text-muted">Message <span class="mark"><%= @campaign.user.username %></span> to offer any help to this Campaign</span>
-        <%= link_to @campaign.user.username, conversations_path(sender_id: current_user.id, receiver_id: @campaign.user.id), method: :post %>
+<% if user_signed_in? %>
+  <% if @campaign.user.id != current_user.id %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <span class="text-muted">Message <span class="mark"><%= @campaign.user.username %></span> to offer any help to this Campaign</span>
+          <%= link_to "Message Now", conversations_path(sender_id: current_user.id, receiver_id: @campaign.user.id), method: :post, class:'btn btn-primary btn-sm' %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
 <div class="container my-3">
 	<div class="row">

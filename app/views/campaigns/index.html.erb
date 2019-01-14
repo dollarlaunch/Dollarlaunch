@@ -8,10 +8,13 @@
     <thead>
       <tr>
         <th>Project Title</th>
-        <% if current_user.admin == true%>
+        <% if current_user.admin == true %>
           <th>Status</th>
           <th>Featured</th>
+          <th>Allow Milestone</th>
           <th>Username</th>
+          <th>Project Champion</th>
+          <th>Champion Names</th>
         <% end %>
         <th>Show</th>
         <th>Edit</th>
@@ -35,7 +38,27 @@
               | <%= link_to 'Make Featured', change_campaign_featuredstatus_path(campaign), method: :put %>
               <% end %>
             </td>
+            <td>
+              <% if campaign.backers.count == campaign.no_of_participants %>
+                <small class="text-muted"><%= campaign.allowmilestone %></small>
+                <% if campaign.allowmilestone == false %>
+                | <%= link_to 'Allow Milestone Start', change_campaign_allowmilestone_path(campaign), method: :put %>
+                <% end %>
+              <% else %>
+                <small class="text-muted">Backers Not Completed Yet</small>
+              <% end %>
+            </td>
             <td><%= campaign.user.username %></td>
+            <td><%= campaign.projectchampionstatus %></td>
+            <% if campaign.projectchampions.count == 0 %>
+              <td><small>No Projectchampion Yet</small></td>
+            <% else %>
+              <td>
+                <% campaign.projectchampions.each do |projectchampion| %>
+                  <small><%= projectchampion.user.username %></small>,
+                <% end %>
+              </td>
+            <% end %>
           <% end %>
           <td><center><%= link_to '<i class="fas fa-eye"></i>'.html_safe, campaign_path(campaign) %></center></td>
           <td><center><%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_campaign_path(campaign) %></center></td>
@@ -44,6 +67,47 @@
       <% end %>
     </tbody>
   </table>
+  <% if current_user.admin == true %>
+    <hr>
+    <h1>Listing All of Your Projects</h1>
+    <table id="admincampaigns" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Project Title</th>
+          <th>Status</th>
+          <th>Featured</th>
+          <th>Username</th>
+          <th>Show</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @admincampaigns.each do |campaign| %>
+          <tr>
+            <td><%= campaign.title %></td>
+            <td>
+              <small class="text-muted"><%= campaign.status %></small>
+              <% if campaign.status == 'Draft' %>
+              | <%= link_to 'Launch', change_campaign_status_path(campaign), method: :put %>
+              <% end %>
+            </td>
+            <td>
+              <small class="text-muted"><%= campaign.featuredstatus %></small>
+              <% if campaign.featuredstatus == false %>
+              | <%= link_to 'Make Featured', change_campaign_featuredstatus_path(campaign), method: :put %>
+              <% end %>
+            </td>
+            <td><%= campaign.user.username %></td>
+            <td><center><%= link_to '<i class="fas fa-eye"></i>'.html_safe, campaign_path(campaign) %></center></td>
+            <td><center><%= link_to '<i class="fas fa-edit"></i>'.html_safe, edit_campaign_path(campaign) %></center></td>
+            <td><center><%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, campaign_path(campaign), method: :delete, data: { confirm: 'Are You Sure?' } %></center></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  
   <% if current_user.campaigns.count == 0 && current_user.admin == false %>
     <h5>You Don't have any Projects! Want to Create?</h5>
     <%= link_to 'Start a Project', new_campaign_path, class:'btn btn-primary btn-sm' %>

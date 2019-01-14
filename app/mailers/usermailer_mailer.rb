@@ -27,4 +27,12 @@ class UsermailerMailer < ApplicationMailer
     mail(to: @user.email, subject: "You got some Messages, go Check it!")
   end
   
+  def allowmilestone_email(admin, title, user)
+    @admin = admin
+    @title = title
+    @user = user
+    @url = 'http://kickstarter-mhamzajutt96.c9users.io'
+    mail(to: @admin.email, subject: "Backers are Completed, Start the Milestone")
+  end
+  
 end

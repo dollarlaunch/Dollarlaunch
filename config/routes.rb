@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :campaignreviews
   put '/admin/campaign/:id/change' => 'admins#change_campaign_status', :as => 'change_campaign_status'
   put 'campaign/:id/make' => 'admins#change_campaign_featuredstatus', :as => 'change_campaign_featuredstatus'
+  put 'campaign/:id/allowmilestone' => 'admins#change_campaign_allowmilestone', :as => 'change_campaign_allowmilestone'
   put 'campaign/:id/milestone/:id/change' => 'users#change_milestone_status', :as => 'change_milestone_status'
   get '/user/:id/dashboard', to: 'users#dashboard', :as => 'dashboard'
   get '/user/:id/profile', to: 'users#profile', :as => 'profile'
