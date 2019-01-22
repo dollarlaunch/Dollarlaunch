@@ -3891,7 +3891,7 @@ input[type="button"].btn-block {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #dee2e6;
+  /*border-bottom: 1px solid #dee2e6;*/
 }
 
 .nav-tabs .nav-item {
@@ -3916,8 +3916,8 @@ input[type="button"].btn-block {
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
-  background-color: #fff;
+  color: #fff;
+  background-color: #668926;
   border-color: #dee2e6 #dee2e6 #fff;
 }
 
@@ -3941,6 +3941,9 @@ input[type="button"].btn-block {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   text-align: center;
+  box-shadow: 0 0.125rem 0.8rem rgba(0,0,0,0.1);
+  margin-left: 10px;
+  margin-bottom: 3px;
 }
 
 .nav-justified .nav-item {
