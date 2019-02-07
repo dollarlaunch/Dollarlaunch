@@ -1,0 +1,15 @@
+<div class="container mt-2">
+  <% if @status == "All Campaigns"%>
+    <h3>All Campaigns</h3>
+  <% else %>
+    <h2><%= @status %> Campaigns</h2>
+  <% end %>
+  <hr>
+  <% @campaigns.each do |campaign| %>
+    <%= link_to campaign_path(campaign) do %>
+      <h4><%= campaign.title %></h4>
+      <small><%= campaign.description.truncate(200) %></small>
+      <hr>
+    <% end %>
+  <% end %>
+</div>

@@ -7,6 +7,7 @@ default: &default
 development:
   <<: *default
   database: dollarmark_development
+  password: password
 test:
   <<: *default
   database: dollarmark_test

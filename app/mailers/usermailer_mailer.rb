@@ -4,13 +4,13 @@ class UsermailerMailer < ApplicationMailer
   
   def welcome_email(user)
     @user = user
-    @url = 'http://kickstarter-mhamzajutt96.c9users.io'
+    @url = 'http://dollarlaunch-mhamzajutt96.c9users.io'
     mail(to: @user.email, subject: "Welcome to DollarMark Website, Your Account has been Confirmed")
   end
   
   def informationaboutsite_email(user)
     @user = user
-    @url = 'http://kickstarter-mhamzajutt96.c9users.io'
+    @url = 'http://dollarlaunch-mhamzajutt96.c9users.io'
     mail(to: @user.email, subject: "Welcome to DollarMark Website, This Website is for Open Source Projects")
   end
   
@@ -18,7 +18,7 @@ class UsermailerMailer < ApplicationMailer
     @user = user
     @amount = amount
     @title = title
-    @url = 'http://kickstarter-mhamzajutt96.c9users.io'
+    @url = 'http://dollarlaunch-mhamzajutt96.c9users.io'
     mail(to: @user.email, subject: "Congratulations! Milestone is Completed")
   end
   
@@ -31,7 +31,7 @@ class UsermailerMailer < ApplicationMailer
     @admin = admin
     @title = title
     @user = user
-    @url = 'http://kickstarter-mhamzajutt96.c9users.io'
+    @url = 'http://dollarlaunch-mhamzajutt96.c9users.io'
     mail(to: @admin.email, subject: "Backers are Completed, Start the Milestone")
   end
   
