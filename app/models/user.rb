@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :badges, dependent: :destroy
   has_many :userbadges, dependent: :destroy
+  has_many :invites, dependent: :destroy
   acts_as_voter
   has_attached_file :avatar
   validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]

@@ -143,7 +143,12 @@
           </div>
         </div>
       </div>
-      <%= f.hidden_field :user_id, value: current_user.id %>
+      <% if action_name == "new" %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+      <% end %>
+      <% if action_name == "edit" %>
+        <%= f.hidden_field :user_id, value: @campaign.user.id %>
+      <% end %>
     </div>
     <div class="tab">
       <center><small class="mark">Milestones are not Mandatory! If you want to skip the Milestones, then click on the Next button to process further !</small></center>

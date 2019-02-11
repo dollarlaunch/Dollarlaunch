@@ -30,4 +30,5 @@ Rails.application.routes.draw do
   post 'badge/socialsharebadge', to: 'badges#socialsharebadge'
   resources :milestoneupdates
   get '/searchcampaigns', to: 'home#searchcampaigns', :as => 'searchcampaigns'
+  get '/inviteemail', to: 'home#inviteemail', :as => 'inviteemail'
 end

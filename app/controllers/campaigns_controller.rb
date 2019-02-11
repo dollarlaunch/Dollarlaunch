@@ -5,7 +5,7 @@ class CampaignsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :like]
   before_action :backer_params, only: [:show]
   before_action :set_campaign_params, only: [:show, :edit, :update, :destroy, :like]
-  load_and_authorize_resource only: [:edit, :destroy, :new]
+  load_and_authorize_resource only: [:edit, :destroy, :new, :show]
   
   def index
     if current_user.admin == true
@@ -112,7 +112,10 @@ class CampaignsController < ApplicationController
     
     def authenticate_me
       if params[:referalcode].present?
-        session[:referalcode] = params[:referalcode]
+        puts session[:referalcode] = params[:referalcode]
+      end
+      if params[:invitecampaign].present?
+        session[:invitecampaign] = params[:invitecampaign]
       end
     end
     

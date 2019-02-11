@@ -25,6 +25,33 @@
           <%= link_to '<i class="far fa-heart"></i>'.html_safe, like_path(@campaign), method: :put, remote: true, title: 'Mark as Favourite', 'data-toggle' => 'tooltip', 'data-placement' => 'right'%>
         <% end %>
         <span class="likescount"><%= @campaign.get_upvotes.size %> <small class="text-muted"></small></span>
+        <% if @campaign.user == current_user %>
+          <a href="" class="badge badge-primary ml-5" data-toggle="modal" data-target="#myModal">I N V I T E </a>
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Invite Team Member To Your Project</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <%= form_tag('/inviteemail', method: :get) do %>
+                    <label>Enter the Email Here</label>
+                    <%= email_field_tag 'email', nil, class:'form-control', :required => true %>
+                    <small>This Email Sends the Description of Your Campaign, and the Team Member you Add here will Modify your Campaign, So! only add Participants that You Know.</small>
+                    <%= hidden_field_tag 'campaign_id', @campaign.id %>
+                    <%= hidden_field_tag 'campaign_user', @campaign.user %>
+                    <%= hidden_field_tag 'campaign_user_referalcode', @campaign.user.referalcode %>
+                </div>
+                <div class="modal-footer">
+                    <%= submit_tag 'Send', class:"btn btn-primary" %>
+                  <% end %>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>

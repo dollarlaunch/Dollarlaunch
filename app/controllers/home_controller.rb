@@ -29,4 +29,18 @@ class HomeController < ApplicationController
     end
   end
   
+  def inviteemail
+    if params[:email].present?
+      @campaign = params[:campaign_id]
+      @email = params[:email]
+      @user = params[:campaign_user]
+      @referalcode = params[:campaign_user_referalcode]
+      @url = campaign_url(@campaign, referalcode: @referalcode, invitecampaign: @campaign)
+      UsermailerMailer.inviteemail_email(@email, @user, @url).deliver
+      redirect_to campaign_path(@campaign), flash: {success: 'Email Sent Successfully'}
+    else
+      redirect_to campaign_path(@campaign), flash: {error: 'Email Sending Failed'}
+    end
+  end
+  
 end

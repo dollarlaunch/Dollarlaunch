@@ -9,7 +9,7 @@ class Ability
     else
       can :new, Campaign
       can :update, Campaign do |campaign|
-        campaign.user == user
+        campaign.user == user or (campaign.user.referalcode  == user.referby and campaign.invites.each { |invite| invite.user == user })
       end
       can :destroy, Campaign do |campaingn|
         campaingn.user == user
@@ -27,6 +27,8 @@ class Ability
       cannot :index, Category
       cannot :index, Badge
       cannot :show, Badge
+      cannot :read, Campaign, status: 'Draft'
+      can :read, Campaign, status: 'Draft', user_id: user.id
     end
     
   end

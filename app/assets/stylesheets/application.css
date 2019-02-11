@@ -420,3 +420,8 @@ a #nav-champion-tab {
 a:hover {
   text-decoration: none;
 }
+.disabledd {
+  pointer-events: none;
+  background: transparent !important;
+  border: 1px dashed #cbcbcb !important;
+}

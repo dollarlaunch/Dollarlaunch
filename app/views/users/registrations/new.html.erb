@@ -39,12 +39,12 @@
             </div>
             <input type="hidden" class="form-control login-bg" name="user[referalcode]">
             <% if session[:referalcode].present? %>
-              Note: <small class="text-muted">Enter your referal code if you have been invited by someone</small>
+              Note: <small class="text-muted">Your Referal code</small>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text login-icn"><i class="fas fa-code"></i></span>
                 </div>
-                  <input type="text" class="form-control login-bg" placeholder="Enter your Invited Referal Code" name="user[referby]" value="<%= session[:referalcode] %>" >
+                  <input type="text" class="form-control login-bg disabledd" placeholder="Enter your Invited Referal Code" name="user[referby]" value="<%= session[:referalcode] %>">
               </div>
             <% end %>
           </div>

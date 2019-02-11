@@ -35,4 +35,11 @@ class UsermailerMailer < ApplicationMailer
     mail(to: @admin.email, subject: "Backers are Completed, Start the Milestone")
   end
   
+  def inviteemail_email(email, user, url)
+    @email = email
+    @user = user
+    @url = url
+    mail(to: @email, subject: "Project Has Been Shared With You")
+  end
+  
 end

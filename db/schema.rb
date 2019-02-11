@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_14_100313) do
+ActiveRecord::Schema.define(version: 2019_02_08_130043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,15 @@ ActiveRecord::Schema.define(version: 2019_01_14_100313) do
     t.index ["owner_type", "owner_id"], name: "index_images_on_owner_type_and_owner_id"
   end
 
+  create_table "invites", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_invites_on_campaign_id"
+    t.index ["user_id"], name: "index_invites_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.bigint "conversation_id"
@@ -273,6 +282,8 @@ ActiveRecord::Schema.define(version: 2019_01_14_100313) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "faqs", "campaigns"
+  add_foreign_key "invites", "campaigns"
+  add_foreign_key "invites", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "milestones", "campaigns"

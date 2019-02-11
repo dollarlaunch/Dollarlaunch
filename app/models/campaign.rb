@@ -9,6 +9,7 @@ class Campaign < ApplicationRecord
   enum status: { Draft: 0, Launched: 1 }
   acts_as_votable
   has_many :campaignreviews, dependent: :destroy
+  has_many :invites, dependent: :destroy
   
   # Milestone Scenario
   has_many :milestones, dependent: :destroy

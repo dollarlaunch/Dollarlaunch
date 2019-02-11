@@ -108,3 +108,20 @@
     <p class="mark">You are not the ProjectChampion of any Campaign</p><%= link_to "Browse Projects", root_path, class:'btn btn-primary btn-sm' %>
   <% end %>
 </div>
+<% if current_user.invites.present? %>
+  <div class="container-fluid mt-3 home-container">
+    <h2 class="mb-3 text-muted py-2">CAMPAIGNS YOU CAN MODIFY</h2>
+    <table class="table">
+      <tr>
+        <th>Title</th>
+        <th>Modify</th>
+      </tr>
+      <% current_user.invites.each do |invite| %>
+        <tr>
+          <td><%= invite.campaign.title %></td>
+          <td><%= link_to "Modify", edit_campaign_path(invite.campaign.id) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
