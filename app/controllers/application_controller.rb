@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
   end
   
   def after_sign_in_path_for(resource)
-    if session[:campaign].present?
-      Invite.create!(user_id: current_user.id, campaign_id: session[:campaign])
+    if session[:invitecampaign].present?
+      Invite.create!(user_id: current_user.id, campaign_id: session[:invitecampaign])
     end
     dashboard_path(current_user)
   end
