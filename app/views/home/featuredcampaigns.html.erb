@@ -2,7 +2,7 @@
   <h2 class="mb-3 text-muted">FEATURED CAMPAIGNS</h2>  
   <div class="row">
     <% @campaigns.each do |campaign| %>
-      <div class="col-md-4 mb-4">
+      <div class="col-lg-4 mb-4">
         <%= link_to campaign_path(campaign), class:'link-dec' do %>
           <div class="home-top-cmpgn" style="background:url('<%= campaign.image.url %>')"></div>
           <div class="hding-brdr mt-3">

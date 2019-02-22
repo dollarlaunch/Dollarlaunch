@@ -425,3 +425,8 @@ a:hover {
   background: transparent !important;
   border: 1px dashed #cbcbcb !important;
 }
+@media only screen and (max-width: 1210px) and (min-width: 992px)  { 
+  .blog-title-h {
+    height: 225px !important;
+  }
+}
