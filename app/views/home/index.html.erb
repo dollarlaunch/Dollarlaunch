@@ -92,7 +92,7 @@
               <h3><%= post.title.truncate(50) %></h3>
               <p class="text-muted"><%= truncate(sanitize(post.description, tags: []), length: 80) %></p>
             </div>
-            <br>
+            <br> 
             <hr>
             <div class="blog-meta">
               <small class="text-muted mr-3">Author: <%= post.user.username %></small>
